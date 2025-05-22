@@ -1,13 +1,270 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root">test</div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ポートフォリオ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+      background: linear-gradient(to bottom right, #fdf8f5, #f7f2ec);
+      color: #3e2e2e;
+      margin: 0;
+      padding: 0;
+      line-height: 1.8;
+    }
+
+    header {
+      padding: 2rem 1rem;
+      text-align: center;
+      border-bottom: 2px solid #d8cfc4;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      margin-bottom: 0.4rem;
+      color: #5c3d31;
+      letter-spacing: 0.1rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #6b5b52;
+    }
+
+    nav {
+      background-color: #f9f5f2;
+      border-bottom: 1px solid #e0dad2;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0;
+      padding: 0.5rem;
+    }
+
+    nav li {
+      margin: 0.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #5c3d31;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background-color 0.3s, border 0.3s;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      background-color: #f1e8e2;
+      border: 1px solid #d8cfc4;
+    }
+
+    section {
+      padding: 2rem 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      border-left: 5px solid #a86858;
+      padding-left: 0.8rem;
+      color: #5c3d31;
+      margin-bottom: 1rem;
+      font-size: 1.6rem;
+      position: relative;
+    }
+
+    h2::before {
+      content: "🌸";
+      position: absolute;
+      left: -2rem;
+      font-size: 1.4rem;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .tag {
+      background-color: #f0e7e2;
+      color: #5c3d31;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid #d8cfc4;
+    }
+
+    .card {
+      border: 1px solid #e4dcd2;
+      background-color: #fffdfc;
+      padding: 1.8rem;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      color: #5c3d31;
+      margin-top: 0;
+    }
+
+    .btn-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #fff;
+      background-color: #a86858;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+
+    .btn-link:hover {
+      background-color: #8a5444;
+    }
+
+    @media screen and (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      section {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>川岸遥奈</h1>
+  <p><strong>ECCコンピュータ専門学校 2027年卒業予定</strong></p>
+</header>
+
+<nav aria-label="メインナビゲーション">
+  <ul>
+    <li><a href="#intro">自己紹介</a></li>
+    <li><a href="#job">希望職種</a></li>
+    <li><a href="#tech">スキル</a></li>
+    <li><a href="#process">開発手法</a></li>
+    <li><a href="#works">制作物</a></li>
+    <li><a href="#research">研究</a></li>
+  </ul>
+</nav>
+
+<section id="intro">
+  <h2>自己紹介</h2>
+  <p>
+    技術そのものだけでなく、「どんな課題を解決したいのか」「どの手段が最適か」といった企画・問題定義の部分から考えることを大切にしています。<br>
+    個人開発では、「なぜこのアプリを作るのか」「誰の役に立てるのか」を明確にしながら設計や実装を行っています。
+  </p>
+  <p>
+    また、リーダーや発表の機会を多く経験したことで、使う技術の選定理由やシステム構成について、自分の言葉で伝える力も意識して磨いてきました。<br>
+    単に動くものを作るだけでなく、**なぜそのように作るのか**を説明できるエンジニアを目指しています。
+  </p>
+</section>
+
+<section id="job">
+  <h2>希望職種</h2>
+  <ul>
+    <li>モバイルアプリエンジニア（iOS / Android）</li>
+    <li>Flutter開発者</li>
+  </ul>
+</section>
+
+<section id="tech">
+  <h2>スキル</h2>
+  <div class="tags">
+    <span class="tag">Swift</span>
+    <span class="tag">Dart</span>
+    <span class="tag">Flutter</span>
+    <span class="tag">React.js</span>
+    <span class="tag">React Native</span>
+    <span class="tag">Go</span>
+    <span class="tag">Node.js</span>
+    <span class="tag">PHP</span>
+    <span class="tag">HTML</span>
+    <span class="tag">CSS</span>
+    <span class="tag">JavaScript</span>
+  </div>
+</section>
+
+<section id="process">
+  <h2>開発手法</h2>
+  <ul>
+    <li>スキーマ駆動開発</li>
+    <li>アジャイル開発</li>
+    <li>Git（GitHub / GitLab）</li>
+  </ul>
+</section>
+
+<section id="works">
+  <h2>制作物</h2>
+
+  <article class="card">
+    <h3>food shuffle - 新しいお店との出会いを届けるアプリ</h3>
+<ul>
+  <li><strong>概要:</strong> すれ違いを通じて“おすすめのお店”を共有し合う、レビュー信頼性重視のグルメ情報アプリ</li>
+  <li><strong>期間:</strong> 2025年9月 ～ 2025年2月</li>
+  <li><strong>担当した技術スタック:</strong>
+    <span class="tag">Flutter</span>
+    <span class="tag">Google Maps API</span>
+  </li>
+  <li><strong>役割:</strong> 企画立案、プレゼンテーション、リーダー、UI設計、Flutterによるフロントエンド開発</li>
+  <li><strong>特徴:</strong> 「信頼できるレビュー」「すれ違いによるお店の発見」「リアルタイム性」を軸に、大学生や若年層が“楽しく外食したくなる”体験を設計しました。</li>
+</ul>
+
+<a class="btn-link" href="https://github.com/Doremifa-donuts/foodshuffle" target="_blank">GitHubを見る</a>
+</article>
+
+<article class="card">
+  <h3>家族コミュニケーション促進アプリ</h3>
+  <ul>
+    <li><strong>概要:</strong> 家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ</li>
+    <li><strong>期間:</strong> 2024年4月 ～ 2025年8月</li>
+    <li><strong>担当した技術スタック:</strong>
+      <span class="tag">HTML</span>
+      <span class="tag">Tailwind CSS</span>
+      <span class="tag">JavaScript</span>
+    </li>
+    <li><strong>役割:</strong> フロントエンド開発、企画、プレゼンリーダー、UI設計</li>
+    <li><strong>特徴:</strong> タスクの見える化・予定提案機能・家族向けポイントシステムを実装予定</li>
+  </ul>
+  <a class="btn-link" href="https://github.com/ganbariya-ecc/buntanchan_Renew_web" target="_blank">Githubを見る</a>
+</article>
+</section>
+
+<section id="research">
+  <h2>研究</h2>
+  <p><strong>テーマ:</strong> スキーマ駆動開発 — OpenAPIとgRPCの比較研究</p>
+  <ul>
+    <li>OpenAPI / gRPC / コードファーストの3手法を比較</li>
+    <li>使いやすさ、型安全性、拡張性の観点から評価</li>
+    <li>最終成果物はGitHubにて公開</li>
+  </ul>
+  <a class="btn-link" href="https://github.com/haruna1256/schema-vs-code-api-comparison" target="_blank">GitHubを見る</a>
+</section>
+
+</body>
 </html>
