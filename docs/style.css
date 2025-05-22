@@ -1,0 +1,868 @@
+:root {
+  --primary-color: #722f37;
+  --secondary-color: #a8334a;
+  --accent-color: #d4526e;
+  --wine-red: #8b1538;
+  --rose-pink: #f4c2c2;
+  --bg-gradient-start: #fdf8f8;
+  --bg-gradient-end: #f9f2f4;
+  --card-bg: #fffdfd;
+  --text-color: #3e2e2e;
+  --text-muted: #6b5b52;
+  --border-color: #e8d4d6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  line-height: 1.8;
+  min-height: 100vh;
+  overflow-x: hidden; /* 横スクロールを防ぐ */
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  padding: 4rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(114, 47, 55, 0.9), rgba(168, 51, 74, 0.85)),
+              url('https://source.unsplash.com/1200x600/?abstract-rose,romantic-gradient') center/cover no-repeat;
+  color: white;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(212, 82, 110, 0.3) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '🌹';
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  font-size: 3rem;
+  opacity: 0.6;
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+  filter: grayscale(20%) brightness(1.1); /* 画像の色調調整 */
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero .subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  font-family: 'Inter', sans-serif;
+}
+
+.hero .description {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Navigation */
+nav {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem; /* デスクトップ用のパディング */
+  display: flex; /* ナビゲーションの配置を調整 */
+  justify-content: center; /* ナビゲーション項目を中央に配置 */
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0; /* paddingをリセット */
+  gap: 0.5rem;
+  transition: all 0.3s ease-in-out; /* メニュー開閉時のアニメーション */
+}
+
+nav li {
+  margin: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--primary-color);
+  padding: 0.7rem 1.2rem;
+  border-radius: 25px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+nav a:hover {
+  background: linear-gradient(135deg, var(--wine-red), var(--secondary-color));
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.4);
+}
+
+/* Hamburger Menu Icon */
+.hamburger {
+  display: none; /* デフォルトでは非表示 */
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  cursor: pointer;
+  position: absolute; /* ナビゲーションバー内で絶対配置 */
+  right: 1.5rem; /* 右端に配置 */
+  top: 50%; /* 垂直中央に配置 */
+  transform: translateY(-50%);
+  z-index: 101; /* ナビゲーション項目より手前に */
+  transition: color 0.3s ease;
+}
+
+.hamburger:hover {
+  color: var(--wine-red);
+}
+
+section {
+padding: 3rem 1rem;
+max-width: 1200px; /* 例えば1200pxに増やす */
+margin: 0 auto;
+position: relative;
+}
+
+h2 {
+  font-size: 2.2rem;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  position: relative;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--wine-red), var(--accent-color));
+  border-radius: 2px;
+}
+
+h2::before {
+  content: '🌹';
+  position: absolute;
+  left: -3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  opacity: 0.7;
+}
+
+/* Info Cards */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--wine-red), var(--accent-color));
+}
+
+.info-card::after {
+  content: '🌹';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  opacity: 0.4;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.info-card h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.info-card .icon {
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+}
+
+/* Skills Section */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.skill-category {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.skill-category h3 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.tag {
+  background: linear-gradient(135deg, var(--wine-red), var(--accent-color));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.tag::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tag:hover::before {
+  opacity: 1;
+}
+
+.tag:hover {
+  transform: scale(1.05);
+}
+
+/* Project Cards */
+.project-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 2rem; /* projects-grid の gap で置き換えられるので、必要に応じて削除 */
+  border: 1px solid var(--border-color);
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ここが元々アイコン表示用だった .project-image のスタイルです。
+   画像を複数表示する場合は、このスタイルは競合するため削除またはコメントアウトが必要です。
+   foodshuffle のカードで画像を使う場合は、このルールは適用されません。
+*/
+.project-image {
+  width: 100%;
+  height: 200px; /* アイコン表示用の固定高さ */
+  object-fit: cover; /* アイコン表示用の設定 */
+  background: linear-gradient(135deg, var(--wine-red), var(--accent-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-image::before { /* アイコン表示用の装飾 */
+  content: '🌹';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  opacity: 0.6;
+}
+
+
+.project-content {
+  padding: 2rem;
+}
+
+.project-card h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+}
+
+.project-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  color: white;
+  background: linear-gradient(135deg, var(--wine-red), var(--accent-color));
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-link:hover::before {
+  left: 100%;
+}
+
+.btn-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 21, 56, 0.4);
+}
+
+/* Research Section */
+.research-card {
+  background: linear-gradient(135deg, var(--card-bg), var(--rose-pink));
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 25px rgba(139, 21, 56, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.research-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(212, 82, 110, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.research-card::after {
+  content: '🌹';
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  opacity: 0.3;
+}
+
+.research-card h3 {
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-gradient-start);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--wine-red), var(--accent-color));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Floating animation for roses */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+}
+
+/* Rose petals animation */
+.rose-petals {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rose-petal {
+  position: absolute;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  animation: fall 10s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* --- Responsive Design (Mobile First) --- */
+
+/* デスクトップ用のスタイル（基本） */
+html {
+  scroll-behavior: smooth;
+}
+
+/* スマホ・タブレット用のスタイル (最大幅 768px) */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, rgba(114, 47, 55, 0.95), rgba(168, 51, 74, 0.9)),
+                url('https://source.unsplash.com/600x400/?rose-pattern,flower') center/cover no-repeat;
+  }
+
+  .hero::after {
+    top: 10%;
+    right: 5%;
+    font-size: 2rem;
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero .subtitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero .description {
+    font-size: 0.9rem;
+  }
+
+  /* モバイルナビゲーション */
+  nav {
+    padding: 1rem 0; /* ハンバーガーアイコンのためのパディングを確保 */
+    justify-content: space-between; /* アイコンとタイトルを両端に配置 */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    width: 100%; /* 全幅 */
+  }
+
+  nav .nav-title {
+    color: var(--primary-color);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-left: 1.5rem; /* 左側に余白 */
+  }
+
+  nav ul {
+    flex-direction: column;
+    position: fixed; /* 全画面でオーバーレイ */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.98); /* 背景をわずかに透過 */
+    backdrop-filter: blur(15px);
+    justify-content: center;
+    align-items: center;
+    transform: translateX(100%); /* 初期状態では右に隠す */
+    transition: transform 0.4s ease-in-out;
+    z-index: 99; /* ハンバーガーアイコンより下 */
+    overflow-y: auto; /* メニュー項目が多い場合にスクロール可能にする */
+  }
+
+  nav ul.active {
+    transform: translateX(0); /* アクティブ時に表示 */
+  }
+
+  nav li {
+    margin: 1rem 0; /* 項目間の余白 */
+  }
+
+  nav a {
+    width: 80%; /* リンクの幅を調整 */
+    max-width: 300px;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* カード風の影 */
+  }
+
+  /* ハンバーガーアイコンを表示 */
+  .hamburger {
+    display: block;
+    right: 1.5rem; /* ハンバーガーアイコンの右側の位置を調整 */
+  }
+
+  section {
+    padding: 2rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2::before {
+    left: 0.5rem;
+    top: 0.5rem;
+    transform: none;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .info-card .icon {
+    font-size: 1.3rem;
+  }
+
+  .skills-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    padding: 1.5rem;
+  }
+
+  .skill-category h3 {
+    font-size: 1.3rem;
+  }
+
+  .tags {
+    gap: 0.6rem;
+  }
+
+  .tag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .project-card {
+    margin-bottom: 1.5rem;
+  }
+
+  /* モバイルでのデフォルトの .project-image は、アイコン表示用のため、
+     画像を使う場合は、個別の .project-card.image-left .project-image で上書きします。
+     もしアイコン表示用カードの画像エリアも高さを固定したいなら残します。
+  */
+  /*
+  .project-image {
+    height: 150px;
+    font-size: 2.5rem;
+  }
+  */
+
+  .project-image::before {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .project-content {
+    padding: 1.5rem;
+  }
+
+  .project-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .btn-link {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+  }
+
+  .research-card {
+    padding: 1.5rem;
+  }
+
+  .research-card h3 {
+    font-size: 1.4rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .research-card ul {
+    padding-left: 1.5rem;
+  }
+
+  .research-card::after {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .rose-petal {
+    font-size: 1rem;
+  }
+}
+
+/* --- プロジェクトカードの画像左寄せスタイル --- */
+
+/* デスクトップ表示 (769px以上) で画像を左に配置 */
+@media screen and (min-width: 769px) {
+  .project-card.image-left {
+    display: flex; /* Flexboxコンテナにする */
+    flex-direction: row; /* 要素を横並びにする */
+    align-items: flex-start; /* 上端に揃える */
+  }
+
+  .project-card.image-left .project-image {
+    width: 30%; /* 画像の幅を30%に設定 (前回の調整を適用) */
+    height: 100%; 
+    flex-shrink: 0; /* 画像が縮まないようにする */
+    /* 角丸を画像左側にだけ適用 */
+    border-radius: 20px 0 0 20px;
+    padding: 10px; /* 画像エリア全体のパディング */
+
+    /* ここからFlexboxのスタイル */
+    display: flex;
+    flex-direction: column; /* 複数のimgを縦に並べる */
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px; /* 画像間の隙間 */
+
+    /* 画像が収まりきらない場合にスクロールさせるなら残す */
+    /* overflow-y: auto; */
+    /* max-height: 400px; */
+  }
+
+  .project-card.image-left .project-content {
+    flex-grow: 1; /* コンテンツが残りのスペースを全て占めるようにする */
+    padding-left: 2rem; /* 画像とコンテンツの間に余白を追加 */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* 画像が実際に表示されるようにするためのスタイル調整 */
+/* project-card.image-left の中の img に適用 */
+.project-card.image-left .project-image img {
+  display: block; /* img要素をブロック要素にする */
+  width: 100%; /* 親要素の幅いっぱいに広げる */
+  height: auto; /* 高さは自動調整 */
+  object-fit: cover; /* 縦横比を維持しつつ、要素を覆うように拡大・縮小 */
+  border-radius: 10px; /* 各画像に角丸 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 各画像に影 */
+}
+
+/* モバイル表示での角丸調整 */
+@media screen and (max-width: 768px) {
+  .project-card.image-left .project-image {
+    width: 100%; /* モバイルでは幅100% */
+    height: auto; /* 高さは自動調整 */
+    border-radius: 20px 20px 0 0; /* モバイルの角丸 */
+    padding: 10px;
+    /* モバイルでも必要なら max-height を設定してスクロールさせる */
+    /* max-height: 250px; */
+    /* overflow-y: auto; */
+  }
+
+  .project-card.image-left .project-image img {
+    border-radius: 10px; /* モバイルでも角丸 */
+  }
+}
+
+/* --- プロジェクトカードのタイトルハイライトスタイル --- */
+.project-card h3 .highlight-title {
+  background: linear-gradient(135deg, var(--wine-red), var(--accent-color)); /* 赤系の背景 */
+  color: white; /* 白文字 */
+  padding: 0.3em 0.6em; /* 内側の余白 */
+  border-radius: 8px; /* 少し角丸に */
+  display: inline-block; /* インライン要素だが、paddingやwidth/heightを適用できるように */
+  line-height: 1.2; /* 行の高さを調整 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 軽く影をつける */
+  margin-bottom: 0.5em; /* 下に少し余白 */
+}
+
+/* --- 制作物セクションのグリッドレイアウト --- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 常に1列にする */
+  gap: 2rem; /* カード間の間隔 */
+}
