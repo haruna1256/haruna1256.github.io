@@ -62,7 +62,7 @@ body {
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -94,7 +94,7 @@ body {
 .hero .description {
   font-size: 1.1rem;
   opacity: 0.95;
-  max-width: 500px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -592,9 +592,6 @@ html {
     margin-bottom: 1rem;
   }
 
-  .hero .description {
-    font-size: 0.9rem;
-  }
 
   /* モバイルナビゲーション */
   nav {
@@ -865,4 +862,24 @@ html {
   display: grid;
   grid-template-columns: 1fr; /* 常に1列にする */
   gap: 2rem; /* カード間の間隔 */
+}
+
+@media screen and (max-width: 768px) {
+  /* 既存のモバイル用スタイル */
+
+  /* 制作物カード内の画像調整 */
+  .project-card.image-left .project-image img {
+    /* 最初の画像だけを表示し、2枚目以降を非表示にする */
+    display: block; /* デフォルトで表示 */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 2枚目以降の画像を非表示にする */
+  .project-card.image-left .project-image img:not(:first-of-type) {
+    display: none;
+  }
 }

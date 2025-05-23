@@ -41,29 +41,33 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
     observer.observe(section);
   });
   
-  // バラの花びらアニメーション
-  function createRosePetal() {
-    const petal = document.createElement('div');
-    petal.innerHTML = '🌹';
-    petal.className = 'rose-petal';
-    petal.style.left = Math.random() * 100 + 'vw';
-    petal.style.animationDuration = (Math.random() * 3 + 8) + 's';
-    petal.style.animationDelay = Math.random() * 2 + 's';
-  
-    document.getElementById('rose-petals').appendChild(petal);
-  
-    setTimeout(() => {
+ // バラの花びらアニメーション
+function createRosePetal(content = '🐾', durationMultiplier = 1, delayMultiplier = 1) { // ★引数を追加
+  const petal = document.createElement('div');
+  petal.innerHTML = content; // ★contentを使用
+  petal.className = 'rose-petal';
+  petal.style.left = Math.random() * 100 + 'vw';
+  petal.style.animationDuration = (Math.random() * 3 + 8) * durationMultiplier + 's'; // ★durationMultiplierを適用
+  petal.style.animationDelay = Math.random() * 2 * delayMultiplier + 's'; // ★delayMultiplierを適用
+
+  document.getElementById('rose-petals').appendChild(petal);
+
+  setTimeout(() => {
       petal.remove();
-    }, 12000);
-  }
-  
-  // 定期的にバラの花びらを生成
-  setInterval(createRosePetal, 3000);
-  
-  // 初期バラ花びら
-  for(let i = 0; i < 3; i++) {
-    setTimeout(createRosePetal, i * 1000);
-  }
+  }, 12000 * durationMultiplier); // ★durationMultiplierを適用
+}
+
+// 定期的にバラの花びらを生成
+setInterval(() => createRosePetal('🐾', 1, 1), 3000); // ★引数を渡して呼び出す
+
+// 初期バラ花びら
+for(let i = 0; i < 3; i++) {
+  setTimeout(() => createRosePetal('🐾', 1, 1), i * 1000); // ★引数を渡して呼び出す
+}
+
+// 例：別の場所で、少し速い、異なる絵文字の花びらを生成したい場合
+setInterval(() => createRosePetal('🌹', 0.8, 0.5), 2000);
+setInterval(() => createRosePetal('🥀', 0.8, 0.5), 2000);
   
   // ハンバーガーメニューの開閉機能
   const hamburgerMenu = document.getElementById('hamburger-menu');
