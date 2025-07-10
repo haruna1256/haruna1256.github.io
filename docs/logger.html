@@ -15,11 +15,11 @@
 </head>
 <body>
     <h1>位置情報ロガー</h1>
-    <p>「ロギング開始」ボタンを押すと、現在の緯度、経度、時間を5秒ごとに記録します。</p>
+    <p>「ロギング開始」ボタンを押すと、現在の緯度、経度、**ダミーの歩数**、Unixタイムスタンプ（ミリ秒）を5秒ごとに記録します。</p>
     <p class="red-text">※ このページを開いている間だけ記録されます。ページを閉じたり、ブラウザを閉じると記録はリセットされます。</p>
     <button id="startButton">ロギング開始</button>
     <button id="stopButton" disabled>ロギング停止</button>
-    <button id="downloadButton" disabled>データダウンロード (JSON)</button>
+    <button id="downloadButton" disabled>データダウンロード (TXT)</button>
     
     <h2>記録されたデータ:</h2>
     <div id="log">
@@ -44,24 +44,25 @@
         function success(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            const timestamp = new Date(position.timestamp); // epochからのミリ秒をDateオブジェクトに変換
-            const formattedTime = timestamp.toLocaleString('ja-JP'); // 日本語ロケールで整形
+            // タイムスタンプはミリ秒単位のUnixタイムスタンプ
+            const timestampMillis = position.timestamp; 
+            
+            // 歩数はロガーから直接取得できないため、現在はダミー値 (0) を使用します
+            const dummySteps = 0; 
 
-            const dataEntry = {
-                latitude: latitude,
-                longitude: longitude,
-                timestamp: formattedTime // 整形済みの日時文字列を保存
-            };
+            // ご希望の形式: 緯度,経度,歩数,Unixタイムスタンプ（ミリ秒）
+            const dataEntry = `${latitude.toFixed(6)},${longitude.toFixed(6)},${dummySteps},${timestampMillis}`;
             loggedData.push(dataEntry); // 配列に追加
 
-            // 画面に表示
+            // 画面に表示（整形して表示）
+            const formattedTime = new Date(timestampMillis).toLocaleString('ja-JP');
             const entryElement = document.createElement('div');
             entryElement.classList.add('log-entry');
-            entryElement.innerHTML = `<strong>日時:</strong> ${formattedTime}<br><strong>緯度:</strong> ${latitude.toFixed(6)}, <strong>経度:</strong> ${longitude.toFixed(6)}`;
+            entryElement.innerHTML = `<strong>${formattedTime}</strong><br>${latitude.toFixed(6)},${longitude.toFixed(6)},${dummySteps},${timestampMillis}`;
             logDiv.prepend(entryElement); // 新しいエントリを上に追加
             logDiv.scrollTop = 0; // スクロール位置を一番上に
 
-            console.log(`緯度: ${latitude}, 経度: ${longitude}, 時間: ${formattedTime}`);
+            console.log(dataEntry);
 
             downloadButton.disabled = false; // データが記録されたらダウンロードボタンを有効にする
         }
@@ -92,18 +93,14 @@
         function startLogging() {
             startButton.disabled = true;
             stopButton.disabled = false;
-            downloadButton.disabled = true; // 新しいロギング開始時は一時的に無効に
+            downloadButton.disabled = true; 
             logDiv.innerHTML = '<p>ロギングを開始しました...</p>';
             loggedData.length = 0; // 既存データをクリア
 
-            // watchPositionで定期的に位置情報を取得
-            // enableHighAccuracy: true で高精度を要求 (バッテリー消費は増えます)
-            // timeout: 位置情報取得の最大待機時間 (ミリ秒)
-            // maximumAge: キャッシュされた位置情報の最大使用期限 (ミリ秒)
             watchId = navigator.geolocation.watchPosition(success, error, {
                 enableHighAccuracy: true,
-                timeout: 5000, // 5秒以内に取得できない場合はタイムアウト
-                maximumAge: 0 // キャッシュされた古い位置情報を使わない
+                timeout: 5000, 
+                maximumAge: 0 
             });
             console.log("ロギング開始");
         }
@@ -123,27 +120,28 @@
             }
         }
 
-        // データダウンロード (JSON形式)
+        // データダウンロード (TXT形式)
         function downloadData() {
             if (loggedData.length === 0) {
                 alert("記録されたデータがありません。");
                 return;
             }
 
-            const dataStr = JSON.stringify(loggedData, null, 2); // データをJSON文字列に変換 (整形して読みやすく)
-            const blob = new Blob([dataStr], { type: 'application/json' }); // Blobオブジェクトを作成
-            const url = URL.createObjectURL(blob); // ダウンロード用のURLを作成
+            // 各データを改行で結合して文字列を作成
+            const dataStr = loggedData.join('\n'); 
+            const blob = new Blob([dataStr], { type: 'text/plain' }); // テキストファイルとして保存
+            const url = URL.createObjectURL(blob); 
 
             const a = document.createElement('a');
             a.href = url;
-            a.download = `location_log_${new Date().toISOString().slice(0,10)}.json`; // ファイル名
+            // ファイル名を location_log_YYYY-MM-DD.txt とします
+            a.download = `location_log_${new Date().toISOString().slice(0,10)}.txt`; 
             document.body.appendChild(a);
-            a.click(); // クリックしてダウンロードを開始
-            document.body.removeChild(a); // 要素を削除
-            URL.revokeObjectURL(url); // URLを解放
+            a.click(); 
+            document.body.removeChild(a); 
+            URL.revokeObjectURL(url); 
         }
 
-        // ボタンにイベントリスナーを追加
         startButton.addEventListener('click', startLogging);
         stopButton.addEventListener('click', stopLogging);
         downloadButton.addEventListener('click', downloadData);
