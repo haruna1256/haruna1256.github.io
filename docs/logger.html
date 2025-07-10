@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>位置情報ロガー</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        #log { border: 1px solid #ccc; padding: 10px; min-height: 200px; overflow-y: scroll; margin-top: 20px; background-color: #f9f9f9; }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px dashed #eee; padding-bottom: 3px; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        .red-text { color: red; }
+    </style>
+</head>
+<body>
+    <h1>位置情報ロガー</h1>
+    <p>「ロギング開始」ボタンを押すと、現在の緯度、経度、時間を5秒ごとに記録します。</p>
+    <p class="red-text">※ このページを開いている間だけ記録されます。ページを閉じたり、ブラウザを閉じると記録はリセットされます。</p>
+    <button id="startButton">ロギング開始</button>
+    <button id="stopButton" disabled>ロギング停止</button>
+    <button id="downloadButton" disabled>データダウンロード (JSON)</button>
+    
+    <h2>記録されたデータ:</h2>
+    <div id="log">
+        <p>ログはここに表示されます...</p>
+    </div>
+
+    <script>
+        let watchId; // Geolocation.watchPosition() のIDを格納
+        const loggedData = []; // 記録されたデータを格納する配列
+        const logDiv = document.getElementById('log');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const downloadButton = document.getElementById('downloadButton');
+
+        // Geolocation APIが利用可能かチェック
+        if (!navigator.geolocation) {
+            logDiv.innerHTML = '<p class="red-text">お使いのブラウザは位置情報サービスに対応していません。</p>';
+            startButton.disabled = true;
+        }
+
+        // 位置情報取得成功時のコールバック関数
+        function success(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const timestamp = new Date(position.timestamp); // epochからのミリ秒をDateオブジェクトに変換
+            const formattedTime = timestamp.toLocaleString('ja-JP'); // 日本語ロケールで整形
+
+            const dataEntry = {
+                latitude: latitude,
+                longitude: longitude,
+                timestamp: formattedTime // 整形済みの日時文字列を保存
+            };
+            loggedData.push(dataEntry); // 配列に追加
+
+            // 画面に表示
+            const entryElement = document.createElement('div');
+            entryElement.classList.add('log-entry');
+            entryElement.innerHTML = `<strong>日時:</strong> ${formattedTime}<br><strong>緯度:</strong> ${latitude.toFixed(6)}, <strong>経度:</strong> ${longitude.toFixed(6)}`;
+            logDiv.prepend(entryElement); // 新しいエントリを上に追加
+            logDiv.scrollTop = 0; // スクロール位置を一番上に
+
+            console.log(`緯度: ${latitude}, 経度: ${longitude}, 時間: ${formattedTime}`);
+
+            downloadButton.disabled = false; // データが記録されたらダウンロードボタンを有効にする
+        }
+
+        // 位置情報取得失敗時のコールバック関数
+        function error(err) {
+            let errorMessage;
+            switch(err.code) {
+                case err.PERMISSION_DENIED:
+                    errorMessage = "位置情報の利用が許可されませんでした。";
+                    break;
+                case err.POSITION_UNAVAILABLE:
+                    errorMessage = "位置情報を取得できませんでした。";
+                    break;
+                case err.TIMEOUT:
+                    errorMessage = "位置情報の取得がタイムアウトしました。";
+                    break;
+                default:
+                    errorMessage = `不明なエラーが発生しました: ${err.message}`;
+                    break;
+            }
+            logDiv.innerHTML = `<p class="red-text">エラー: ${errorMessage}</p>`;
+            console.error(`エラー(${err.code}): ${err.message}`);
+            stopLogging(); // エラー発生時はロギングを停止
+        }
+
+        // ロギング開始
+        function startLogging() {
+            startButton.disabled = true;
+            stopButton.disabled = false;
+            downloadButton.disabled = true; // 新しいロギング開始時は一時的に無効に
+            logDiv.innerHTML = '<p>ロギングを開始しました...</p>';
+            loggedData.length = 0; // 既存データをクリア
+
+            // watchPositionで定期的に位置情報を取得
+            // enableHighAccuracy: true で高精度を要求 (バッテリー消費は増えます)
+            // timeout: 位置情報取得の最大待機時間 (ミリ秒)
+            // maximumAge: キャッシュされた位置情報の最大使用期限 (ミリ秒)
+            watchId = navigator.geolocation.watchPosition(success, error, {
+                enableHighAccuracy: true,
+                timeout: 5000, // 5秒以内に取得できない場合はタイムアウト
+                maximumAge: 0 // キャッシュされた古い位置情報を使わない
+            });
+            console.log("ロギング開始");
+        }
+
+        // ロギング停止
+        function stopLogging() {
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+                logDiv.prepend('<p>ロギングを停止しました。</p>');
+                console.log("ロギング停止");
+            }
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            if (loggedData.length > 0) {
+                downloadButton.disabled = false;
+            }
+        }
+
+        // データダウンロード (JSON形式)
+        function downloadData() {
+            if (loggedData.length === 0) {
+                alert("記録されたデータがありません。");
+                return;
+            }
+
+            const dataStr = JSON.stringify(loggedData, null, 2); // データをJSON文字列に変換 (整形して読みやすく)
+            const blob = new Blob([dataStr], { type: 'application/json' }); // Blobオブジェクトを作成
+            const url = URL.createObjectURL(blob); // ダウンロード用のURLを作成
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `location_log_${new Date().toISOString().slice(0,10)}.json`; // ファイル名
+            document.body.appendChild(a);
+            a.click(); // クリックしてダウンロードを開始
+            document.body.removeChild(a); // 要素を削除
+            URL.revokeObjectURL(url); // URLを解放
+        }
+
+        // ボタンにイベントリスナーを追加
+        startButton.addEventListener('click', startLogging);
+        stopButton.addEventListener('click', stopLogging);
+        downloadButton.addEventListener('click', downloadData);
+    </script>
+</body>
+</html>
