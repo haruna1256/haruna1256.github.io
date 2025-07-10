@@ -15,11 +15,11 @@
 </head>
 <body>
     <h1>位置情報ロガー</h1>
-    <p>「ロギング開始」ボタンを押すと、現在の緯度、経度、**ダミーの歩数**、Unixタイムスタンプ（ミリ秒）を5秒ごとに記録します。</p>
+    <p>「ロギング開始」ボタンを押すと、現在の緯度、経度、**ダミーの歩数**、Unixタイムスタンプ（ミリ秒）を5秒ごとに記録します。データはCSV形式でダウンロードされます。</p>
     <p class="red-text">※ このページを開いている間だけ記録されます。ページを閉じたり、ブラウザを閉じると記録はリセットされます。</p>
     <button id="startButton">ロギング開始</button>
     <button id="stopButton" disabled>ロギング停止</button>
-    <button id="downloadButton" disabled>データダウンロード (TXT)</button>
+    <button id="downloadButton" disabled>データダウンロード (CSV)</button>
     
     <h2>記録されたデータ:</h2>
     <div id="log">
@@ -48,6 +48,7 @@
             const timestampMillis = position.timestamp; 
             
             // 歩数はロガーから直接取得できないため、現在はダミー値 (0) を使用します
+            // 必要に応じて、後で手動でデータを加筆修正してください
             const dummySteps = 0; 
 
             // ご希望の形式: 緯度,経度,歩数,Unixタイムスタンプ（ミリ秒）
@@ -120,22 +121,24 @@
             }
         }
 
-        // データダウンロード (TXT形式)
+        // データダウンロード (CSV形式)
         function downloadData() {
             if (loggedData.length === 0) {
                 alert("記録されたデータがありません。");
                 return;
             }
 
-            // 各データを改行で結合して文字列を作成
-            const dataStr = loggedData.join('\n'); 
-            const blob = new Blob([dataStr], { type: 'text/plain' }); // テキストファイルとして保存
+            // ヘッダー行を追加
+            const header = "latitude,longitude,steps,timestamp";
+            const dataStr = header + '\n' + loggedData.join('\n'); // ヘッダーとデータを改行で結合
+
+            const blob = new Blob([dataStr], { type: 'text/csv;charset=utf-8;' }); // CSVファイルとして保存
             const url = URL.createObjectURL(blob); 
 
             const a = document.createElement('a');
             a.href = url;
-            // ファイル名を location_log_YYYY-MM-DD.txt とします
-            a.download = `location_log_${new Date().toISOString().slice(0,10)}.txt`; 
+            // ファイル名を location_log_YYYY-MM-DD.csv とします
+            a.download = `location_log_${new Date().toISOString().slice(0,10)}.csv`; 
             document.body.appendChild(a);
             a.click(); 
             document.body.removeChild(a); 
