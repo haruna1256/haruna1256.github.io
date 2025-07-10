@@ -15,11 +15,11 @@
 </head>
 <body>
     <h1>位置情報ロガー</h1>
-    <p>「ロギング開始」ボタンを押すと、現在の緯度、経度、**ダミーの歩数**、Unixタイムスタンプ（ミリ秒）を5秒ごとに記録します。データはCSV形式でダウンロードされます。</p>
+    <p>「ロギング開始」ボタンを押すと、現在の緯度、経度、**ダミーの歩数**、Unixタイムスタンプ（ミリ秒）を5秒ごとに記録します。データはJSON形式でダウンロードされます。</p>
     <p class="red-text">※ このページを開いている間だけ記録されます。ページを閉じたり、ブラウザを閉じると記録はリセットされます。</p>
     <button id="startButton">ロギング開始</button>
     <button id="stopButton" disabled>ロギング停止</button>
-    <button id="downloadButton" disabled>データダウンロード (CSV)</button>
+    <button id="downloadButton" disabled>データダウンロード (JSON)</button>
     
     <h2>記録されたデータ:</h2>
     <div id="log">
@@ -48,18 +48,22 @@
             const timestampMillis = position.timestamp; 
             
             // 歩数はロガーから直接取得できないため、現在はダミー値 (0) を使用します
-            // 必要に応じて、後で手動でデータを加筆修正してください
             const dummySteps = 0; 
 
-            // ご希望の形式: 緯度,経度,歩数,Unixタイムスタンプ（ミリ秒）
-            const dataEntry = `${latitude.toFixed(6)},${longitude.toFixed(6)},${dummySteps},${timestampMillis}`;
+            // JSONオブジェクトの形式でデータを格納
+            const dataEntry = {
+                latitude: parseFloat(latitude.toFixed(6)), // 精度を保ちつつ数値型に
+                longitude: parseFloat(longitude.toFixed(6)), // 精度を保ちつつ数値型に
+                steps: dummySteps,
+                timestamp: timestampMillis // Unixタイムスタンプ（ミリ秒）
+            };
             loggedData.push(dataEntry); // 配列に追加
 
             // 画面に表示（整形して表示）
             const formattedTime = new Date(timestampMillis).toLocaleString('ja-JP');
             const entryElement = document.createElement('div');
             entryElement.classList.add('log-entry');
-            entryElement.innerHTML = `<strong>${formattedTime}</strong><br>${latitude.toFixed(6)},${longitude.toFixed(6)},${dummySteps},${timestampMillis}`;
+            entryElement.innerHTML = `<strong>${formattedTime}</strong><br>緯度: ${latitude.toFixed(6)}, 経度: ${longitude.toFixed(6)}, 歩数: ${dummySteps}, タイムスタンプ: ${timestampMillis}`;
             logDiv.prepend(entryElement); // 新しいエントリを上に追加
             logDiv.scrollTop = 0; // スクロール位置を一番上に
 
@@ -121,24 +125,22 @@
             }
         }
 
-        // データダウンロード (CSV形式)
+        // データダウンロード (JSON形式)
         function downloadData() {
             if (loggedData.length === 0) {
                 alert("記録されたデータがありません。");
                 return;
             }
 
-            // ヘッダー行を追加
-            const header = "latitude,longitude,steps,timestamp";
-            const dataStr = header + '\n' + loggedData.join('\n'); // ヘッダーとデータを改行で結合
-
-            const blob = new Blob([dataStr], { type: 'text/csv;charset=utf-8;' }); // CSVファイルとして保存
+            // データをJSON文字列に変換 (整形して読みやすく)
+            const dataStr = JSON.stringify(loggedData, null, 2); 
+            const blob = new Blob([dataStr], { type: 'application/json' }); // JSONファイルとして保存
             const url = URL.createObjectURL(blob); 
 
             const a = document.createElement('a');
             a.href = url;
-            // ファイル名を location_log_YYYY-MM-DD.csv とします
-            a.download = `location_log_${new Date().toISOString().slice(0,10)}.csv`; 
+            // ファイル名を location_log_YYYY-MM-DD.json とします
+            a.download = `location_log_${new Date().toISOString().slice(0,10)}.json`; 
             document.body.appendChild(a);
             a.click(); 
             document.body.removeChild(a); 
