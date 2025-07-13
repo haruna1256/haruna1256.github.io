@@ -281,11 +281,19 @@ nav {
   }
 
   #nav-list a {
-    padding: 15px 25px; /* 項目内のパディングを調整 */
-    font-size: 1.2em; /* フォントサイズを少し大きく */
+    text-decoration: none;
     color: var(--text-color);
-    font-family: var(--body-font); /* フォント適用 */
-  }
+    padding: 10px 15px;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.1em;
+    font-family: var(--body-font);
+    transition: color 0.3s ease, background-color 0.3s ease;
+    /* ここから追加・修正 */
+    display: flex; /* Flexboxを有効にする */
+    align-items: center; /* アイコンと文字を垂直方向で中央揃えにする */
+    gap: 8px; /* アイコンと文字の間に8pxの隙間を開ける */
+}
 
   #nav-list a:hover {
     background-color: var(--rose-pink);
