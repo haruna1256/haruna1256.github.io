@@ -12,8 +12,8 @@
   --border-color: #e8d4d6;
 
   /* 新しいフォント設定 */
-  --header-font: 'Playfair Display', serif; /* 見出し用 */
-  --body-font: 'Noto Sans JP', sans-serif; /* 本文・メニュー用 */
+  --header-font: 'Playfair Display', serif; /* 見出し用 (Playfair Displayを維持) */
+  --body-font: 'M PLUS Rounded 1c', sans-serif; /* 本文・メニュー用 (M PLUS Rounded 1cに変更) */
 }
 
 * {
