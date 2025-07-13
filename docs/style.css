@@ -98,72 +98,100 @@ body {
   margin: 0 auto;
 }
 
-/* Navigation */
+
+/* ナビゲーションの基本スタイル（必要に応じて調整してください） */
 nav {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 1rem; /* デスクトップ用のパディング */
-  display: flex; /* ナビゲーションの配置を調整 */
-  justify-content: center; /* ナビゲーション項目を中央に配置 */
-  align-items: center;
+    position: relative; /* オーバーレイの配置に必要 */
+    z-index: 1000; /* ナビゲーションが他のコンテンツの上に表示されるように */
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 0; /* paddingをリセット */
-  gap: 0.5rem;
-  transition: all 0.3s ease-in-out; /* メニュー開閉時のアニメーション */
+#nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* デスクトップでの横並び表示用 */
+    justify-content: flex-end; /* 右寄せにする場合 */
 }
 
-nav li {
-  margin: 0;
+#nav-list li {
+    margin-left: 20px; /* デスクトップメニュー項目の間隔 */
 }
 
-nav a {
-  text-decoration: none;
-  color: var(--primary-color);
-  padding: 0.7rem 1.2rem;
-  border-radius: 25px;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+#nav-list a {
+    text-decoration: none;
+    color: #333; /* 例の文字色 */
+    padding: 10px 15px;
+    display: block;
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
 }
 
-nav a:hover {
-  background: linear-gradient(135deg, var(--wine-red), var(--secondary-color));
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.4);
+#nav-list a:hover {
+    background-color: #f0f0f0; /* 例のホバー効果 */
 }
 
-/* Hamburger Menu Icon */
+/* モバイル用ハンバーガーメニュー */
 .hamburger {
-  display: none; /* デフォルトでは非表示 */
-  font-size: 1.8rem;
-  color: var(--primary-color);
-  cursor: pointer;
-  position: absolute; /* ナビゲーションバー内で絶対配置 */
-  right: 1.5rem; /* 右端に配置 */
-  top: 50%; /* 垂直中央に配置 */
-  transform: translateY(-50%);
-  z-index: 101; /* ナビゲーション項目より手前に */
-  transition: color 0.3s ease;
+    display: none; /* デスクトップではデフォルトで非表示 */
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+    z-index: 1001; /* ハンバーガーがオーバーレイの上に表示されるように */
 }
 
-.hamburger:hover {
-  color: var(--wine-red);
+/* メニューが開いている時のオーバーレイ */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明のグレー */
+    z-index: 999; /* nav-listの下、コンテンツの上に表示 */
+    display: none; /* デフォルトで非表示 */
+}
+
+/* モバイル/タブレット表示（768pxを必要に応じて調整） */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* 小さい画面でハンバーガーを表示 */
+    }
+
+    #nav-list {
+        position: fixed; /* メニューをビューポートに固定 */
+        top: 0;
+        right: -250px; /* 最初は画面外（右側）に配置 */
+        width: 250px; /* モバイルメニューの幅 */
+        height: 100%;
+        background-color: #fff; /* メニューの背景色 */
+        flex-direction: column; /* 項目を縦に並べる */
+        padding-top: 60px; /* 上からの余白 */
+        transition: right 0.3s ease-in-out; /* スムーズなスライドアニメーション */
+        box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    }
+
+    #nav-list.active {
+        right: 0; /* 画面内にスライドして表示 */
+    }
+
+    #nav-list li {
+        margin: 0; /* 横方向の余白を削除 */
+        width: 100%; /* リスト項目を全幅に */
+        border-bottom: 1px solid #eee; /* 縦リストの区切り線 */
+    }
+
+    #nav-list li:last-child {
+        border-bottom: none; /* 最後の項目に区切り線は不要 */
+    }
+
+    #nav-list a {
+        padding: 15px 20px; /* タッチしやすいようにパディングを増やす */
+        font-size: 1.1em;
+    }
+
+    /* メニューがアクティブな時にオーバーレイを表示 */
+    .overlay.active {
+        display: block;
+    }
 }
 
 section {

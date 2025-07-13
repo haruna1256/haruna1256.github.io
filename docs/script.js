@@ -41,20 +41,54 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
     observer.observe(section);
   });
   
- 
-  // ハンバーガーメニューの開閉機能
-  const hamburgerMenu = document.getElementById('hamburger-menu');
-  const navList = document.getElementById('nav-list');
-  
-  hamburgerMenu.addEventListener('click', () => {
-    navList.classList.toggle('active');
-    // メニューが開いているときはスクロールを無効にする
+ const hamburgerMenu = document.getElementById('hamburger-menu');
+const navList = document.getElementById('nav-list');
+const navOverlay = document.getElementById('nav-overlay'); // オーバーレイ要素を取得
+
+// メニューを開く関数
+function openMenu() {
+    navList.classList.add('active');
+    navOverlay.classList.add('active'); // オーバーレイを表示
+    document.body.style.overflow = 'hidden'; // スクロールを無効にする
+}
+
+// メニューを閉じる関数
+function closeMenu() {
+    navList.classList.remove('active');
+    navOverlay.classList.remove('active'); // オーバーレイを非表示
+    document.body.style.overflow = ''; // スクロールを有効にする
+}
+
+// ハンバーガーメニューのクリックイベント
+hamburgerMenu.addEventListener('click', () => {
     if (navList.classList.contains('active')) {
-      document.body.style.overflow = 'hidden';
+        closeMenu();
     } else {
-      document.body.style.overflow = '';
+        openMenu();
     }
-  });
+});
+
+// オーバーレイ（メニュー外）をクリックしたときにメニューを閉じる
+navOverlay.addEventListener('click', () => {
+    closeMenu();
+});
+
+// ナビゲーションリンクをクリックしたときにメニューを閉じる（特にモバイルで重要）
+navList.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        // モバイルメニューの場合のみ閉じる（常に閉じてもOK）
+        if (window.innerWidth <= 768) {
+            closeMenu();
+        }
+    });
+});
+
+// 画面サイズ変更イベント
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        closeMenu(); // デスクトップに戻った時にメニューが閉じ、スクロールが有効になるように
+    }
+});
   
   // 画面サイズ変更時にメニューの状態をリセット (デスクトップに戻った場合など)
   window.addEventListener('resize', () => {
