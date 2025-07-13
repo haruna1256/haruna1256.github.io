@@ -10,6 +10,10 @@
   --text-color: #3e2e2e;
   --text-muted: #6b5b52;
   --border-color: #e8d4d6;
+
+  /* 新しいフォント設定 */
+  --header-font: 'Playfair Display', serif; /* 見出し用 */
+  --body-font: 'Noto Sans JP', sans-serif; /* 本文・メニュー用 */
 }
 
 * {
@@ -17,7 +21,8 @@
 }
 
 body {
-  font-family: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  /* フォントをNoto Sans JPに変更 */
+  font-family: var(--body-font), 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
   background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
   color: var(--text-color);
   margin: 0;
@@ -82,13 +87,14 @@ body {
   margin-bottom: 0.5rem;
   font-weight: 600;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: var(--header-font); /* 見出しフォント適用 */
 }
 
 .hero .subtitle {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   opacity: 0.9;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .hero .description {
@@ -98,13 +104,13 @@ body {
   margin: 0 auto;
 }
 
-/* --- ナビゲーションのCSSを再整理 --- */
+/* --- ナビゲーションのCSSを再々整理 --- */
 
 /* デスクトップ用ナビゲーション (デフォルト) */
 nav {
     width: 100%;
     padding: 10px 20px;
-    background-color: var(--card-bg); /* ナビゲーションの背景色 */
+    background-color: var(--card-bg); /* ナビゲーションバーの背景色 */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 軽い影 */
     position: sticky; /* スクロールしても上部に固定 */
     top: 0;
@@ -136,6 +142,7 @@ nav {
     display: block;
     white-space: nowrap;
     font-size: 1.1em;
+    font-family: var(--body-font); /* フォント適用 */
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -201,38 +208,62 @@ nav {
   nav {
     background-color: transparent; /* スマホではナビの背景色を透明に */
     box-shadow: none; /* 影もなし */
+    position: absolute; /* 親要素（bodyやhero）に対して相対位置に。スクロールで追従しない */
+    top: 0; /* ページの最上部に固定 */
+    left: 0;
+    padding: 15px 20px; /* パディングを調整 */
     justify-content: flex-start; /* ハンバーガーを左寄せにするため */
   }
 
+  /* ハンバーガーメニュー */
   .hamburger {
-    display: block; /* スマホでハンバーガーメニューを表示 */
-    position: fixed; /* 画面左上に固定 */
+    display: flex; /* スマホでハンバーガーメニューを表示 */
+    align-items: center; /* アイコンを垂直中央揃え */
+    justify-content: center; /* アイコンを水平中央揃え */
+    position: static; /* nav要素内での通常の配置に戻す */
+    width: 45px; /* ボタンの幅 */
+    height: 45px; /* ボタンの高さ */
+    background-color: var(--card-bg); /* ハンバーガーボタンの背景色 */
+    border-radius: 50%; /* 丸いボタンにする */
+    color: var(--primary-color); /* アイコンの色 */
+    font-size: 22px; /* アイコンサイズを少し小さく */
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    /* ハンバーガーメニューアイコン自体のデザインを詳細に制御 */
+    position: fixed; /* 画面に固定 */
     top: 20px; /* 上からの距離 */
     left: 20px; /* 左からの距離 */
-    right: auto; /* 右寄せの指定を解除 */
-    cursor: pointer;
-    font-size: 28px;
-    padding: 5px;
-    background-color: var(--card-bg); /* ハンバーガーボタンの背景色 */
-    border-radius: 5px;
-    color: var(--primary-color); /* アイコンの色 */
     z-index: 1002; /* ナビゲーションより手前 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
+  .hamburger:hover {
+    background-color: var(--rose-pink); /* ホバー時の色 */
+    color: white;
+  }
+
+  /* ハンバーガーメニューアイコン（棒線）のスタイル */
+  /* Font Awesomeのアイコンを使っているので、これは不要かもしれませんが、
+     もしアイコンではなく3本線を自作する場合は以下のようにします。 */
+  /* .hamburger i { display: none; } */
+  /* .hamburger::before, .hamburger::after { ... } */
+
+
+  /* メニューが開いた時のスタイル（ハンバーガーメニューで制御） */
   #nav-list {
     position: fixed; /* 画面に固定 */
     top: 0;
     left: -300px; /* 初期位置は画面左外（左から300px幅でスライド） */
     width: 300px; /* メニューの幅 */
     height: 100%;
-    background-color: var(--card-bg); /* メニューの背景色 */
+    background-color: var(--card-bg); /* メニューの背景色を白にする */
     flex-direction: column; /* 項目を縦に並べる */
     padding-top: 80px; /* ハンバーガーボタンと被らないように */
     transition: left 0.3s ease-in-out; /* スムーズなスライドアニメーション */
     box-shadow: 2px 0 10px rgba(0,0,0,0.3); /* 影を強調 (右側に影) */
     z-index: 1001; /* オーバーレイより手前、ハンバーガーボタンより奥 */
     display: flex; /* Flexboxとして振る舞う */
+    border-right: 1px solid var(--border-color); /* 右側に細い線 */
   }
 
   #nav-list.active {
@@ -242,23 +273,25 @@ nav {
   #nav-list li {
     margin: 0; /* PC用のマージンをリセット */
     width: 100%;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color); /* 区切り線 */
   }
 
   #nav-list li:last-child {
-    border-bottom: none;
+    border-bottom: none; /* 最後の項目に区切り線は不要 */
   }
 
   #nav-list a {
     padding: 15px 25px; /* 項目内のパディングを調整 */
     font-size: 1.2em; /* フォントサイズを少し大きく */
     color: var(--text-color);
+    font-family: var(--body-font); /* フォント適用 */
   }
 
   #nav-list a:hover {
     background-color: var(--rose-pink);
     color: white;
   }
+
 
   /* その他のセクションのモバイルスタイルはそのまま維持 */
   section {
@@ -376,7 +409,34 @@ nav {
   }
 }
 
-/* --- プロジェクトカードの画像左寄せスタイルとグリッド --- */
+/* --- ページトップへ戻るボタンのスタイル --- */
+#back-to-top {
+    display: none; /* デフォルトでは非表示 */
+    position: fixed; /* 画面に固定 */
+    bottom: 20px; /* 下からの距離 */
+    right: 20px; /* 右からの距離 */
+    background: linear-gradient(135deg, var(--wine-red), var(--accent-color)); /* グラデーション背景 */
+    color: white; /* アイコンの色 */
+    border: none;
+    border-radius: 50%; /* 丸くする */
+    width: 50px; /* 幅 */
+    height: 50px; /* 高さ */
+    font-size: 24px; /* アイコンサイズ */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 990; /* 他のコンテンツより手前 */
+    display: flex; /* アイコンを中央に配置 */
+    align-items: center;
+    justify-content: center;
+}
+
+#back-to-top:hover {
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* その他の既存のセクションとカードのスタイルは変更なしで継続 */
 section {
 padding: 3rem 1rem;
 max-width: 1200px; /* 例えば1200pxに増やす */
@@ -390,7 +450,7 @@ h2 {
   margin-bottom: 2rem;
   position: relative;
   text-align: center;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--header-font); /* 見出しフォント適用 */
   font-weight: 600;
 }
 
@@ -467,7 +527,7 @@ h2::before {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .info-card .icon {
@@ -494,7 +554,7 @@ h2::before {
 .skill-category h3 {
   color: var(--primary-color);
   margin-bottom: 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -514,7 +574,7 @@ h2::before {
   font-size: 0.9rem;
   font-weight: 500;
   transition: transform 0.2s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   position: relative;
   overflow: hidden;
 }
@@ -592,7 +652,7 @@ h2::before {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .project-meta {
@@ -602,7 +662,7 @@ h2::before {
   margin-bottom: 1rem;
   font-size: 0.9rem;
   color: var(--text-muted);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .project-meta span {
@@ -623,7 +683,7 @@ h2::before {
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   position: relative;
   overflow: hidden;
 }
@@ -683,7 +743,7 @@ h2::before {
   color: var(--primary-color);
   font-size: 1.6rem;
   margin-bottom: 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   display: flex;
   align-items: center;
   gap: 1rem;

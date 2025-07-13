@@ -41,9 +41,10 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
     observer.observe(section);
   });
   
- const hamburgerMenu = document.getElementById('hamburger-menu');
+const hamburgerMenu = document.getElementById('hamburger-menu');
 const navList = document.getElementById('nav-list');
-const navOverlay = document.getElementById('nav-overlay'); // オーバーレイ要素を取得
+const navOverlay = document.getElementById('nav-overlay');
+const backToTopButton = document.getElementById('back-to-top'); // 追加
 
 // メニューを開く関数
 function openMenu() {
@@ -73,27 +74,35 @@ navOverlay.addEventListener('click', () => {
     closeMenu();
 });
 
-// ナビゲーションリンクをクリックしたときにメニューを閉じる（特にモバイルで重要）
+// ナビゲーションリンクをクリックしたときにメニューを閉じる
 navList.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-        // モバイルメニューの場合のみ閉じる（常に閉じてもOK）
-        if (window.innerWidth <= 768) {
-            closeMenu();
-        }
+        closeMenu();
     });
 });
 
 // 画面サイズ変更イベント
 window.addEventListener('resize', () => {
+    // 画面幅が768pxより大きくなったら（PC表示になったら）
+    // メニューが開いていたら強制的に閉じる
     if (window.innerWidth > 768) {
-        closeMenu(); // デスクトップに戻った時にメニューが閉じ、スクロールが有効になるように
+        closeMenu();
     }
 });
-  
-  // 画面サイズ変更時にメニューの状態をリセット (デスクトップに戻った場合など)
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      navList.classList.remove('active');
-      document.body.style.overflow = '';
+
+// ページスクロールイベントでトップへ戻るボタンの表示/非表示を切り替え
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) { // 200pxスクロールしたらボタンを表示
+        backToTopButton.style.display = 'flex'; // flexを使って中央揃えを維持
+    } else {
+        backToTopButton.style.display = 'none';
     }
-  });
+});
+
+// トップへ戻るボタンのクリックイベント
+backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // スムーズスクロール
+    });
+});
