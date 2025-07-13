@@ -98,32 +98,53 @@ body {
   margin: 0 auto;
 }
 
-/* --- ナビゲーションのCSSを整理 --- */
+/* --- ナビゲーションのCSSを再整理 --- */
 
-/* nav要素自体はコンテンツの幅に合わせて自動調整させるか、不要な場合は削除 */
-/* nav要素はハンバーガーメニュー自体を囲むものではなく、
-   単にアクセシビリティラベルを付けるためのものとして、CSSでのスタイルは最低限に */
+/* デスクトップ用ナビゲーション (デフォルト) */
 nav {
-    /* スタイルが必要な場合はここに記述 */
-    /* 例: width: 100%; padding: 10px 20px; など */
-    /* ただし、ハンバーガーメニューがfixedなので、nav要素に固定ヘッダーとしての役割は持たせません */
+    width: 100%;
+    padding: 10px 20px;
+    background-color: var(--card-bg); /* ナビゲーションの背景色 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 軽い影 */
+    position: sticky; /* スクロールしても上部に固定 */
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end; /* ナビリストを右寄せ */
+    align-items: center;
 }
 
-/* ハンバーガーメニューの配置 */
 .hamburger {
-    display: block; /* 常に表示 */
-    position: fixed; /* 画面右上に固定 */
-    top: 20px; /* 上からの距離 */
-    right: 20px; /* 右からの距離 */
-    cursor: pointer;
-    font-size: 28px; /* アイコンを少し大きく */
-    padding: 5px; /* クリックしやすいようにパディングを追加 */
-    background-color: transparent; /* 背景色なし */
-    color: var(--primary-color); /* アイコンの色をプライマリーカラーに合わせる */
-    z-index: 1002; /* ナビゲーションやオーバーレイより手前に表示 */
+    display: none; /* デスクトップではハンバーガーメニューを非表示 */
 }
 
-/* オーバーレイ */
+#nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* デスクトップでは横並びで常に表示 */
+}
+
+#nav-list li {
+    margin-left: 25px; /* メニュー項目間のスペース */
+}
+
+#nav-list a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.1em;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#nav-list a:hover {
+    color: var(--wine-red); /* ホバー時の文字色 */
+    background-color: transparent; /* 背景変化なし */
+}
+
+/* オーバーレイ (共通) */
 .overlay {
     position: fixed;
     top: 0;
@@ -142,61 +163,8 @@ nav {
     opacity: 1; /* 不透明にする */
 }
 
-/* メニューが開いた時のスタイル（ハンバーガーメニューで制御） */
-/* ハンバーガーメニューを押したら画面右から出てくるメニュー */
-#nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: fixed;
-    top: 0;
-    right: -300px; /* 初期位置は画面外（右から300px幅でスライド） */
-    width: 300px; /* メニューの幅 */
-    height: 100%;
-    background-color: var(--card-bg); /* メニューの背景色をカード背景色に合わせる */
-    flex-direction: column; /* 項目を縦に並べる */
-    padding-top: 80px; /* ハンバーガーボタンと被らないように */
-    transition: right 0.3s ease-in-out; /* スムーズなスライドアニメーション */
-    box-shadow: -2px 0 10px rgba(0,0,0,0.3); /* 影を強調 */
-    z-index: 1001; /* オーバーレイより手前、ハンバーガーボタンより奥 */
-    display: flex; /* Flexboxとして振る舞う */
-    /* 最初からflexにするが、rightで隠しているため見えない状態 */
-}
 
-#nav-list.active {
-    right: 0; /* アクティブ時に画面内にスライドして表示 */
-}
-
-#nav-list li {
-    margin: 0;
-    width: 100%;
-    border-bottom: 1px solid var(--border-color); /* 区切り線 */
-}
-
-#nav-list li:last-child {
-    border-bottom: none; /* 最後の項目に区切り線は不要 */
-}
-
-#nav-list a {
-    text-decoration: none;
-    color: var(--text-color); /* メニュー項目の文字色をテキストカラーに合わせる */
-    padding: 15px 25px; /* 項目内のパディングを調整して幅を稼ぐ */
-    display: block;
-    white-space: nowrap;
-    font-size: 1.2em; /* フォントサイズを少し大きく */
-}
-
-#nav-list a:hover {
-    background-color: var(--rose-pink); /* ホバー時の背景色をローズピンクに合わせる */
-    color: white; /* ホバー時の文字色を白に */
-}
-
-/* ここまでの変更で、デスクトップ・モバイル問わず、右上のハンバーガーメニューを押すと
-   右からメニューがスライドインし、背後にオーバーレイが表示されるようになります。
-   以前の @media screen and (max-width: 768px) 内にあったナビゲーションに関する記述は不要です。 */
-
-
-/* Hero Section のメディアクエリは残す */
+/* --- レスポンシブデザイン (スマホ用スタイル) --- */
 @media screen and (max-width: 768px) {
   body {
     font-size: 0.95rem;
@@ -227,6 +195,69 @@ nav {
   .hero .subtitle {
     font-size: 1rem;
     margin-bottom: 1rem;
+  }
+
+  /* スマホ用ナビゲーション */
+  nav {
+    background-color: transparent; /* スマホではナビの背景色を透明に */
+    box-shadow: none; /* 影もなし */
+    justify-content: flex-start; /* ハンバーガーを左寄せにするため */
+  }
+
+  .hamburger {
+    display: block; /* スマホでハンバーガーメニューを表示 */
+    position: fixed; /* 画面左上に固定 */
+    top: 20px; /* 上からの距離 */
+    left: 20px; /* 左からの距離 */
+    right: auto; /* 右寄せの指定を解除 */
+    cursor: pointer;
+    font-size: 28px;
+    padding: 5px;
+    background-color: var(--card-bg); /* ハンバーガーボタンの背景色 */
+    border-radius: 5px;
+    color: var(--primary-color); /* アイコンの色 */
+    z-index: 1002; /* ナビゲーションより手前 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  #nav-list {
+    position: fixed; /* 画面に固定 */
+    top: 0;
+    left: -300px; /* 初期位置は画面左外（左から300px幅でスライド） */
+    width: 300px; /* メニューの幅 */
+    height: 100%;
+    background-color: var(--card-bg); /* メニューの背景色 */
+    flex-direction: column; /* 項目を縦に並べる */
+    padding-top: 80px; /* ハンバーガーボタンと被らないように */
+    transition: left 0.3s ease-in-out; /* スムーズなスライドアニメーション */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3); /* 影を強調 (右側に影) */
+    z-index: 1001; /* オーバーレイより手前、ハンバーガーボタンより奥 */
+    display: flex; /* Flexboxとして振る舞う */
+  }
+
+  #nav-list.active {
+    left: 0; /* アクティブ時に画面内にスライドして表示 */
+  }
+
+  #nav-list li {
+    margin: 0; /* PC用のマージンをリセット */
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  #nav-list li:last-child {
+    border-bottom: none;
+  }
+
+  #nav-list a {
+    padding: 15px 25px; /* 項目内のパディングを調整 */
+    font-size: 1.2em; /* フォントサイズを少し大きく */
+    color: var(--text-color);
+  }
+
+  #nav-list a:hover {
+    background-color: var(--rose-pink);
+    color: white;
   }
 
   /* その他のセクションのモバイルスタイルはそのまま維持 */
@@ -345,109 +376,7 @@ nav {
   }
 }
 
-/* --- プロジェクトカードの画像左寄せスタイル --- */
-
-/* デスクトップ表示 (769px以上) で画像を左に配置 */
-@media screen and (min-width: 769px) {
-  .project-card.image-left {
-    display: flex; /* Flexboxコンテナにする */
-    flex-direction: row; /* 要素を横並びにする */
-    align-items: flex-start; /* 上端に揃える */
-  }
-
-  .project-card.image-left .project-image {
-    width: 30%; /* 画像の幅を30%に設定 (前回の調整を適用) */
-    height: 100%;
-    flex-shrink: 0; /* 画像が縮まないようにする */
-    /* 角丸を画像左側にだけ適用 */
-    border-radius: 20px 0 0 20px;
-    padding: 10px; /* 画像エリア全体のパディング */
-
-    /* ここからFlexboxのスタイル */
-    display: flex;
-    flex-direction: column; /* 複数のimgを縦に並べる */
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 10px; /* 画像間の隙間 */
-
-    /* 画像が収まりきらない場合にスクロールさせるなら残す */
-    /* overflow-y: auto; */
-    /* max-height: 400px; */
-  }
-
-  .project-card.image-left .project-content {
-    flex-grow: 1; /* コンテンツが残りのスペースを全て占めるようにする */
-    padding-left: 2rem; /* 画像とコンテンツの間に余白を追加 */
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-/* 画像が実際に表示されるようにするためのスタイル調整 */
-/* project-card.image-left の中の img に適用 */
-.project-card.image-left .project-image img {
-  display: block; /* img要素をブロック要素にする */
-  width: 100%; /* 親要素の幅いっぱいに広げる */
-  height: auto; /* 高さは自動調整 */
-  object-fit: cover; /* 縦横比を維持しつつ、要素を覆うように拡大・縮小 */
-  border-radius: 10px; /* 各画像に角丸 */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 各画像に影 */
-}
-
-/* モバイル表示での角丸調整 */
-@media screen and (max-width: 768px) {
-  .project-card.image-left .project-image {
-    width: 100%; /* モバイルでは幅100% */
-    height: auto; /* 高さは自動調整 */
-    border-radius: 20px 20px 0 0; /* モバイルの角丸 */
-    padding: 10px;
-    /* モバイルでも必要なら max-height を設定してスクロールさせる */
-    /* max-height: 250px; */
-    /* overflow-y: auto; */
-  }
-
-  .project-card.image-left .project-image img {
-    border-radius: 10px; /* モバイルでも角丸 */
-  }
-}
-
-/* --- プロジェクトカードのタイトルハイライトスタイル --- */
-.project-card h3 .highlight-title {
-  background: linear-gradient(135deg, var(--wine-red), var(--accent-color)); /* 赤系の背景 */
-  color: white; /* 白文字 */
-  padding: 0.3em 0.6em; /* 内側の余白 */
-  border-radius: 8px; /* 少し角丸に */
-  display: inline-block; /* インライン要素だが、paddingやwidth/heightを適用できるように */
-  line-height: 1.2; /* 行の高さを調整 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 軽く影をつける */
-  margin-bottom: 0.5em; /* 下に少し余白 */
-}
-
-/* --- 制作物セクションのグリッドレイアウト --- */
-.projects-grid {
-  display: grid;
-  grid-template-columns: 1fr; /* 常に1列にする */
-  gap: 2rem; /* カード間の間隔 */
-}
-
-@media screen and (max-width: 768px) {
-  /* 制作物カード内の画像調整 */
-  .project-card.image-left .project-image img {
-    display: block; /* デフォルトで表示 */
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  /* 2枚目以降の画像を非表示にする */
-  .project-card.image-left .project-image img:not(:first-of-type) {
-    display: none;
-  }
-}
-
+/* --- プロジェクトカードの画像左寄せスタイルとグリッド --- */
 section {
 padding: 3rem 1rem;
 max-width: 1200px; /* 例えば1200pxに増やす */
@@ -834,157 +763,105 @@ h2::before {
   }
 }
 
-/* --- Responsive Design (Mobile First) --- */
+/* --- プロジェクトカードの画像左寄せスタイル --- */
 
-/* デスクトップ用のスタイル（基本） */
-html {
-  scroll-behavior: smooth;
+/* デスクトップ表示 (769px以上) で画像を左に配置 */
+@media screen and (min-width: 769px) {
+  .project-card.image-left {
+    display: flex; /* Flexboxコンテナにする */
+    flex-direction: row; /* 要素を横並びにする */
+    align-items: flex-start; /* 上端に揃える */
+  }
+
+  .project-card.image-left .project-image {
+    width: 30%; /* 画像の幅を30%に設定 (前回の調整を適用) */
+    height: 100%;
+    flex-shrink: 0; /* 画像が縮まないようにする */
+    /* 角丸を画像左側にだけ適用 */
+    border-radius: 20px 0 0 20px;
+    padding: 10px; /* 画像エリア全体のパディング */
+
+    /* ここからFlexboxのスタイル */
+    display: flex;
+    flex-direction: column; /* 複数のimgを縦に並べる */
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px; /* 画像間の隙間 */
+
+    /* 画像が収まりきらない場合にスクロールさせるなら残す */
+    /* overflow-y: auto; */
+    /* max-height: 400px; */
+  }
+
+  .project-card.image-left .project-content {
+    flex-grow: 1; /* コンテンツが残りのスペースを全て占めるようにする */
+    padding-left: 2rem; /* 画像とコンテンツの間に余白を追加 */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-right: 2rem;
+  }
 }
 
-/* その他のセクションのモバイルスタイル (最大幅 768px) */
+/* 画像が実際に表示されるようにするためのスタイル調整 */
+/* project-card.image-left の中の img に適用 */
+.project-card.image-left .project-image img {
+  display: block; /* img要素をブロック要素にする */
+  width: 100%; /* 親要素の幅いっぱいに広げる */
+  height: auto; /* 高さは自動調整 */
+  object-fit: cover; /* 縦横比を維持しつつ、要素を覆うように拡大・縮小 */
+  border-radius: 10px; /* 各画像に角丸 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 各画像に影 */
+}
+
+/* モバイル表示での角丸調整 */
 @media screen and (max-width: 768px) {
-  body {
-    font-size: 0.95rem;
+  .project-card.image-left .project-image {
+    width: 100%; /* モバイルでは幅100% */
+    height: auto; /* 高さは自動調整 */
+    border-radius: 20px 20px 0 0; /* モバイルの角丸 */
+    padding: 10px;
+    /* モバイルでも必要なら max-height を設定してスクロールさせる */
+    /* max-height: 250px; */
+    /* overflow-y: auto; */
   }
 
-  .hero {
-    padding: 2rem 1rem;
-    background: linear-gradient(135deg, rgba(114, 47, 55, 0.95), rgba(168, 51, 74, 0.9)),
-                url('https://source.unsplash.com/600x400/?rose-pattern,flower') center/cover no-repeat;
+  .project-card.image-left .project-image img {
+    border-radius: 10px; /* モバイルでも角丸 */
   }
+}
 
-  .hero::after {
-    top: 10%;
-    right: 5%;
-    font-size: 2rem;
-  }
+/* --- プロジェクトカードのタイトルハイライトスタイル --- */
+.project-card h3 .highlight-title {
+  background: linear-gradient(135deg, var(--wine-red), var(--accent-color)); /* 赤系の背景 */
+  color: white; /* 白文字 */
+  padding: 0.3em 0.6em; /* 内側の余白 */
+  border-radius: 8px; /* 少し角丸に */
+  display: inline-block; /* インライン要素だが、paddingやwidth/heightを適用できるように */
+  line-height: 1.2; /* 行の高さを調整 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 軽く影をつける */
+  margin-bottom: 0.5em; /* 下に少し余白 */
+}
 
-  .profile-image {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 1rem;
-  }
+/* --- 制作物セクションのグリッドレイアウト --- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 常に1列にする */
+  gap: 2rem; /* カード間の間隔 */
+}
 
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero .subtitle {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  section {
-    padding: 2rem 1rem;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
-
-  h2::before {
-    left: 0.5rem;
-    top: 0.5rem;
-    transform: none;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .info-card {
-    padding: 1.5rem;
-  }
-
-  .info-card h3 {
-    font-size: 1.2rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .info-card .icon {
-    font-size: 1.3rem;
-  }
-
-  .skills-container {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .skill-category {
-    padding: 1.5rem;
-  }
-
-  .skill-category h3 {
-    font-size: 1.3rem;
-  }
-
-  .tags {
-    gap: 0.6rem;
-  }
-
-  .tag {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-  }
-
-  .project-card {
-    margin-bottom: 1.5rem;
-  }
-
-  .project-image::before {
-    top: 0.5rem;
-    right: 0.5rem;
-    font-size: 1.2rem;
-  }
-
-  .project-content {
-    padding: 1.5rem;
-  }
-
-  .project-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .project-meta {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .btn-link {
+@media screen and (max-width: 768px) {
+  /* 制作物カード内の画像調整 */
+  .project-card.image-left .project-image img {
+    display: block; /* デフォルトで表示 */
     width: 100%;
-    justify-content: center;
-    padding: 0.7rem 1rem;
-    font-size: 0.95rem;
-    margin-top: 1rem;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
-  .research-card {
-    padding: 1.5rem;
-  }
-
-  .research-card h3 {
-    font-size: 1.4rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .research-card ul {
-    padding-left: 1.5rem;
-  }
-
-  .research-card::after {
-    bottom: 0.5rem;
-    right: 0.5rem;
-    font-size: 1.5rem;
-  }
-
-  .rose-petal {
-    font-size: 1rem;
+  /* 2枚目以降の画像を非表示にする */
+  .project-card.image-left .project-image img:not(:first-of-type) {
+    display: none;
   }
 }
