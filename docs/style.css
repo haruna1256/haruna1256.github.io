@@ -292,7 +292,7 @@ nav {
     /* ここから追加・修正 */
     display: flex; /* Flexboxを有効にする */
     align-items: center; /* アイコンと文字を垂直方向で中央揃えにする */
-    gap: 8px; /* アイコンと文字の間に8pxの隙間を開ける */
+    gap: 16px; /* アイコンと文字の間に16pxの隙間を開ける */
 }
 
   #nav-list a:hover {
