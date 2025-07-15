@@ -10,6 +10,10 @@
   --text-color: #3e2e2e;
   --text-muted: #6b5b52;
   --border-color: #e8d4d6;
+
+  /* 新しいフォント設定 */
+  --header-font: 'Playfair Display', serif; /* 見出し用 (Playfair Displayを維持) */
+  --body-font: 'M PLUS Rounded 1c', sans-serif; /* 本文・メニュー用 (M PLUS Rounded 1cに変更) */
 }
 
 * {
@@ -17,7 +21,8 @@
 }
 
 body {
-  font-family: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  /* フォントをNoto Sans JPに変更 */
+  font-family: var(--body-font), 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
   background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
   color: var(--text-color);
   margin: 0;
@@ -82,13 +87,14 @@ body {
   margin-bottom: 0.5rem;
   font-weight: 600;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: var(--header-font); /* 見出しフォント適用 */
 }
 
 .hero .subtitle {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   opacity: 0.9;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .hero .description {
@@ -98,74 +104,347 @@ body {
   margin: 0 auto;
 }
 
-/* Navigation */
+/* --- ナビゲーションのCSSを再々整理 --- */
+
+/* デスクトップ用ナビゲーション (デフォルト) */
 nav {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 1rem; /* デスクトップ用のパディング */
-  display: flex; /* ナビゲーションの配置を調整 */
-  justify-content: center; /* ナビゲーション項目を中央に配置 */
-  align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: var(--card-bg); /* ナビゲーションバーの背景色 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 軽い影 */
+    position: sticky; /* スクロールしても上部に固定 */
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end; /* ナビリストを右寄せ */
+    align-items: center;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 0; /* paddingをリセット */
-  gap: 0.5rem;
-  transition: all 0.3s ease-in-out; /* メニュー開閉時のアニメーション */
-}
-
-nav li {
-  margin: 0;
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--primary-color);
-  padding: 0.7rem 1.2rem;
-  border-radius: 25px;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-nav a:hover {
-  background: linear-gradient(135deg, var(--wine-red), var(--secondary-color));
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.4);
-}
-
-/* Hamburger Menu Icon */
 .hamburger {
-  display: none; /* デフォルトでは非表示 */
-  font-size: 1.8rem;
-  color: var(--primary-color);
-  cursor: pointer;
-  position: absolute; /* ナビゲーションバー内で絶対配置 */
-  right: 1.5rem; /* 右端に配置 */
-  top: 50%; /* 垂直中央に配置 */
-  transform: translateY(-50%);
-  z-index: 101; /* ナビゲーション項目より手前に */
-  transition: color 0.3s ease;
+    display: none; /* デスクトップではハンバーガーメニューを非表示 */
 }
 
-.hamburger:hover {
-  color: var(--wine-red);
+#nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* デスクトップでは横並びで常に表示 */
 }
 
+#nav-list li {
+    margin-left: 25px; /* メニュー項目間のスペース */
+}
+
+#nav-list a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.1em;
+    font-family: var(--body-font); /* フォント適用 */
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#nav-list a:hover {
+    color: var(--wine-red); /* ホバー時の文字色 */
+    background-color: transparent; /* 背景変化なし */
+}
+
+/* オーバーレイ (共通) */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明のグレー */
+    z-index: 999; /* nav-listより奥、コンテンツより手前 */
+    display: none; /* デフォルトで非表示 */
+    opacity: 0; /* 最初は透明 */
+    transition: opacity 0.3s ease-in-out; /* フェードイン/アウト */
+}
+
+.overlay.active {
+    display: block; /* アクティブ時に表示 */
+    opacity: 1; /* 不透明にする */
+}
+
+
+/* --- レスポンシブデザイン (スマホ用スタイル) --- */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, rgba(114, 47, 55, 0.95), rgba(168, 51, 74, 0.9)),
+                url('https://source.unsplash.com/600x400/?rose-pattern,flower') center/cover no-repeat;
+  }
+
+  .hero::after {
+    top: 10%;
+    right: 5%;
+    font-size: 2rem;
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero .subtitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* スマホ用ナビゲーション */
+  nav {
+    background-color: transparent; /* スマホではナビの背景色を透明に */
+    box-shadow: none; /* 影もなし */
+    position: absolute; /* 親要素（bodyやhero）に対して相対位置に。スクロールで追従しない */
+    top: 0; /* ページの最上部に固定 */
+    left: 0;
+    padding: 15px 20px; /* パディングを調整 */
+    justify-content: flex-start; /* ハンバーガーを左寄せにするため */
+  }
+
+  /* ハンバーガーメニュー */
+  .hamburger {
+    display: flex; /* スマホでハンバーガーメニューを表示 */
+    align-items: center; /* アイコンを垂直中央揃え */
+    justify-content: center; /* アイコンを水平中央揃え */
+    position: static; /* nav要素内での通常の配置に戻す */
+    width: 45px; /* ボタンの幅 */
+    height: 45px; /* ボタンの高さ */
+    background-color: var(--card-bg); /* ハンバーガーボタンの背景色 */
+    border-radius: 50%; /* 丸いボタンにする */
+    color: var(--primary-color); /* アイコンの色 */
+    font-size: 22px; /* アイコンサイズを少し小さく */
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    /* ハンバーガーメニューアイコン自体のデザインを詳細に制御 */
+    position: fixed; /* 画面に固定 */
+    top: 20px; /* 上からの距離 */
+    left: 20px; /* 左からの距離 */
+    z-index: 1002; /* ナビゲーションより手前 */
+  }
+
+  .hamburger:hover {
+    background-color: var(--rose-pink); /* ホバー時の色 */
+    color: white;
+  }
+
+  /* ハンバーガーメニューアイコン（棒線）のスタイル */
+  /* Font Awesomeのアイコンを使っているので、これは不要かもしれませんが、
+     もしアイコンではなく3本線を自作する場合は以下のようにします。 */
+  /* .hamburger i { display: none; } */
+  /* .hamburger::before, .hamburger::after { ... } */
+
+
+  /* メニューが開いた時のスタイル（ハンバーガーメニューで制御） */
+  #nav-list {
+    position: fixed; /* 画面に固定 */
+    top: 0;
+    left: -300px; /* 初期位置は画面左外（左から300px幅でスライド） */
+    width: 300px; /* メニューの幅 */
+    height: 100%;
+    background-color: var(--card-bg); /* メニューの背景色を白にする */
+    flex-direction: column; /* 項目を縦に並べる */
+    padding-top: 80px; /* ハンバーガーボタンと被らないように */
+    transition: left 0.3s ease-in-out; /* スムーズなスライドアニメーション */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3); /* 影を強調 (右側に影) */
+    z-index: 1001; /* オーバーレイより手前、ハンバーガーボタンより奥 */
+    display: flex; /* Flexboxとして振る舞う */
+    border-right: 1px solid var(--border-color); /* 右側に細い線 */
+  }
+
+  #nav-list.active {
+    left: 0; /* アクティブ時に画面内にスライドして表示 */
+  }
+
+  #nav-list li {
+    margin: 0; /* PC用のマージンをリセット */
+    width: 100%;
+    border-bottom: 1px solid var(--border-color); /* 区切り線 */
+  }
+
+  #nav-list li:last-child {
+    border-bottom: none; /* 最後の項目に区切り線は不要 */
+  }
+
+  #nav-list a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.1em;
+    font-family: var(--body-font);
+    transition: color 0.3s ease, background-color 0.3s ease;
+    /* ここから追加・修正 */
+    display: flex; /* Flexboxを有効にする */
+    align-items: center; /* アイコンと文字を垂直方向で中央揃えにする */
+    gap: 16px; /* アイコンと文字の間に16pxの隙間を開ける */
+}
+
+  #nav-list a:hover {
+    background-color: var(--rose-pink);
+    color: white;
+  }
+
+
+  /* その他のセクションのモバイルスタイルはそのまま維持 */
+  section {
+    padding: 2rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2::before {
+    left: 0.5rem;
+    top: 0.5rem;
+    transform: none;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .info-card .icon {
+    font-size: 1.3rem;
+  }
+
+  .skills-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    padding: 1.5rem;
+  }
+
+  .skill-category h3 {
+    font-size: 1.3rem;
+  }
+
+  .tags {
+    gap: 0.6rem;
+  }
+
+  .tag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .project-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .project-image::before {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .project-content {
+    padding: 1.5rem;
+  }
+
+  .project-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .btn-link {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+  }
+
+  .research-card {
+    padding: 1.5rem;
+  }
+
+  .research-card h3 {
+    font-size: 1.4rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .research-card ul {
+    padding-left: 1.5rem;
+  }
+
+  .research-card::after {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .rose-petal {
+    font-size: 1rem;
+  }
+}
+
+/* --- ページトップへ戻るボタンのスタイル --- */
+#back-to-top {
+    display: none; /* デフォルトでは非表示 */
+    position: fixed; /* 画面に固定 */
+    bottom: 20px; /* 下からの距離 */
+    right: 20px; /* 右からの距離 */
+    background: linear-gradient(135deg, var(--wine-red), var(--accent-color)); /* グラデーション背景 */
+    color: white; /* アイコンの色 */
+    border: none;
+    border-radius: 50%; /* 丸くする */
+    width: 50px; /* 幅 */
+    height: 50px; /* 高さ */
+    font-size: 24px; /* アイコンサイズ */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 990; /* 他のコンテンツより手前 */
+    display: flex; /* アイコンを中央に配置 */
+    align-items: center;
+    justify-content: center;
+}
+
+#back-to-top:hover {
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* その他の既存のセクションとカードのスタイルは変更なしで継続 */
 section {
 padding: 3rem 1rem;
 max-width: 1200px; /* 例えば1200pxに増やす */
@@ -179,7 +458,7 @@ h2 {
   margin-bottom: 2rem;
   position: relative;
   text-align: center;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--header-font); /* 見出しフォント適用 */
   font-weight: 600;
 }
 
@@ -256,7 +535,7 @@ h2::before {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .info-card .icon {
@@ -283,7 +562,7 @@ h2::before {
 .skill-category h3 {
   color: var(--primary-color);
   margin-bottom: 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -303,7 +582,7 @@ h2::before {
   font-size: 0.9rem;
   font-weight: 500;
   transition: transform 0.2s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   position: relative;
   overflow: hidden;
 }
@@ -381,7 +660,7 @@ h2::before {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .project-meta {
@@ -391,7 +670,7 @@ h2::before {
   margin-bottom: 1rem;
   font-size: 0.9rem;
   color: var(--text-muted);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
 }
 
 .project-meta span {
@@ -412,7 +691,7 @@ h2::before {
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   position: relative;
   overflow: hidden;
 }
@@ -472,7 +751,7 @@ h2::before {
   color: var(--primary-color);
   font-size: 1.6rem;
   margin-bottom: 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--body-font); /* フォント適用 */
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -552,232 +831,6 @@ h2::before {
   }
 }
 
-/* --- Responsive Design (Mobile First) --- */
-
-/* デスクトップ用のスタイル（基本） */
-html {
-  scroll-behavior: smooth;
-}
-
-/* スマホ・タブレット用のスタイル (最大幅 768px) */
-@media screen and (max-width: 768px) {
-  body {
-    font-size: 0.95rem;
-  }
-
-  .hero {
-    padding: 2rem 1rem;
-    background: linear-gradient(135deg, rgba(114, 47, 55, 0.95), rgba(168, 51, 74, 0.9)),
-                url('https://source.unsplash.com/600x400/?rose-pattern,flower') center/cover no-repeat;
-  }
-
-  .hero::after {
-    top: 10%;
-    right: 5%;
-    font-size: 2rem;
-  }
-
-  .profile-image {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 1rem;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero .subtitle {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-
-
-  /* モバイルナビゲーション */
-  nav {
-    padding: 1rem 0; /* ハンバーガーアイコンのためのパディングを確保 */
-    justify-content: space-between; /* アイコンとタイトルを両端に配置 */
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    width: 100%; /* 全幅 */
-  }
-
-  nav .nav-title {
-    color: var(--primary-color);
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 1.2rem;
-    margin-left: 1.5rem; /* 左側に余白 */
-  }
-
-  nav ul {
-    flex-direction: column;
-    position: fixed; /* 全画面でオーバーレイ */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.98); /* 背景をわずかに透過 */
-    backdrop-filter: blur(15px);
-    justify-content: center;
-    align-items: center;
-    transform: translateX(100%); /* 初期状態では右に隠す */
-    transition: transform 0.4s ease-in-out;
-    z-index: 99; /* ハンバーガーアイコンより下 */
-    overflow-y: auto; /* メニュー項目が多い場合にスクロール可能にする */
-  }
-
-  nav ul.active {
-    transform: translateX(0); /* アクティブ時に表示 */
-  }
-
-  nav li {
-    margin: 1rem 0; /* 項目間の余白 */
-  }
-
-  nav a {
-    width: 80%; /* リンクの幅を調整 */
-    max-width: 300px;
-    font-size: 1.1rem;
-    padding: 0.8rem 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* カード風の影 */
-  }
-
-  /* ハンバーガーアイコンを表示 */
-  .hamburger {
-    display: block;
-    right: 1.5rem; /* ハンバーガーアイコンの右側の位置を調整 */
-  }
-
-  section {
-    padding: 2rem 1rem;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
-
-  h2::before {
-    left: 0.5rem;
-    top: 0.5rem;
-    transform: none;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .info-card {
-    padding: 1.5rem;
-  }
-
-  .info-card h3 {
-    font-size: 1.2rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .info-card .icon {
-    font-size: 1.3rem;
-  }
-
-  .skills-container {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .skill-category {
-    padding: 1.5rem;
-  }
-
-  .skill-category h3 {
-    font-size: 1.3rem;
-  }
-
-  .tags {
-    gap: 0.6rem;
-  }
-
-  .tag {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-  }
-
-  .project-card {
-    margin-bottom: 1.5rem;
-  }
-
-  /* モバイルでのデフォルトの .project-image は、アイコン表示用のため、
-     画像を使う場合は、個別の .project-card.image-left .project-image で上書きします。
-     もしアイコン表示用カードの画像エリアも高さを固定したいなら残します。
-  */
-  /*
-  .project-image {
-    height: 150px;
-    font-size: 2.5rem;
-  }
-  */
-
-  .project-image::before {
-    top: 0.5rem;
-    right: 0.5rem;
-    font-size: 1.2rem;
-  }
-
-  .project-content {
-    padding: 1.5rem;
-  }
-
-  .project-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .project-meta {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .btn-link {
-    width: 100%;
-    justify-content: center;
-    padding: 0.7rem 1rem;
-    font-size: 0.95rem;
-    margin-top: 1rem;
-  }
-
-  .research-card {
-    padding: 1.5rem;
-  }
-
-  .research-card h3 {
-    font-size: 1.4rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .research-card ul {
-    padding-left: 1.5rem;
-  }
-
-  .research-card::after {
-    bottom: 0.5rem;
-    right: 0.5rem;
-    font-size: 1.5rem;
-  }
-
-  .rose-petal {
-    font-size: 1rem;
-  }
-}
-
 /* --- プロジェクトカードの画像左寄せスタイル --- */
 
 /* デスクトップ表示 (769px以上) で画像を左に配置 */
@@ -790,7 +843,7 @@ html {
 
   .project-card.image-left .project-image {
     width: 30%; /* 画像の幅を30%に設定 (前回の調整を適用) */
-    height: 100%; 
+    height: 100%;
     flex-shrink: 0; /* 画像が縮まないようにする */
     /* 角丸を画像左側にだけ適用 */
     border-radius: 20px 0 0 20px;
@@ -865,11 +918,8 @@ html {
 }
 
 @media screen and (max-width: 768px) {
-  /* 既存のモバイル用スタイル */
-
   /* 制作物カード内の画像調整 */
   .project-card.image-left .project-image img {
-    /* 最初の画像だけを表示し、2枚目以降を非表示にする */
     display: block; /* デフォルトで表示 */
     width: 100%;
     height: auto;

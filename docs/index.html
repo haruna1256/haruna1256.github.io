@@ -8,6 +8,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="./style.css">
 </head>
@@ -29,17 +33,17 @@
 
   <nav aria-label="メインナビゲーション">
     <div class="hamburger" id="hamburger-menu">
-      <i class="fas fa-bars"></i>
-    </div>
+        <i class="fas fa-bars"></i> </div>
     <ul id="nav-list">
-      <li><a href="#intro"><i class="fas fa-user"></i>自己紹介</a></li>
-      <li><a href="#job"><i class="fas fa-briefcase"></i>希望職種</a></li>
-      <li><a href="#tech"><i class="fas fa-code"></i>スキル</a></li>
-      <li><a href="#process"><i class="fas fa-cogs"></i>開発手法</a></li>
-      <li><a href="#works"><i class="fas fa-laptop-code"></i>制作物</a></li>
-      <li><a href="#research"><i class="fas fa-search"></i>研究</a></li>
+        <li><a href="test-page.html"><i class="fas fa-vial"></i>テストページ</a></li>
+        <li><a href="study-page.html"><i class="fas fa-book"></i>勉強ページ</a></li>
     </ul>
-  </nav>
+    <div class="overlay" id="nav-overlay"></div>
+</nav>
+
+<button id="back-to-top" title="ページトップへ戻る">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
   <section id="intro" class="fade-in">
     <h2>自己紹介</h2>
@@ -149,11 +153,12 @@
             <span class="tag">MapKit</span>
             <span class="tag">Keycloak</span>
           </div>
-          <a class="btn-link" href="https://github.com/Rihlar" target="_blank">
+          <a class="btn-link" href="https://github.com/Rihlar/rihlar_front" target="_blank">
             <i class="fab fa-github"></i>GitHubを見る
           </a>
         </div>
       </article>
+     
 
       <article class="project-card image-left">
         <div class="project-image">
