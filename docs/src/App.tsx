@@ -1,26 +1,14 @@
-import { useState } from 'react'
-import BentoCard from './component/BentoCard'
+import React from "react";
+import './index.css';
+import { ProjectList } from "./components/ProjectList";
 
-export default function App() {
+function App() {
   return (
-    <div className="max-w-4xl mx-auto p-4 grid grid-cols-3 gap-4">
-      <BentoCard
-        title="プロフィール"
-        description="自己紹介やSNSリンク"
-        url="https://example.com/profile"
-      />
-      <BentoCard
-        title="制作物1"
-        description="Reactで作ったポートフォリオ"
-        url="https://github.com/haruna1256/bento-portfolio"
-      />
-      <BentoCard
-        title="プレゼン資料"
-        description="ゼミのスライドを公開"
-        url="https://docs.google.com/presentation/..."
-      />
+    <div>
+      <h1 className="text-3xl font-bold text-center my-6">制作物一覧</h1>
+      <ProjectList />
     </div>
   );
 }
 
-
+export default App;

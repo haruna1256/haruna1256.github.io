@@ -1,5 +1,5 @@
 import React from "react";
-
+import '../index.css';
 type BentoCardProps = {
   title: string;
   description: string;
