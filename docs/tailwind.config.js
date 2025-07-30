@@ -4,12 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        wine: '#722F37',
-        wineLight: '#A05259',
-        wineGold: '#CBB994',
-        wineDeep: '#4A1F24',
-        wineRose: '#B97C86',
-      },
+        yuruPink: '#FDECEF',
+        yuruRose: '#FADADD',
+        yuruDust: '#8B5D67',
+        yuruBeige: '#D8B4A0',
+      }
     },
   },
   plugins: [],

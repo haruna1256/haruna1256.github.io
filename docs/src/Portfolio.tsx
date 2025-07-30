@@ -1,33 +1,35 @@
-import React, { useState } from "react";
+// Portfolio.tsx
+import React, { useState, useEffect } from "react";
+import "./font.css";
+
+const profileIconUrl = "/profile.png";
 
 interface Project {
   title: string;
   period: string;
-  grade?: string;
   overview?: string;
   role?: string;
-  features?: string;
-  technologies?: string[];
+  technologies: string[];
   images: string[];
 }
 
 const projectsByCategory: Record<string, Project[]> = {
-  Swift: [
+  SwiftUI: [
     {
-      title: "food shuffle - 新しいお店との出会いを届けるアプリ",
-      period: "2024年9月 ～ 2025年2月",
-      grade: "2年後期",
-      overview:
-        'すれ違いを通じて"おすすめのお店"を共有し合う、レビュー信頼性重視のグルメ情報アプリ',
-      role:
-        "企画立案、プレゼンテーション、リーダー、UI設計、Flutterによるフロントエンド開発",
-      features:
-        '「信頼できるレビュー」「すれ違いによるお店の発見」「リアルタイム性」を軸に、大学生や若年層が"楽しく外食したくなる"体験を設計しました。',
-      technologies: ["Flutter", "Firebase", "Figma"],
-      images: [
-        "/slides/swift1.png",
-        "/slides/swift2.png"
-      ],
+      title: "SwiftUI Project 1",
+      period: "2024年9月 - 2025年2月",
+      overview: "SwiftUIで作成した素敵なアプリ。",
+      role: "設計・実装",
+      technologies: ["SwiftUI", "Combine"],
+      images: ["/slides/swiftui1.png", "/slides/swiftui2.png"],
+    },
+    {
+      title: "SwiftUI Project 2",
+      period: "2023年4月 - 2023年9月",
+      overview: "SwiftUIで作った2つ目のアプリ。",
+      role: "UI設計・開発",
+      technologies: ["SwiftUI", "CoreData"],
+      images: ["/slides/swiftui3.png"],
     },
   ],
   Flutter: [
@@ -37,15 +39,15 @@ const projectsByCategory: Record<string, Project[]> = {
       overview:
         "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
       role: "個人開発、設計〜実装、UI/UX設計",
-      features: "子どもでも使いやすいUI、役割分担の明確化、リアルタイム同期",
       technologies: ["Flutter", "Firebase", "Sqlite", "Github", "Youtube"],
       images: [
         "/slides/buntan1.png",
         "/slides/buntan2.png",
         "/slides/buntan3.png",
-        "/slides/buntan4.png"
+        "/slides/buntan4.png",
       ],
     },
+    // Flutter 他の制作物もここに追加可能
   ],
   React: [
     {
@@ -53,128 +55,182 @@ const projectsByCategory: Record<string, Project[]> = {
       period: "期間未定",
       overview: "Reactを使ったポートフォリオやSPAなどの制作物",
       role: "構成・UI設計・コーディング",
-      features: "レスポンシブ対応、Vite環境構築済",
       technologies: ["React", "Vite", "TypeScript"],
-      images: [],
-    },
-  ],
-  HTML: [
-    {
-      title: "HTML制作物1",
-      period: "期間未定",
-      overview: "HTML/CSSで作成したシンプルなサイトなど",
-      role: "HTMLマークアップ、スタイル定義",
-      features: "静的サイト、配色アクセントあり",
-      technologies: ["HTML", "CSS"],
       images: [],
     },
   ],
 };
 
+const techStack = [
+  "Swift",
+  "Flutter",
+  "Firebase",
+  "React",
+  "TypeScript",
+  "Go",
+  "Docker",
+  "Figma",
+];
 
+const Portfolio: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>("SwiftUI");
+  const [imageIndex, setImageIndex] = useState<Record<string, number>>({});
 
-export const Portfolio: React.FC = () => {
-  const [slideIndices, setSlideIndices] = useState<Record<string, Record<number, number>>>({});
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const moveImage = (category: string, projectIndex: number, delta: number) => {
-    const project = projectsByCategory[category][projectIndex];
-    const totalImages = project.images.length;
-    const currentIndex = slideIndices[category]?.[projectIndex] ?? 0;
-    let nextIndex = currentIndex + delta;
-    if (nextIndex < 0) nextIndex = 0;
-    if (nextIndex >= totalImages) nextIndex = totalImages - 1;
-
-    setSlideIndices(prev => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [projectIndex]: nextIndex,
-      },
-    }));
+  const handleImageChange = (key: string, total: number, direction: number) => {
+    setImageIndex((prev) => {
+      const current = prev[key] || 0;
+      const next = (current + direction + total) % total;
+      return { ...prev, [key]: next };
+    });
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-wineLight">
+        <h1 className="text-5xl md:text-7xl text-wineGold font-script animate-fade-in">
+          Haruna Kawagishi
+        </h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-wineLight min-h-screen p-8 max-w-6xl mx-auto space-y-12">
-      <header className="text-center text-5xl font-bold text-wineGold mb-12">
-        kokomeow.com
-      </header>
+    <div className="snap-y snap-mandatory overflow-y-scroll h-screen font-script bg-white text-yuruDust">
+      {/* Profile Section */}
+      <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-white p-10">
+        <img
+          src={profileIconUrl}
+          alt="Profile"
+          className="w-32 h-32 rounded-full object-cover mb-6"
+        />
+        <h1 className="text-5xl mb-2">Haruna Kawagishi</h1>
+        <p className="text-lg text-yuruBeige">iOS Engineer</p>
+      </section>
 
-      {Object.entries(projectsByCategory).map(([category, projects], i) => (
-        <section key={i} className="space-y-6">
-          <h2 className="text-2xl font-bold text-wineGold border-b pb-2 border-wineDeep mb-6">
-            {category}
-          </h2>
+      {/* About Me Section */}
+      <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-yuruPink p-10 text-gray-700">
+        <h2 className="text-4xl mb-8">About Me</h2>
+        <div className="max-w-xl space-y-6 text-base text-center">
+          <p>
+            企画・問題定義重視。技術だけでなく、「どんな課題を解決したいのか」「どの手段が最適か」を重視しています。
+            個人開発では「なぜこのアプリを作るのか」「誰の役に立てるのか」を考えながら設計・実装しています。
+          </p>
+          <p>
+            リーダーや発表経験を通して、物事を分かりやすく整理し伝える力を磨いてきました。
+            動くものだけでなく、その背後にある意図や価値を明確にし、良いプロダクト作りに貢献します。
+          </p>
+        </div>
+      </section>
 
-          {projects.length === 0 ? (
-            <p className="text-gray-600 italic">まだ制作物はありません。</p>
-          ) : (
-            projects.map((project, j) => {
-              const currentImageIndex = slideIndices[category]?.[j] ?? 0;
+      {/* Tech Stack Section */}
+      <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-white p-10">
+        <h2 className="text-4xl mb-6">Tech Stack</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-800 max-w-4xl mx-auto justify-items-center">
+          {techStack.map((tech) => (
+            <div key={tech} className="px-4 py-2 bg-yuruPink rounded-lg shadow-md">
+              {tech}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section className="snap-start min-h-screen bg-yuruPink p-10 flex flex-col items-center">
+        <h2 className="text-4xl mb-10">Projects</h2>
+
+        {/* Category Tabs */}
+        <div className="flex justify-center space-x-6 mb-8">
+          {Object.keys(projectsByCategory).map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-5 py-2 rounded-full font-semibold
+                ${
+                  selectedCategory === category
+                    ? "bg-yuruDust text-white shadow-lg"
+                    : "bg-white text-yuruDust hover:bg-yuruDust hover:text-white transition"
+                }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {projectsByCategory[selectedCategory]
+            .slice(0, 3)
+            .map((project, idx) => {
+              const key = `${selectedCategory}-${idx}`;
+              const currentIndex = imageIndex[key] || 0;
               return (
-                <div key={j} className="bg-white rounded-2xl shadow-lg p-6 max-w-xl mx-auto space-y-4">
-                  <h3 className="text-xl font-semibold text-wine mb-1">{project.title}</h3>
-                  <p className="text-sm text-wineLight">{project.period}</p>
+                <div
+                  key={key}
+                  className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-shadow duration-300"
+                  style={{ maxWidth: 320 }}
+                >
+                  <h4
+                    className="text-lg font-semibold text-yuruDust text-center truncate"
+                    title={project.title}
+                  >
+                    {project.title}
+                  </h4>
+                  <p className="text-sm text-yuruBeige">{project.period}</p>
 
                   {project.images.length > 0 && (
-                    <div className="relative">
+                    <div className="relative w-full flex items-center justify-center">
                       <img
-                        src={project.images[currentImageIndex]}
-                        alt={`${project.title} スライド画像${currentImageIndex + 1}`}
-                        className="w-full h-56 object-cover rounded-xl shadow-md"
+                        src={project.images[currentIndex]}
+                        alt={`Slide ${currentIndex + 1}`}
+                        className="w-full h-40 object-cover rounded-lg"
                       />
                       <button
-                        onClick={() => moveImage(category, j, -1)}
-                        disabled={currentImageIndex === 0}
-                        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-wineDeep text-white rounded-full w-8 h-8 flex items-center justify-center disabled:opacity-40"
-                        aria-label="前の画像"
+                        className="absolute left-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-r hover:bg-opacity-90"
+                        onClick={() => handleImageChange(key, project.images.length, -1)}
+                        aria-label="Previous"
                       >
                         ‹
                       </button>
                       <button
-                        onClick={() => moveImage(category, j, 1)}
-                        disabled={currentImageIndex === project.images.length - 1}
-                        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-wineDeep text-white rounded-full w-8 h-8 flex items-center justify-center disabled:opacity-40"
-                        aria-label="次の画像"
+                        className="absolute right-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-l hover:bg-opacity-90"
+                        onClick={() => handleImageChange(key, project.images.length, 1)}
+                        aria-label="Next"
                       >
                         ›
                       </button>
                     </div>
                   )}
 
-                  {project.overview && (
-                    <>
-                      <p className="font-semibold text-wine mt-2">概要</p>
-                      <p className="text-gray-700 leading-relaxed">{project.overview}</p>
-                    </>
-                  )}
-                  {project.role && (
-                    <>
-                      <p className="font-semibold text-wine mt-2">役割</p>
-                      <p className="text-gray-700 leading-relaxed">{project.role}</p>
-                    </>
-                  )}
-                  {project.features && (
-                    <>
-                      <p className="font-semibold text-wine mt-2">特徴</p>
-                      <p className="text-gray-700 leading-relaxed">{project.features}</p>
-                    </>
-                  )}
-                  {project.technologies && (
-                    <>
-                      <p className="font-semibold text-wine mt-2">技術スタック</p>
-                      <ul className="list-disc list-inside text-gray-700">
-                        {project.technologies.map((tech, idx) => (
-                          <li key={idx}>{tech}</li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
+                  <p className="text-sm text-gray-700 text-center">{project.overview}</p>
+                  <p className="text-sm text-gray-600">
+                    <span className="font-semibold">Role:</span> {project.role}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <span className="font-semibold">Tech:</span> {project.technologies.join(", ")}
+                  </p>
                 </div>
               );
-            })
-          )}
-        </section>
-      ))}
+            })}
+        </div>
+      </section>
+
+      {/* Research Section */}
+      <section className="snap-start min-h-screen bg-white p-10">
+        <h2 className="text-4xl mb-8 text-center">Research</h2>
+        <div className="max-w-2xl mx-auto text-gray-700">
+          <p>
+            スキーマ駆動開発に関する研究を行いました。OpenAPI、gRPC、コードファーストによる実装比較と検証を行い、設計・実装効率に与える影響を調査しています。
+          </p>
+        </div>
+      </section>
     </div>
   );
 };
+
+export default Portfolio;
