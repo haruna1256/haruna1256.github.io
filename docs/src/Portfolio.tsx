@@ -63,11 +63,14 @@ const projectsByCategory: Record<string, Project[]> = {
 const techStack = [
   { label: "Swift", icon: "/icons/swift.png" },
   { label: "Flutter", icon: "/icons/flutter.png" },
-  { label: "Firebase", icon: "/icons/firebase.png" },
+  { label: "html", icon: "/icons/html.png" },
+  { label: "css", icon: "/icons/css.png" },
+  { label: "JavaScript", icon: "/icons/javasqript.png" },
   { label: "React", icon: "/icons/react.png" },
-  { label: "TypeScript", icon: "/icons/typescript.png" },
   { label: "Go", icon: "/icons/go.png" },
-  { label: "Docker", icon: "/icons/docker.png" },
+  { label: "mysql", icon: "/icons/mysql.png" },
+   { label: "Docker", icon: "/icons/docker.png" },
+  { label: "github", icon: "/icons/github.png" },
   { label: "Figma", icon: "/icons/figma.png" },
 ];
 
