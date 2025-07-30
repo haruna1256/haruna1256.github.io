@@ -1,18 +1,33 @@
+/* font.css */
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 .font-script {
-  font-family: 'Great Vibes', cursive;
+  font-family: 'Great Vibes', cursive !important;
+}
+
+.bg-wineLight {
+  background-color: #f7e9e9;
+}
+
+.text-wineGold {
+  color: #cba135;
+}
+
+.text-yuruDust {
+  color: #5b4b4b;
+}
+
+.text-yuruBeige {
+  color: #a69384;
+}
+
+.bg-yuruPink {
+  background-color: #f7d9d9;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {

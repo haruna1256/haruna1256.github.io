@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./font.css";
 
-const profileIconUrl = "/profile.png";
+const profileIconUrl = "/neko.jpeg";
 
 interface Project {
   title: string;
@@ -47,7 +47,6 @@ const projectsByCategory: Record<string, Project[]> = {
         "/slides/buntan4.png",
       ],
     },
-    // Flutter 他の制作物もここに追加可能
   ],
   React: [
     {
@@ -62,15 +61,16 @@ const projectsByCategory: Record<string, Project[]> = {
 };
 
 const techStack = [
-  "Swift",
-  "Flutter",
-  "Firebase",
-  "React",
-  "TypeScript",
-  "Go",
-  "Docker",
-  "Figma",
+  { label: "Swift", icon: "/icons/swift.png" },
+  { label: "Flutter", icon: "/icons/flutter.png" },
+  { label: "Firebase", icon: "/icons/firebase.png" },
+  { label: "React", icon: "/icons/react.png" },
+  { label: "TypeScript", icon: "/icons/typescript.png" },
+  { label: "Go", icon: "/icons/go.png" },
+  { label: "Docker", icon: "/icons/docker.png" },
+  { label: "Figma", icon: "/icons/figma.png" },
 ];
+
 
 const Portfolio: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -101,22 +101,26 @@ const Portfolio: React.FC = () => {
   }
 
   return (
-    <div className="snap-y snap-mandatory overflow-y-scroll h-screen font-script bg-white text-yuruDust">
+    <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-white text-yuruDust">
       {/* Profile Section */}
-      <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-white p-10">
-        <img
-          src={profileIconUrl}
-          alt="Profile"
-          className="w-32 h-32 rounded-full object-cover mb-6"
-        />
-        <h1 className="text-5xl mb-2">Haruna Kawagishi</h1>
-        <p className="text-lg text-yuruBeige">iOS Engineer</p>
+      <section className="snap-start min-h-screen flex flex-col justify-center items-center p-10 bg-white">
+        <div className="flex items-center space-x-8">
+          <img
+            src={profileIconUrl}
+            alt="Profile"
+            className="w-[280px] h-[280px] rounded-full object-cover"
+          />
+          <div>
+            <h1 className="text-6xl font-script">Haruna Kawagishi</h1>
+            <p className="text-xl text-yuruBeige mt-2 font-sans">iOS Engineer</p>
+          </div>
+        </div>
       </section>
 
       {/* About Me Section */}
       <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-yuruPink p-10 text-gray-700">
-        <h2 className="text-4xl mb-8">About Me</h2>
-        <div className="max-w-xl space-y-6 text-base text-center">
+        <h2 className="text-4xl mb-8 font-script">About Me</h2>
+        <div className="max-w-xl space-y-6 text-base text-center font-script">
           <p>
             企画・問題定義重視。技術だけでなく、「どんな課題を解決したいのか」「どの手段が最適か」を重視しています。
             個人開発では「なぜこのアプリを作るのか」「誰の役に立てるのか」を考えながら設計・実装しています。
@@ -129,20 +133,25 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Tech Stack Section */}
-      <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-white p-10">
-        <h2 className="text-4xl mb-6">Tech Stack</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-800 max-w-4xl mx-auto justify-items-center">
-          {techStack.map((tech) => (
-            <div key={tech} className="px-4 py-2 bg-yuruPink rounded-lg shadow-md">
-              {tech}
-            </div>
-          ))}
-        </div>
-      </section>
+      <section className="snap-start min-h-screen flex flex-col justify-center items-center p-10">
+  <h2 className="text-4xl mb-6 font-script">Tech Stack</h2>
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-800 max-w-4xl mx-auto justify-items-center">
+    {techStack.map((tech) => (
+      <div
+        key={tech.label}
+        className="flex flex-col items-center px-4 py-2 bg-yuruPink rounded-lg shadow-md w-32 h-32 justify-center"
+      >
+        <img src={tech.icon} alt={tech.label} className="w-12 h-12 mb-2" />
+        <span className="text-sm font-sans">{tech.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
 
       {/* Projects Section */}
       <section className="snap-start min-h-screen bg-yuruPink p-10 flex flex-col items-center">
-        <h2 className="text-4xl mb-10">Projects</h2>
+        <h2 className="text-4xl mb-10 font-script">Projects</h2>
 
         {/* Category Tabs */}
         <div className="flex justify-center space-x-6 mb-8">
@@ -176,7 +185,7 @@ const Portfolio: React.FC = () => {
                   style={{ maxWidth: 320 }}
                 >
                   <h4
-                    className="text-lg font-semibold text-yuruDust text-center truncate"
+                    className="text-lg font-semibold text-yuruDust text-center truncate font-script"
                     title={project.title}
                   >
                     {project.title}
@@ -192,14 +201,18 @@ const Portfolio: React.FC = () => {
                       />
                       <button
                         className="absolute left-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-r hover:bg-opacity-90"
-                        onClick={() => handleImageChange(key, project.images.length, -1)}
+                        onClick={() =>
+                          handleImageChange(key, project.images.length, -1)
+                        }
                         aria-label="Previous"
                       >
                         ‹
                       </button>
                       <button
                         className="absolute right-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-l hover:bg-opacity-90"
-                        onClick={() => handleImageChange(key, project.images.length, 1)}
+                        onClick={() =>
+                          handleImageChange(key, project.images.length, 1)
+                        }
                         aria-label="Next"
                       >
                         ›
@@ -207,12 +220,15 @@ const Portfolio: React.FC = () => {
                     </div>
                   )}
 
-                  <p className="text-sm text-gray-700 text-center">{project.overview}</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-700 text-center font-sans">
+                    {project.overview}
+                  </p>
+                  <p className="text-sm text-gray-600 font-sans">
                     <span className="font-semibold">Role:</span> {project.role}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    <span className="font-semibold">Tech:</span> {project.technologies.join(", ")}
+                  <p className="text-sm text-gray-600 font-sans">
+                    <span className="font-semibold">Tech:</span>{" "}
+                    {project.technologies.join(", ")}
                   </p>
                 </div>
               );
@@ -222,8 +238,8 @@ const Portfolio: React.FC = () => {
 
       {/* Research Section */}
       <section className="snap-start min-h-screen bg-white p-10">
-        <h2 className="text-4xl mb-8 text-center">Research</h2>
-        <div className="max-w-2xl mx-auto text-gray-700">
+        <h2 className="text-4xl mb-8 text-center font-script">Research</h2>
+        <div className="max-w-2xl mx-auto text-gray-700 font-sans">
           <p>
             スキーマ駆動開発に関する研究を行いました。OpenAPI、gRPC、コードファーストによる実装比較と検証を行い、設計・実装効率に与える影響を調査しています。
           </p>

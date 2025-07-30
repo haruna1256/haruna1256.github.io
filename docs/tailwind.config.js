@@ -8,7 +8,10 @@ export default {
         yuruRose: '#FADADD',
         yuruDust: '#8B5D67',
         yuruBeige: '#D8B4A0',
-      }
+      },
+      fontFamily: {
+        script: ["'Great Vibes'", "cursive"],
+      },
     },
   },
   plugins: [],
