@@ -237,14 +237,35 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Research Section */}
-      <section className="snap-start min-h-screen bg-white p-10">
-        <h2 className="text-4xl mb-8 text-center font-script">Research</h2>
-        <div className="max-w-2xl mx-auto text-gray-700 font-sans">
-          <p>
-            スキーマ駆動開発に関する研究を行いました。OpenAPI、gRPC、コードファーストによる実装比較と検証を行い、設計・実装効率に与える影響を調査しています。
-          </p>
-        </div>
-      </section>
+<section className="snap-start min-h-screen bg-white p-10 flex flex-col items-center">
+  <h2 className="text-4xl mb-10 font-script">Research</h2>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <div className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-shadow duration-300" style={{ maxWidth: 320 }}>
+      <h4 className="text-lg font-semibold text-yuruDust text-center truncate font-script" title="スキーマ駆動開発の研究">
+        スキーマ駆動開発の研究
+      </h4>
+      <p className="text-sm text-yuruBeige">2025年4月 〜 2025年7月</p>
+
+      <img
+        src="/slides/research.png"
+        alt="Research Visual"
+        className="w-full h-40 object-cover rounded-lg"
+      />
+
+      <p className="text-sm text-gray-700 text-center font-sans">
+        スキーマ駆動開発（OpenAPI・gRPC）とコードファースト開発を比較し、設計・実装効率や保守性の違いを検証しました。
+      </p>
+      <p className="text-sm text-gray-600 font-sans">
+        <span className="font-semibold">手法:</span> OpenAPI, gRPC, Code First
+      </p>
+      <p className="text-sm text-gray-600 font-sans">
+        <span className="font-semibold">使用技術:</span> Go, React, Swagger, Protobuf
+      </p>
+    </div>
+  </div>
+</section>
+
     </div>
   );
 };
