@@ -1,19 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-const profileIconUrl = "/profile.png"; // public直下に画像を置く
-
-const skills = [
-  { name: "Swift", iconUrl: "/icons/swift.png" },
-  { name: "Flutter", iconUrl: "/icons/flutter.png" },
-  { name: "React", iconUrl: "/icons/react.png" },
-  { name: "HTML", iconUrl: "/icons/html.png" },
-  { name: "CSS", iconUrl: "/icons/css.png" },
-  { name: "Figma", iconUrl: "/icons/figma.png" },
-  { name: "Git", iconUrl: "/icons/git.png" },
-];
-
-// Projectの型定義（オプション多め）
-type Project = {
+interface Project {
   title: string;
   period: string;
   grade?: string;
@@ -21,7 +8,8 @@ type Project = {
   role?: string;
   features?: string;
   technologies?: string[];
-};
+  images: string[];
+}
 
 const projectsByCategory: Record<string, Project[]> = {
   Swift: [
@@ -35,44 +23,28 @@ const projectsByCategory: Record<string, Project[]> = {
         "企画立案、プレゼンテーション、リーダー、UI設計、Flutterによるフロントエンド開発",
       features:
         '「信頼できるレビュー」「すれ違いによるお店の発見」「リアルタイム性」を軸に、大学生や若年層が"楽しく外食したくなる"体験を設計しました。',
+      technologies: ["Flutter", "Firebase", "Figma"],
+      images: [
+        "/slides/swift1.png",
+        "/slides/swift2.png"
+      ],
     },
   ],
   Flutter: [
     {
       title: "ぶんたんちゃん",
       period: "4月21日 〜 4月29日",
-      overview: "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
+      overview:
+        "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
+      role: "個人開発、設計〜実装、UI/UX設計",
+      features: "子どもでも使いやすいUI、役割分担の明確化、リアルタイム同期",
       technologies: ["Flutter", "Firebase", "Sqlite", "Github", "Youtube"],
-    },
-    {
-      title: "ぶんたんちゃん",
-      period: "4月21日 〜 4月29日",
-      overview: "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
-      technologies: ["Flutter", "Firebase", "Sqlite", "Github", "Youtube"],
-    },
-    {
-      title: "ぶんたんちゃん",
-      period: "4月21日 〜 4月29日",
-      overview: "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
-      technologies: ["Flutter", "Firebase", "Sqlite", "Github", "Youtube"],
-    },
-    {
-      title: "ぶんたんちゃん",
-      period: "4月21日 〜 4月29日",
-      overview: "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
-      technologies: ["Flutter", "Firebase", "Sqlite", "Github", "Youtube"],
-    },
-    {
-      title: "ぶんたんちゃん",
-      period: "4月21日 〜 4月29日",
-      overview: "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
-      technologies: ["Flutter", "Firebase", "Sqlite", "Github", "Youtube"],
-    },
-    {
-      title: "ぶんたんちゃん",
-      period: "4月21日 〜 4月29日",
-      overview: "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
-      technologies: ["Flutter", "Firebase", "Sqlite", "Github", "Youtube"],
+      images: [
+        "/slides/buntan1.png",
+        "/slides/buntan2.png",
+        "/slides/buntan3.png",
+        "/slides/buntan4.png"
+      ],
     },
   ],
   React: [
@@ -80,6 +52,10 @@ const projectsByCategory: Record<string, Project[]> = {
       title: "React制作物1",
       period: "期間未定",
       overview: "Reactを使ったポートフォリオやSPAなどの制作物",
+      role: "構成・UI設計・コーディング",
+      features: "レスポンシブ対応、Vite環境構築済",
+      technologies: ["React", "Vite", "TypeScript"],
+      images: [],
     },
   ],
   HTML: [
@@ -87,125 +63,116 @@ const projectsByCategory: Record<string, Project[]> = {
       title: "HTML制作物1",
       period: "期間未定",
       overview: "HTML/CSSで作成したシンプルなサイトなど",
+      role: "HTMLマークアップ、スタイル定義",
+      features: "静的サイト、配色アクセントあり",
+      technologies: ["HTML", "CSS"],
+      images: [],
     },
   ],
 };
 
+
+
 export const Portfolio: React.FC = () => {
+  const [slideIndices, setSlideIndices] = useState<Record<string, Record<number, number>>>({});
+
+  const moveImage = (category: string, projectIndex: number, delta: number) => {
+    const project = projectsByCategory[category][projectIndex];
+    const totalImages = project.images.length;
+    const currentIndex = slideIndices[category]?.[projectIndex] ?? 0;
+    let nextIndex = currentIndex + delta;
+    if (nextIndex < 0) nextIndex = 0;
+    if (nextIndex >= totalImages) nextIndex = totalImages - 1;
+
+    setSlideIndices(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [projectIndex]: nextIndex,
+      },
+    }));
+  };
+
   return (
-    <div className="bg-ajisaiLight min-h-screen p-8 max-w-6xl mx-auto space-y-10">
-      {/* ヘッダー */}
-      <header className="text-center text-5xl font-bold text-ajisaiPurple mb-12">
+    <div className="bg-wineLight min-h-screen p-8 max-w-6xl mx-auto space-y-12">
+      <header className="text-center text-5xl font-bold text-wineGold mb-12">
         kokomeow.com
       </header>
 
-      {/* プロフィール */}
-      <section className="flex flex-col md:flex-row gap-6 bg-white p-6 rounded shadow">
-        <div className="flex-shrink-0">
-          <img
-            src={profileIconUrl}
-            alt="プロフィールアイコン"
-            className="w-32 h-32 rounded-full object-cover"
-          />
-        </div>
-        <div className="flex-grow flex flex-col justify-center space-y-2">
-          <h2 className="text-2xl font-semibold text-ajisaiPurple">
-            川岸 遥奈 (Haruna Kawagishi)
-          </h2>
-          <p className="text-indigo-600 font-medium">企画・問題定義重視 エンジニア</p>
-          <p className="italic text-gray-700">
-            自分の考えを伝え、課題解決にフォーカスした開発を大切にしています。
-          </p>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-            <div>
-              <h3 className="font-semibold border-b border-ajisaiPurple mb-2">私について</h3>
-              <p className="text-sm leading-relaxed">
-                企画・問題定義重視。技術だけでなく、「どんな課題を解決したいのか」「どの手段が最適か」を重視しています。個人開発では「なぜこのアプリを作るのか」「誰の役に立てるのか」を考えながら設計・実装しています。
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold border-b border-ajisaiPurple mb-2">コミュニケーション力</h3>
-              <p className="text-sm leading-relaxed">
-                リーダーや発表経験を通して、物事を分かりやすく整理し伝える力を磨いてきました。動くものだけでなく、その背後にある意図や価値を明確にし、良いプロダクト作りに貢献します。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* スキルセクション */}
-      <section className="bg-white p-6 rounded shadow">
-        <h2 className="text-xl font-semibold mb-4 text-ajisaiPurple">スキル</h2>
-        <div className="flex flex-wrap gap-6 justify-center items-center">
-          {skills.map((skill) => (
-            <div
-              key={skill.name}
-              title={skill.name}
-              className="cursor-default w-12 h-12"
-            >
-              <img
-                src={skill.iconUrl}
-                alt={skill.name}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 制作物セクション */}
-      {Object.entries(projectsByCategory).map(([category, projects]) => (
-        <section key={category} className="mb-10">
-          <h2 className="text-2xl font-bold border-b-2 border-ajisaiPurple pb-2 mb-6 text-ajisaiPurple">
+      {Object.entries(projectsByCategory).map(([category, projects], i) => (
+        <section key={i} className="space-y-6">
+          <h2 className="text-2xl font-bold text-wineGold border-b pb-2 border-wineDeep mb-6">
             {category}
           </h2>
-          <div className="flex space-x-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-ajisaiPurple scrollbar-track-ajisaiLight">
-            {projects.map((p, i) => (
-              <div
-                key={i}
-                className="min-w-[320px] bg-white p-6 rounded-lg shadow hover:shadow-xl transition"
-              >
-                <h3 className="text-lg font-semibold text-ajisaiBlue mb-2">
-                  ■ {p.title}
-                </h3>
-                {p.period && (
-                  <p className="text-sm text-gray-500 mb-1">{p.period}</p>
-                )}
-                {p.grade && (
-                  <p className="text-sm text-gray-500 mb-1">{p.grade}</p>
-                )}
-                {p.overview && (
-                  <>
-                    <p className="font-semibold mt-2">概要</p>
-                    <p className="text-gray-700">{p.overview}</p>
-                  </>
-                )}
-                {p.role && (
-                  <>
-                    <p className="font-semibold mt-2">役割</p>
-                    <p className="text-gray-700">{p.role}</p>
-                  </>
-                )}
-                {p.features && (
-                  <>
-                    <p className="font-semibold mt-2">特徴</p>
-                    <p className="text-gray-700">{p.features}</p>
-                  </>
-                )}
-                {p.technologies && (
-                  <>
-                    <p className="font-semibold mt-2">技術スタック</p>
-                    <ul className="list-disc list-inside text-gray-700">
-                      {p.technologies.map((tech, idx) => (
-                        <li key={idx}>{tech}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
+
+          {projects.length === 0 ? (
+            <p className="text-gray-600 italic">まだ制作物はありません。</p>
+          ) : (
+            projects.map((project, j) => {
+              const currentImageIndex = slideIndices[category]?.[j] ?? 0;
+              return (
+                <div key={j} className="bg-white rounded-2xl shadow-lg p-6 max-w-xl mx-auto space-y-4">
+                  <h3 className="text-xl font-semibold text-wine mb-1">{project.title}</h3>
+                  <p className="text-sm text-wineLight">{project.period}</p>
+
+                  {project.images.length > 0 && (
+                    <div className="relative">
+                      <img
+                        src={project.images[currentImageIndex]}
+                        alt={`${project.title} スライド画像${currentImageIndex + 1}`}
+                        className="w-full h-56 object-cover rounded-xl shadow-md"
+                      />
+                      <button
+                        onClick={() => moveImage(category, j, -1)}
+                        disabled={currentImageIndex === 0}
+                        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-wineDeep text-white rounded-full w-8 h-8 flex items-center justify-center disabled:opacity-40"
+                        aria-label="前の画像"
+                      >
+                        ‹
+                      </button>
+                      <button
+                        onClick={() => moveImage(category, j, 1)}
+                        disabled={currentImageIndex === project.images.length - 1}
+                        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-wineDeep text-white rounded-full w-8 h-8 flex items-center justify-center disabled:opacity-40"
+                        aria-label="次の画像"
+                      >
+                        ›
+                      </button>
+                    </div>
+                  )}
+
+                  {project.overview && (
+                    <>
+                      <p className="font-semibold text-wine mt-2">概要</p>
+                      <p className="text-gray-700 leading-relaxed">{project.overview}</p>
+                    </>
+                  )}
+                  {project.role && (
+                    <>
+                      <p className="font-semibold text-wine mt-2">役割</p>
+                      <p className="text-gray-700 leading-relaxed">{project.role}</p>
+                    </>
+                  )}
+                  {project.features && (
+                    <>
+                      <p className="font-semibold text-wine mt-2">特徴</p>
+                      <p className="text-gray-700 leading-relaxed">{project.features}</p>
+                    </>
+                  )}
+                  {project.technologies && (
+                    <>
+                      <p className="font-semibold text-wine mt-2">技術スタック</p>
+                      <ul className="list-disc list-inside text-gray-700">
+                        {project.technologies.map((tech, idx) => (
+                          <li key={idx}>{tech}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </div>
+              );
+            })
+          )}
         </section>
       ))}
     </div>
