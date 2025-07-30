@@ -69,7 +69,7 @@ const techStack = [
   { label: "React", icon: "/icons/react.png" },
   { label: "Go", icon: "/icons/go.png" },
   { label: "mysql", icon: "/icons/mysql.png" },
-   { label: "Docker", icon: "/icons/docker.png" },
+  { label: "Docker", icon: "/icons/docker.png" },
   { label: "github", icon: "/icons/github.png" },
   { label: "Figma", icon: "/icons/figma.png" },
 ];
@@ -137,19 +137,19 @@ const Portfolio: React.FC = () => {
 
       {/* Tech Stack Section */}
       <section className="snap-start min-h-screen flex flex-col justify-center items-center p-10">
-  <h2 className="text-4xl mb-6 font-script">Tech Stack</h2>
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-800 max-w-4xl mx-auto justify-items-center">
-    {techStack.map((tech) => (
-      <div
-        key={tech.label}
-        className="flex flex-col items-center px-4 py-2 bg-yuruPink rounded-lg shadow-md w-32 h-32 justify-center"
-      >
-        <img src={tech.icon} alt={tech.label} className="w-12 h-12 mb-2" />
-        <span className="text-sm font-sans">{tech.label}</span>
-      </div>
-    ))}
-  </div>
-</section>
+        <h2 className="text-4xl mb-6 font-script">Tech Stack</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-800 max-w-4xl mx-auto justify-items-center">
+          {techStack.map((tech) => (
+            <div
+              key={tech.label}
+              className="flex flex-col items-center px-4 py-2 bg-yuruPink rounded-lg shadow-md w-32 h-32 justify-center"
+            >
+              <img src={tech.icon} alt={tech.label} className="w-12 h-12 mb-2" />
+              <span className="text-sm font-sans">{tech.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
 
       {/* Projects Section */}
@@ -163,10 +163,9 @@ const Portfolio: React.FC = () => {
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-5 py-2 rounded-full font-semibold
-                ${
-                  selectedCategory === category
-                    ? "bg-yuruDust text-white shadow-lg"
-                    : "bg-white text-yuruDust hover:bg-yuruDust hover:text-white transition"
+                ${selectedCategory === category
+                  ? "bg-yuruDust text-white shadow-lg"
+                  : "bg-white text-yuruDust hover:bg-yuruDust hover:text-white transition"
                 }`}
             >
               {category}
@@ -240,34 +239,63 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Research Section */}
-<section className="snap-start min-h-screen bg-white p-10 flex flex-col items-center">
-  <h2 className="text-4xl mb-10 font-script">Research</h2>
+      {/* Research Section */}
+      <section className="snap-start min-h-screen bg-white p-10 flex flex-col items-center">
+        <h2 className="text-4xl mb-10 font-script">Research</h2>
 
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-    <div className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-shadow duration-300" style={{ maxWidth: 320 }}>
-      <h4 className="text-lg font-semibold text-yuruDust text-center truncate font-script" title="スキーマ駆動開発の研究">
-        スキーマ駆動開発の研究
-      </h4>
-      <p className="text-sm text-yuruBeige">2025年4月 〜 2025年7月</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div
+            className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-shadow duration-300"
+            style={{ maxWidth: 320 }}
+          >
+            <h4
+              className="text-lg font-semibold text-yuruDust text-center truncate font-script"
+              title="スキーマ駆動開発の研究"
+            >
+              スキーマ駆動開発の研究
+            </h4>
+            <p className="text-sm text-yuruBeige">2025年4月 〜 2025年7月</p>
 
-      <img
-        src="/slides/research.png"
-        alt="Research Visual"
-        className="w-full h-40 object-cover rounded-lg"
-      />
+            {/* スライド画像切り替え */}
+            <div className="relative w-full flex items-center justify-center">
+              <img
+                src={`/slides/research${imageIndex["schema"] ?? 1}.png`}
+                alt={`Research Slide ${imageIndex["schema"] ?? 1}`}
+                className="w-full h-40 object-cover rounded-lg"
+              />
+              <button
+                className="absolute left-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-r hover:bg-opacity-90"
+                onClick={() =>
+                  handleImageChange("schema", 20, -1)
+                }
+                aria-label="Previous"
+              >
+                ‹
+              </button>
+              <button
+                className="absolute right-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-l hover:bg-opacity-90"
+                onClick={() =>
+                  handleImageChange("schema", 20, 1)
+                }
+                aria-label="Next"
+              >
+                ›
+              </button>
+            </div>
 
-      <p className="text-sm text-gray-700 text-center font-sans">
-        スキーマ駆動開発（OpenAPI・gRPC）とコードファースト開発を比較し、設計・実装効率や保守性の違いを検証しました。
-      </p>
-      <p className="text-sm text-gray-600 font-sans">
-        <span className="font-semibold">手法:</span> OpenAPI, gRPC, Code First
-      </p>
-      <p className="text-sm text-gray-600 font-sans">
-        <span className="font-semibold">使用技術:</span> Go, React, Swagger, Protobuf
-      </p>
-    </div>
-  </div>
-</section>
+            <p className="text-sm text-gray-700 text-center font-sans">
+              スキーマ駆動開発（OpenAPI・gRPC）とコードファースト開発を比較し、設計・実装効率や保守性の違いを検証しました。
+            </p>
+            <p className="text-sm text-gray-600 font-sans">
+              <span className="font-semibold">手法:</span> OpenAPI, gRPC, Code First
+            </p>
+            <p className="text-sm text-gray-600 font-sans">
+              <span className="font-semibold">使用技術:</span> Go, React, Swagger, Protobuf
+            </p>
+          </div>
+        </div>
+      </section>
+
 
     </div>
   );
