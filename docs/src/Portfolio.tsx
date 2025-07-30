@@ -16,19 +16,27 @@ interface Project {
 const projectsByCategory: Record<string, Project[]> = {
   SwiftUI: [
     {
-      title: "SwiftUI Project 1",
-      period: "2024年9月 - 2025年2月",
-      overview: "SwiftUIで作成した素敵なアプリ。",
-      role: "設計・実装",
-      technologies: ["SwiftUI", "Combine"],
+      title: "リフラル",
+      period: "2025年4月 - 2025年8月",
+      overview: "現実世界での移動や滞在行動をゲーム化する“陣取り型ライフログアプリ”",
+      role: "企画立案、プレゼンテーション、リーダー、UI設計、swiftによるフロントエンド開発",
+      technologies: ["SwiftUI", "figma"],
       images: ["/slides/swiftui1.png", "/slides/swiftui2.png"],
     },
     {
-      title: "SwiftUI Project 2",
-      period: "2023年4月 - 2023年9月",
-      overview: "SwiftUIで作った2つ目のアプリ。",
-      role: "UI設計・開発",
-      technologies: ["SwiftUI", "CoreData"],
+      title: "捨てログ",
+      period: "2025年2月 - 2025年3月",
+      overview: "物の管理をデジタル化し、快適な生活空間を実現する整理・断捨離支援アプリの開発計画",
+      role: "企画立案、バックエンド設計",
+      technologies: ["SwiftUI", "go","figma"],
+      images: ["/slides/swiftui3.png"],
+    },
+    {
+      title: "わくわく探検隊",
+      period: "2024年6月 - 2024年7月",
+      overview: "目的地への移動中に楽しい体験を提供し、旅の過程そのものを価値あるものにする",
+      role: "バックエンド設計,データベース設計",
+      technologies: ["mysql"],
       images: ["/slides/swiftui3.png"],
     },
   ],
@@ -45,6 +53,29 @@ const projectsByCategory: Record<string, Project[]> = {
         "/slides/buntan2.png",
         "/slides/buntan3.png",
         "/slides/buntan4.png",
+      ],
+    },
+  ],
+  HTML: [
+    {
+      title: "ぶんたんちゃん",
+      period: "4月21日 〜 4月29日",
+      overview:
+        "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
+      role: "フロントエンド開発、企画、プレゼン、リーダー、UI設計",
+      technologies: ["HTML", "CSS", "TailwindCSS",],
+      images: [
+        "/slides/project/buntan/1.png",
+        "/slides/project/buntan/2.png",
+        "/slides/project/buntan/3.png",
+        "/slides/project/buntan/4.png",
+        "/slides/project/buntan/5.png",
+        "/slides/project/buntan/6.png",
+        "/slides/project/buntan/7.png",
+        "/slides/project/buntan/8.png",
+        "/slides/project/buntan/9.png",
+        "/slides/project/buntan/10.png",
+        "/slides/project/buntan/11.png",
       ],
     },
   ],
@@ -74,7 +105,6 @@ const techStack = [
   { label: "Figma", icon: "/icons/figma.png" },
 ];
 
-
 const Portfolio: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("SwiftUI");
@@ -87,7 +117,7 @@ const Portfolio: React.FC = () => {
 
   const handleImageChange = (key: string, total: number, direction: number) => {
     setImageIndex((prev) => {
-      const current = prev[key] || 0;
+      const current = prev[key] ?? 0;
       const next = (current + direction + total) % total;
       return { ...prev, [key]: next };
     });
@@ -151,7 +181,6 @@ const Portfolio: React.FC = () => {
         </div>
       </section>
 
-
       {/* Projects Section */}
       <section className="snap-start min-h-screen bg-yuruPink p-10 flex flex-col items-center">
         <h2 className="text-4xl mb-10 font-script">Projects</h2>
@@ -179,7 +208,7 @@ const Portfolio: React.FC = () => {
             .slice(0, 3)
             .map((project, idx) => {
               const key = `${selectedCategory}-${idx}`;
-              const currentIndex = imageIndex[key] || 0;
+              const currentIndex = imageIndex[key] ?? 0;
               return (
                 <div
                   key={key}
@@ -239,7 +268,6 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Research Section */}
-      {/* Research Section */}
       <section className="snap-start min-h-screen bg-white p-10 flex flex-col items-center">
         <h2 className="text-4xl mb-10 font-script">Research</h2>
 
@@ -259,8 +287,8 @@ const Portfolio: React.FC = () => {
             {/* スライド画像切り替え */}
             <div className="relative w-full flex items-center justify-center">
               <img
-                src={`/slides/research${imageIndex["schema"] ?? 1}.png`}
-                alt={`Research Slide ${imageIndex["schema"] ?? 1}`}
+               src={`/slides/research/schema${(imageIndex["schema"] ?? 0) + 1}.png`}
+                alt={`Research Slide ${(imageIndex["schema"] ?? 0) + 1}`}
                 className="w-full h-40 object-cover rounded-lg"
               />
               <button
@@ -295,8 +323,6 @@ const Portfolio: React.FC = () => {
           </div>
         </div>
       </section>
-
-
     </div>
   );
 };
