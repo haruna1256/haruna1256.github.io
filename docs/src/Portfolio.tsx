@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./font.css";
 
-const profileIconUrl = "/neko.jpeg";
+const profileIconUrl = "./neko.jpeg";
 
 interface Project {
   title: string;
@@ -24,23 +24,23 @@ const projectsByCategory: Record<string, Project[]> = {
       technologies: ["SwiftUI", "figma"],
       githubUrl: "https://github.com/Rihlar/rihlar_front",
       images: [
-        "/slides/project/rihlar/1.png",
-        "/slides/project/rihlar/2.png",
-        "/slides/project/rihlar/3.png",
-        "/slides/project/rihlar/4.png",
-        "/slides/project/rihlar/5.png",
-        "/slides/project/rihlar/6.png",
-        "/slides/project/rihlar/7.png",
-        "/slides/project/rihlar/8.png",
-        "/slides/project/rihlar/9.png",
-        "/slides/project/rihlar/10.png",
-        "/slides/project/rihlar/11.png",
-        "/slides/project/rihlar/12.png",
-        "/slides/project/rihlar/13.png",
-        "/slides/project/rihlar/14.png",
-        "/slides/project/rihlar/15.png",
-        "/slides/project/rihlar/16.png",
-        "/slides/project/rihlar/17.png",
+        "./slides/project/rihlar/1.png",
+        "./slides/project/rihlar/2.png",
+        "./slides/project/rihlar/3.png",
+        "./slides/project/rihlar/4.png",
+        "./slides/project/rihlar/5.png",
+        "./slides/project/rihlar/6.png",
+        "./slides/project/rihlar/7.png",
+        "./slides/project/rihlar/8.png",
+        "./slides/project/rihlar/9.png",
+        "./slides/project/rihlar/10.png",
+        "./slides/project/rihlar/11.png",
+        "./slides/project/rihlar/12.png",
+        "./slides/project/rihlar/13.png",
+        "./slides/project/rihlar/14.png",
+        "./slides/project/rihlar/15.png",
+        "./slides/project/rihlar/16.png",
+        "./slides/project/rihlar/17.png",
       ],
     },
     {
@@ -51,19 +51,19 @@ const projectsByCategory: Record<string, Project[]> = {
       technologies: ["SwiftUI", "go", "figma"],
       githubUrl: "https://github.com/narutosisu/backend",
       images: [
-        "/slides/project/sutelog/1.png",
-        "/slides/project/sutelog/2.png",
-        "/slides/project/sutelog/3.png",
-        "/slides/project/sutelog/4.png",
-        "/slides/project/sutelog/5.png",
-        "/slides/project/sutelog/6.png",
-        "/slides/project/sutelog/7.png",
-        "/slides/project/sutelog/8.png",
-        "/slides/project/sutelog/9.png",
-        "/slides/project/sutelog/10.png",
-        "/slides/project/sutelog/11.png",
-        "/slides/project/sutelog/12.png",
-        "/slides/project/sutelog/13.png",
+        "./slides/project/sutelog/1.png",
+        "./slides/project/sutelog/2.png",
+        "./slides/project/sutelog/3.png",
+        "./slides/project/sutelog/4.png",
+        "./slides/project/sutelog/5.png",
+        "./slides/project/sutelog/6.png",
+        "./slides/project/sutelog/7.png",
+        "./slides/project/sutelog/8.png",
+        "./slides/project/sutelog/9.png",
+        "./slides/project/sutelog/10.png",
+        "./slides/project/sutelog/11.png",
+        "./slides/project/sutelog/12.png",
+        "./slides/project/sutelog/13.png",
       ],
     },
     {
@@ -74,12 +74,12 @@ const projectsByCategory: Record<string, Project[]> = {
       technologies: ["mysql"],
       githubUrl: "https://github.com/Kaito518/ECCOC-front",
       images: [
-        "/slides/project/wakuwaku/1.png",
-        "/slides/project/wakuwaku/2.png",
-        "/slides/project/wakuwaku/3.png",
-        "/slides/project/wakuwaku/4.png",
-        "/slides/project/wakuwaku/5.png",
-        "/slides/project/wakuwaku/6.png",
+        "./slides/project/wakuwaku/1.png",
+        "./slides/project/wakuwaku/2.png",
+        "./slides/project/wakuwaku/3.png",
+        "./slides/project/wakuwaku/4.png",
+        "./slides/project/wakuwaku/5.png",
+        "./slides/project/wakuwaku/6.png",
       ],
     },
   ],
@@ -120,16 +120,16 @@ const projectsByCategory: Record<string, Project[]> = {
       technologies: ["HTML", "CSS", "javasqript", "TailwindCSS"],
       githubUrl: "https://github.com/ganbariya-ecc/buntanchan_Renew_web",
       images: [
-        "/slides/project/buntan/1.png",
-        "/slides/project/buntan/2.png",
-        "/slides/project/buntan/3.png",
-        "/slides/project/buntan/4.png",
-        "/slides/project/buntan/5.png",
-        "/slides/project/buntan/6.png",
-        "/slides/project/buntan/7.png",
-        "/slides/project/buntan/8.png",
-        "/slides/project/buntan/9.png",
-        "/slides/project/buntan/10.png",
+        "./slides/project/buntan/1.png",
+        "./slides/project/buntan/2.png",
+        "./slides/project/buntan/3.png",
+        "./slides/project/buntan/4.png",
+        "./slides/project/buntan/5.png",
+        "./slides/project/buntan/6.png",
+        "./slides/project/buntan/7.png",
+        "./slides/project/buntan/8.png",
+        "./slides/project/buntan/9.png",
+        "./slides/project/buntan/10.png",
       ],
     },
   ],
@@ -143,25 +143,25 @@ const projectsByCategory: Record<string, Project[]> = {
       technologies: ["React", "Vite", "TypeScript"],
       githubUrl: "https://github.com/haruna1256/haruna1256.github.io",
       images: [
-        "/slides/project/profile/1.png",
-        "/slides/project/profile/2.png",
+        "./slides/project/profile/1.png",
+        "./slides/project/profile/2.png",
       ],
     },
   ],
 };
 
 const techStack = [
-  { label: "Swift", icon: "/icons/swift.png" },
-  { label: "Flutter", icon: "/icons/flutter.png" },
-  { label: "html", icon: "/icons/html.png" },
-  { label: "css", icon: "/icons/css.png" },
-  { label: "JavaScript", icon: "/icons/javasqript.png" },
-  { label: "React", icon: "/icons/react.png" },
-  { label: "Go", icon: "/icons/go.png" },
-  { label: "mysql", icon: "/icons/mysql.png" },
-  { label: "Docker", icon: "/icons/docker.png" },
-  { label: "github", icon: "/icons/github.png" },
-  { label: "Figma", icon: "/icons/figma.png" },
+  { label: "Swift", icon: "./icons/swift.png" },
+  { label: "Flutter", icon: "./icons/flutter.png" },
+  { label: "html", icon: "./icons/html.png" },
+  { label: "css", icon: "./icons/css.png" },
+  { label: "JavaScript", icon: ".icons/javasqript.png" },
+  { label: "React", icon: "./icons/react.png" },
+  { label: "Go", icon: "./icons/go.png" },
+  { label: "mysql", icon: "./icons/mysql.png" },
+  { label: "Docker", icon: "./icons/docker.png" },
+  { label: "github", icon: "./icons/github.png" },
+  { label: "Figma", icon: "./icons/figma.png" },
 ];
 
 const Portfolio: React.FC = () => {
@@ -356,7 +356,7 @@ const Portfolio: React.FC = () => {
             {/* スライド画像切り替え */}
             <div className="relative w-full flex items-center justify-center">
               <img
-                src={`/slides/research/schema${(imageIndex["schema"] ?? 0) + 1}.png`}
+                src={`./slides/research/schema${(imageIndex["schema"] ?? 0) + 1}.png`}
                 alt={`Research Slide ${(imageIndex["schema"] ?? 0) + 1}`}
                 className="w-full h-40 object-cover rounded-lg"
               />
