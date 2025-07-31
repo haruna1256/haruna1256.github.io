@@ -21,14 +21,32 @@ const projectsByCategory: Record<string, Project[]> = {
       overview: "現実世界での移動や滞在行動をゲーム化する“陣取り型ライフログアプリ”",
       role: "企画立案、プレゼンテーション、リーダー、UI設計、swiftによるフロントエンド開発",
       technologies: ["SwiftUI", "figma"],
-      images: ["/slides/swiftui1.png", "/slides/swiftui2.png"],
+      images: [
+        "/slides/project/rihlar/1.png",
+        "/slides/project/rihlar/2.png",
+        "/slides/project/rihlar/3.png",
+        "/slides/project/rihlar/4.png",
+        "/slides/project/rihlar/5.png",
+        "/slides/project/rihlar/6.png",
+        "/slides/project/rihlar/7.png",
+        "/slides/project/rihlar/8.png",
+        "/slides/project/rihlar/9.png",
+        "/slides/project/rihlar/10.png",
+        "/slides/project/rihlar/11.png",
+        "/slides/project/rihlar/12.png",
+        "/slides/project/rihlar/13.png",
+        "/slides/project/rihlar/14.png",
+        "/slides/project/rihlar/15.png",
+        "/slides/project/rihlar/16.png",
+        "/slides/project/rihlar/17.png",
+      ],
     },
     {
       title: "捨てログ",
       period: "2025年2月 - 2025年3月",
       overview: "物の管理をデジタル化し、快適な生活空間を実現する整理・断捨離支援アプリの開発計画",
       role: "企画立案、バックエンド設計",
-      technologies: ["SwiftUI", "go","figma"],
+      technologies: ["SwiftUI", "go", "figma"],
       images: ["/slides/swiftui3.png"],
     },
     {
@@ -75,7 +93,6 @@ const projectsByCategory: Record<string, Project[]> = {
         "/slides/project/buntan/8.png",
         "/slides/project/buntan/9.png",
         "/slides/project/buntan/10.png",
-        "/slides/project/buntan/11.png",
       ],
     },
   ],
@@ -287,7 +304,7 @@ const Portfolio: React.FC = () => {
             {/* スライド画像切り替え */}
             <div className="relative w-full flex items-center justify-center">
               <img
-               src={`/slides/research/schema${(imageIndex["schema"] ?? 0) + 1}.png`}
+                src={`/slides/research/schema${(imageIndex["schema"] ?? 0) + 1}.png`}
                 alt={`Research Slide ${(imageIndex["schema"] ?? 0) + 1}`}
                 className="w-full h-40 object-cover rounded-lg"
               />
