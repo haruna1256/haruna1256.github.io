@@ -93,20 +93,20 @@ const projectsByCategory: Record<string, Project[]> = {
       technologies: ["flutter", "firebase",],
       githubUrl: "https://github.com/Doremifa-donuts/foodshuffle",
       images: [
-        "/slides/project/food shuffle/1.png",
-        "/slides/project/food shuffle/2.png",
-        "/slides/project/food shuffle/3.png",
-        "/slides/project/food shuffle/4.png",
-        "/slides/project/food shuffle/5.png",
-        "/slides/project/food shuffle/6.png",
-        "/slides/project/food shuffle/7.png",
-        "/slides/project/food shuffle/8.png",
-        "/slides/project/food shuffle/9.png",
-        "/slides/project/food shuffle/10.png",
-        "/slides/project/food shuffle/11.png",
-        "/slides/project/food shuffle/12.png",
-        "/slides/project/food shuffle/13.png",
-        "/slides/project/food shuffle/14.png",
+        "./slides/project/food shuffle/1.png",
+        "./slides/project/food shuffle/2.png",
+        "./slides/project/food shuffle/3.png",
+        "./slides/project/food shuffle/4.png",
+        "./slides/project/food shuffle/5.png",
+        "./slides/project/food shuffle/6.png",
+        "./slides/project/food shuffle/7.png",
+        "./slides/project/food shuffle/8.png",
+        "./slides/project/food shuffle/9.png",
+        "./slides/project/food shuffle/10.png",
+        "./slides/project/food shuffle/11.png",
+        "./slides/project/food shuffle/12.png",
+        "./slides/project/food shuffle/13.png",
+        "./slides/project/food shuffle/14.png",
       ],
     },
   ],
@@ -155,7 +155,7 @@ const techStack = [
   { label: "Flutter", icon: "./icons/flutter.png" },
   { label: "html", icon: "./icons/html.png" },
   { label: "css", icon: "./icons/css.png" },
-  { label: "JavaScript", icon: ".icons/javasqript.png" },
+  { label: "JavaScript", icon: "./icons/javasqript.png" },
   { label: "React", icon: "./icons/react.png" },
   { label: "Go", icon: "./icons/go.png" },
   { label: "mysql", icon: "./icons/mysql.png" },
@@ -326,7 +326,7 @@ const Portfolio: React.FC = () => {
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex items-center space-x-2 text-sm text-white bg-yuruDust px-4 py-1 rounded-full hover:bg-yuruBeige transition font-sans"
                   >
-                    <img src="/icons/github.png" alt="GitHub" className="w-4 h-4" />
+                    <img src="./icons/github.png" alt="GitHub" className="w-4 h-4" />
                     <span>GitHub</span>
                   </a>
 
@@ -395,7 +395,7 @@ const Portfolio: React.FC = () => {
               rel="noopener noreferrer"
               className="mt-2 inline-flex items-center space-x-2 text-sm text-white bg-yuruDust px-4 py-1 rounded-full hover:bg-yuruBeige transition font-sans"
             >
-              <img src="/icons/github.png" alt="GitHub" className="w-4 h-4" />
+              <img src="./icons/github.png" alt="GitHub" className="w-4 h-4" />
               <span>GitHub</span>
             </a>
 
