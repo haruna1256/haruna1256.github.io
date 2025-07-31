@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ポートフォリオ - 川岸遥奈</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <div class="rose-petals" id="rose-petals"></div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <img src="./images/neko.jpeg" alt="飼ってる猫の写真" class="profile-image">
+      <h1>川岸遥奈</h1>
+      <p class="subtitle"><strong>ECCコンピュータ専門学校 2027年卒業予定</strong></p>
+      <p class="description">
+        技術と企画の両面から、ユーザーの課題を解決するアプリケーション開発に取り組んでいます
+      </p>
+    </div>
+  </section>
+
+  <nav aria-label="メインナビゲーション">
+    <div class="hamburger" id="hamburger-menu">
+        <i class="fas fa-bars"></i> </div>
+    <ul id="nav-list">
+        <li><a href="test-page.html"><i class="fas fa-vial"></i>テストページ</a></li>
+        <li><a href="./swiftui-study/index.html"><i class="fas fa-book"></i>Swift / SwiftUI 勉強ログ</a></li>
+    </ul>
+    <div class="overlay" id="nav-overlay"></div>
+</nav>
+
+<button id="back-to-top" title="ページトップへ戻る">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+  <section id="intro" class="fade-in">
+    <h2>自己紹介</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3><i class="fas fa-lightbulb icon"></i>企画・問題定義重視</h3>
+        <p>
+          技術そのものだけでなく、「どんな課題を解決したいのか」「どの手段が最適か」といった企画・問題定義の部分から考えることを大切にしています。
+          個人開発では、「なぜこのアプリを作るのか」「誰の役に立てるのか」を明確にしながら設計や実装を行っています。
+        </p>
+      </div>
+      <div class="info-card">
+        <h3><i class="fas fa-comments icon"></i>コミュニケーション力</h3>
+        <p>
+          リーダーや発表の機会を多く経験する中で、私は物事を分かりやすく整理し、自分の考えを相手に伝えることの大切さを実感してきました。単に動くものを作るだけでなく、「なぜそのように作るのか」という、その背後にある意図やユーザーへの価値を明確にすることで、より良いプロダクト作りに貢献できるエンジニアを目指しています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="job" class="fade-in">
+    <h2>希望職種</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3><i class="fas fa-mobile-alt icon"></i>モバイルアプリエンジニア</h3>
+        <p>iOSプラットフォームでのネイティブアプリ開発に携わりたいと考えています。ユーザーの日常に寄り添うアプリケーションの開発を通じて、価値のあるサービスを提供したいです。</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="fab fa-flutter icon"></i>Flutter開発者</h3>
+        <p>クロスプラットフォーム開発の効率性とFlutterの表現力豊かなUIに魅力を感じています。一つのコードベースで多くのユーザーに価値を届けられる開発者になりたいです。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech" class="fade-in">
+    <h2>スキル</h2>
+    <div class="skills-container">
+      <div class="skill-category">
+        <h3><i class="fas fa-mobile-alt"></i>モバイル開発</h3>
+        <div class="tags">
+          <span class="tag">Swift</span>
+          <span class="tag">Dart</span>
+          <!-- <span class="tag">React Native</span> -->
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3><i class="fas fa-globe"></i>Web開発</h3>
+        <div class="tags">
+          <span class="tag">React.js</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3><i class="fas fa-server"></i>バックエンド</h3>
+        <div class="tags">
+          <span class="tag">Go</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">PHP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" class="fade-in">
+    <h2>開発手法</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3><i class="fas fa-database icon"></i>スキーマ駆動開発</h3>
+        <p>API設計の初期段階でスキーマを定義し、フロントエンドとバックエンドの開発を効率化する手法を実践しています。</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="fas fa-sync icon"></i>アジャイル開発</h3>
+        <p>短いイテレーションでの開発サイクルを回し、継続的な改善とフィードバックの取り入れを重視しています。</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="fab fa-git-alt icon"></i>バージョン管理</h3>
+        <p>Git（GitHub / GitLab）を使用した効率的なコード管理とチーム開発を行っています。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="works" class="fade-in">
+    <h2>制作物</h2>
+
+    <div class="projects-grid">
+
+      <article class="project-card image-left">
+        <div class="project-image">
+          <img src="./images/rihlar.png" alt="rihlar スクリーンショット1">
+          <img src="./images/rihlar2.png" alt="rihlar スクリーンショット2">
+        </div>
+        <div class="project-content">
+          <h3><span class="highlight-title">Rihlar - 街を歩いて自分の陣地を広げよう　作成中</span></h3>
+          <div class="project-meta">
+            <span><i class="fas fa-calendar"></i>2025年4月 ～ 2025年7月</span>
+            <span><i class="fas fa-user-crown"></i>3年前期</span>
+          </div>
+          <p><strong>概要:</strong> 現実世界での移動や滞在行動をゲーム化する“陣取り型ライフログアプリ”です。</p>
+          <p><strong>役割:</strong> 企画立案、プレゼンテーション、リーダー、UI設計、swiftによるフロントエンド開発</p>
+          <p><strong>特徴:</strong> ユーザーが街を歩くだけで、訪れた場所が自分の陣地となり、写真投稿や滞在によってエリアを強化。
+
+仲間とチームを組んで、他のチームと競い合うことで、毎日の移動に「意味」や「達成感」を与えます。</p>
+          <div class="tags">
+            <span class="tag">swift</span>
+            <span class="tag">MapKit</span>
+            <span class="tag">Keycloak</span>
+          </div>
+          <a class="btn-link" href="https://github.com/Rihlar/rihlar_front" target="_blank">
+            <i class="fab fa-github"></i>GitHubを見る
+          </a>
+        </div>
+      </article>
+     
+
+      <article class="project-card image-left">
+        <div class="project-image">
+          <img src="./images/foodshuffle.png" alt="foodshuffle スクリーンショット1">
+          <img src="./images/foodshuffle2.png" alt="foodshuffle スクリーンショット2">
+        </div>
+        <div class="project-content">
+          <h3><span class="highlight-title">food shuffle - 新しいお店との出会いを届けるアプリ</span></h3>
+          <div class="project-meta">
+            <span><i class="fas fa-calendar"></i>2024年9月 ～ 2025年2月</span>
+            <span><i class="fas fa-user-crown"></i>2年後期</span>
+          </div>
+          <p><strong>概要:</strong> すれ違いを通じて"おすすめのお店"を共有し合う、レビュー信頼性重視のグルメ情報アプリ</p>
+          <p><strong>役割:</strong> 企画立案、プレゼンテーション、リーダー、UI設計、Flutterによるフロントエンド開発</p>
+          <p><strong>特徴:</strong> 「信頼できるレビュー」「すれ違いによるお店の発見」「リアルタイム性」を軸に、大学生や若年層が"楽しく外食したくなる"体験を設計しました。</p>
+          <div class="tags">
+            <span class="tag">Flutter</span>
+            <span class="tag">Google Maps API</span>
+          </div>
+          <a class="btn-link" href="https://github.com/Doremifa-donuts/foodshuffle" target="_blank">
+            <i class="fab fa-github"></i>GitHubを見る
+          </a>
+        </div>
+      </article>
+
+     
+        <article class="project-card image-left">
+          <div class="project-image">
+            <img src="./images/suterogu.png" alt="捨てログ スクリーンショット1">
+            <img src="./images/suterogu2.png" alt="捨てログ スクリーンショット2">
+          </div>
+          <div class="project-content">
+            <h3><span class="highlight-title">捨てログ</span></h3>
+            <div class="project-meta">
+              <span><i class="fas fa-calendar"></i>2025年2月17日 〜 2025年3月15日</span>
+              <span><i class="fas fa-user"></i>2年後期</span>
+            </div>
+            <p><strong>概要:</strong> 物の管理をデジタル化し、快適な生活空間を実現する整理・断捨離支援アプリの開発計画</p>
+            <p><strong>役割:</strong> 企画立案、バックエンド設計</p>
+            <p><strong>特徴:</strong> 収納場所のデジタル管理、使用頻度通知機能、思い出アルバム機能、地域ごみ収集スケジュール連携により、ユーザーの片付け習慣をサポート</p>
+            <div class="tags">
+              <span class="tag">企画・設計</span>
+              <span class="tag">後輩と</span>
+              <span class="tag">他のコースと</span>
+              <span class="tag">Open Hack U 2025 OSAKA</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="project-card image-left">
+          <div class="project-image">
+            <img src="./images/bunntanntyann.png" alt="分担ちゃん スクリーンショット1">
+            <img src="./images/bunntanntyann2.png" alt="分担ちゃん スクリーンショット2">
+          </div>
+        <div class="project-content">
+          <h3><span class="highlight-title">ぶんたんちゃん-swiftでiosのモバイルアプリ化する予定</span></h3>
+          <div class="project-meta">
+            <span><i class="fas fa-calendar"></i>2024年4月 ～ 2024年8月</span>
+            <span><i class="fas fa-user-crown"></i>2年前期</span>
+          </div>
+          <p><strong>概要:</strong> 家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ</p>
+          <p><strong>役割:</strong> フロントエンド開発、企画、プレゼンリーダー、UI設計</p>
+          <p><strong>特徴:</strong> タスクの見える化・予定提案機能・家族向けポイントシステムを実装、</p>
+          <div class="tags">
+            <span class="tag">HTML</span>
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <a class="btn-link" href="https://github.com/ganbariya-ecc/buntanchan_Renew_web" target="_blank">
+            <i class="fab fa-github"></i>GitHubを見る
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card image-left">
+        <div class="project-image">
+          <img src="./images/wakuwaku.png" alt="わくわく探検隊 スクリーンショット1">
+          <img src="./images/wakuwaku2.png" alt="わくわく探検隊 スクリーンショット2">
+        </div>
+        <div class="project-content">
+          <h3><span class="highlight-title">わくわく探検隊 - 行き先までの楽しみを与えるアプリ</span></h3>
+          <div class="project-meta">
+            <span><i class="fas fa-users"></i>2024年6月 ～ 2024年7月</span>
+            <span><i class="fas fa-mobile-alt"></i>2年前期</span>
+          </div>
+          <p><strong>概要:</strong> 目的地への移動中に楽しい体験を提供し、旅の過程そのものを価値あるものにするiOSアプリ</p>
+          <p><strong>役割:</strong> iOSアプリ開発、UI/UX設計、他コース学生との連携</p>
+          <p><strong>特徴:</strong> 移動中のエンターテイメント機能、探検要素の追加、ユーザーの移動体験を向上させる仕組みを実装</p>
+          <div class="tags">
+            <span class="tag">Swift</span>
+            <span class="tag">iOS開発</span>
+            <span class="tag">チーム開発</span>
+            <span class="tag">UI/UX</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="research" class="fade-in">
+    <h2>研究</h2>
+    <div class="research-card">
+      <h3><i class="fas fa-flask"></i>スキーマ駆動開発 — OpenAPIとgRPCの比較研究</h3>
+      <div class="project-meta">
+        <span><i class="fas fa-calendar"></i>2025年4月14日 〜 2025年7月30日</span>
+        <span><i class="fas fa-user"></i>3年前期</span>
+      </div>
+      <ul>
+        <li>OpenAPI / gRPC / コードファーストの3手法を比較</li>
+        <li>使いやすさ、型安全性、拡張性、学習コスト、チーム開発との相性などの観点から評価</li>
+        <li>各手法で読書記録アプリのAPIを実装し、開発プロセスや生成コードを比較</li>
+        <li>OpenAPIにはSwagger Codegen、gRPCにはProtocol Buffersを用いてスキーマ定義</li>
+        <li>結果をレポート・スライドにまとめ、スキーマ駆動開発の有用性を検討</li>
+      </ul>
+      <p>
+        単に便利な技術というだけでなく、「どのような場面で有効か」「導入時にどんな工夫が必要か」といった観点から考察しました。
+        また、ドキュメント設計と実装を分離することでチーム内の認識齟齬を減らすといったスキーマ駆動開発のメリットを、実体験として得ることができました。
+      </p>
+      <a class="btn-link" href="https://github.com/haruna1256/schema-vs-code-api-comparison" target="_blank">
+            <i class="fab fa-github"></i>GitHubを見る
+          </a>
+    </div>
+  </section>
+
+  <script src="./script.js"></script>
+
+</body>
+
+</html>

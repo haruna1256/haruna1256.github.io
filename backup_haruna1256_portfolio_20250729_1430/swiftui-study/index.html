@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Swift / SwiftUI 勉強ログ</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background-color: #fff9f9;
+    color: #722f37;
+    margin: 0;
+    padding: 2rem 1rem;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h1 {
+    color: #722f37;
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    color: #8c4a54;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .filters, .category-filters {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .filters button, .category-filters button {
+    background-color: #d4526e;
+    border: none;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    margin: 0 0.3rem 0.5rem 0.3rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    user-select: none;
+  }
+  .filters button.active, .category-filters button.active,
+  .filters button:hover, .category-filters button:hover {
+    background-color: #722f37;
+  }
+  #search-box {
+    display: block;
+    margin: 0 auto 2rem auto;
+    max-width: 400px;
+    width: 90%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #d4526e;
+    border-radius: 20px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  #search-box:focus {
+    border-color: #722f37;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem 1.5rem;
+  }
+
+  a.study-item, span.study-item {
+    border-radius: 20px;
+    padding: 0.7rem 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 8px rgba(212, 82, 110, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    user-select: none;
+    transition: box-shadow 0.3s, transform 0.15s;
+    will-change: transform;
+  }
+  a.study-item {
+    background-color: #d4526e;
+    color: white;
+    cursor: pointer;
+  }
+  a.study-item:hover {
+    box-shadow: 0 8px 16px rgba(114, 47, 55, 0.6);
+    transform: translateY(-2px);
+  }
+  span.study-item {
+    background-color: #eee;
+    color: #999;
+    cursor: not-allowed;
+  }
+  .material-icons {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  a.study-item .material-icons {
+    color: #fff;
+  }
+  span.study-item .material-icons {
+    color: #bbb;
+  }
+  @media (max-width: 420px) {
+    body {
+      padding: 1rem 0.5rem;
+    }
+    a.study-item, span.study-item {
+      font-size: 0.75rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 16px;
+    }
+    .material-icons {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Swift / SwiftUI 勉強ログ</h1>
+<p>Xcodeで学んだことをまとめています ✍️<br>  
+   1つずつ進めながらポートフォリオ化していきます。</p>
+
+<div class="filters" aria-label="状態フィルター">
+  <button data-filter="all" class="active" aria-pressed="true">すべて</button>
+  <button data-filter="completed" aria-pressed="false">完了済み</button>
+  <button data-filter="pending" aria-pressed="false">未完了</button>
+</div>
+
+<div class="category-filters" aria-label="カテゴリーフィルター">
+  <!-- JSでカテゴリボタンを生成 -->
+</div>
+
+<input type="text" id="search-box" placeholder="検索ワードを入力してください" aria-label="検索ワード">
+
+<div class="grid-container" id="study-list" role="list">
+  <!-- JSでリスト描画 -->
+</div>
+
+<script>
+  // データ例（項目多数、completed:trueの場合はdetailURLが必須）
+  const studyItems = [
+  // Swift文法
+  { id: 1, category: 'Swift文法', icon: 'code', text: '基本文法の理解', completed: false },
+  { id: 2, category: 'Swift文法', icon: 'code', text: '変数と定数', completed: false },
+  { id: 3, category: 'Swift文法', icon: 'code', text: 'データ型(Int, String, Boolなど)', completed: false },
+  { id: 4, category: 'Swift文法', icon: 'code', text: '文字列操作', completed: false },
+  { id: 5, category: 'Swift文法', icon: 'code', text: '配列と辞書', completed: false },
+  { id: 6, category: 'Swift文法', icon: 'code', text: 'オプショナルの理解', completed: false },
+  { id: 7, category: 'Swift文法', icon: 'code', text: '条件分岐(if, switch)', completed: false },
+  { id: 8, category: 'Swift文法', icon: 'code', text: 'ループ(for, while, repeat)', completed: false },
+  { id: 9, category: 'Swift文法', icon: 'code', text: '関数の定義と呼び出し', completed: false },
+  { id: 10, category: 'Swift文法', icon: 'code', text: 'クロージャー(Closures)', completed: false },
+  { id: 11, category: 'Swift文法', icon: 'code', text: '構造体(Struct)', completed: false },
+  { id: 12, category: 'Swift文法', icon: 'code', text: 'クラス(Class)', completed: false },
+  { id: 13, category: 'Swift文法', icon: 'code', text: '列挙型(Enum)', completed: false },
+  { id: 14, category: 'Swift文法', icon: 'code', text: 'プロトコル(Protocol)', completed: false },
+  { id: 15, category: 'Swift文法', icon: 'code', text: '拡張(Extension)', completed: false },
+  { id: 16, category: 'Swift文法', icon: 'code', text: 'エラーハンドリング(try, catch)', completed: false },
+  { id: 17, category: 'Swift文法', icon: 'code', text: 'ジェネリクス(Generics)', completed: false },
+  { id: 18, category: 'Swift文法', icon: 'code', text: 'アクセス制御(public, private, internal)', completed: false },
+  { id: 19, category: 'Swift文法', icon: 'code', text: '型推論と型キャスト', completed: false },
+  { id: 20, category: 'Swift文法', icon: 'code', text: 'メモリ管理(ARC)', completed: false },
+  { id: 21, category: 'Swift文法', icon: 'code', text: 'lazyプロパティ', completed: false },
+  { id: 22, category: 'Swift文法', icon: 'code', text: 'computedプロパティ', completed: false },
+  { id: 23, category: 'Swift文法', icon: 'code', text: 'Property Observers(willSet, didSet)', completed: false },
+
+  // SwiftUI 基礎
+  { id: 24, category: 'SwiftUI', icon: 'brush', text: 'TextとImageの使い方', completed: false },
+  { id: 25, category: 'SwiftUI', icon: 'brush', text: 'レイアウト基礎(HStack, VStack, ZStack)', completed: false },
+  { id: 26, category: 'SwiftUI', icon: 'brush', text: 'Stateプロパティ', completed: false },
+  { id: 27, category: 'SwiftUI', icon: 'brush', text: 'Bindingプロパティ', completed: false },
+  { id: 28, category: 'SwiftUI', icon: 'brush', text: 'ObservedObjectとEnvironmentObject', completed: false },
+  { id: 29, category: 'SwiftUI', icon: 'brush', text: 'Listの作成と編集', completed: false },
+  { id: 30, category: 'SwiftUI', icon: 'brush', text: 'NavigationViewで画面遷移', completed: false },
+  { id: 31, category: 'SwiftUI', icon: 'brush', text: 'カスタムViewの作成', completed: false },
+  { id: 32, category: 'SwiftUI', icon: 'brush', text: 'ViewModifierの作成', completed: false },
+  { id: 33, category: 'SwiftUI', icon: 'brush', text: 'フォーム(Form)の構築', completed: false },
+  { id: 34, category: 'SwiftUI', icon: 'brush', text: 'アニメーション基本', completed: false },
+  { id: 35, category: 'SwiftUI', icon: 'brush', text: '遅延読み込み(LazyVStackなど)', completed: false },
+  { id: 36, category: 'SwiftUI', icon: 'brush', text: 'AlertとSheetの表示', completed: false },
+  { id: 37, category: 'SwiftUI', icon: 'brush', text: 'Gesture認識', completed: false },
+  { id: 38, category: 'SwiftUI', icon: 'brush', text: 'GeometryReaderの利用', completed: false },
+  { id: 39, category: 'SwiftUI', icon: 'brush', text: '環境変数(Environment)の活用', completed: false },
+
+  // Combine フレームワーク
+  { id: 40, category: 'Combine', icon: 'sync', text: 'Publisherの理解', completed: false },
+  { id: 41, category: 'Combine', icon: 'sync', text: 'Subscriberの理解', completed: false },
+  { id: 42, category: 'Combine', icon: 'sync', text: 'Subjects(PassthroughSubject, CurrentValueSubject)', completed: false },
+  { id: 43, category: 'Combine', icon: 'sync', text: 'オペレーター(map, filter, flatMapなど)', completed: false },
+  { id: 44, category: 'Combine', icon: 'sync', text: 'エラーハンドリング', completed: false },
+  { id: 45, category: 'Combine', icon: 'sync', text: 'Cancellableとメモリ管理', completed: false },
+
+  // UIKit 関連
+  { id: 46, category: 'UIKit', icon: 'phone_iphone', text: 'UIViewの基本', completed: false },
+  { id: 47, category: 'UIKit', icon: 'phone_iphone', text: 'UIViewControllerの基礎', completed: false },
+  { id: 48, category: 'UIKit', icon: 'phone_iphone', text: 'Storyboardの基本', completed: false },
+  { id: 49, category: 'UIKit', icon: 'phone_iphone', text: 'Auto Layout基礎', completed: false },
+  { id: 50, category: 'UIKit', icon: 'phone_iphone', text: 'TableViewの実装', completed: false },
+  { id: 51, category: 'UIKit', icon: 'phone_iphone', text: 'CollectionViewの実装', completed: false },
+
+  // Core Data
+  { id: 52, category: 'Core Data', icon: 'storage', text: 'Core Data基本概念', completed: false },
+  { id: 53, category: 'Core Data', icon: 'storage', text: 'エンティティと属性の設計', completed: false },
+  { id: 54, category: 'Core Data', icon: 'storage', text: 'NSManagedObjectの利用', completed: false },
+  { id: 55, category: 'Core Data', icon: 'storage', text: 'フェッチリクエスト', completed: false },
+  { id: 56, category: 'Core Data', icon: 'storage', text: 'データ保存と削除', completed: false },
+  { id: 57, category: 'Core Data', icon: 'storage', text: 'Core DataとSwiftUIの連携', completed: false },
+
+  // ネットワーク・URLSession
+  { id: 58, category: 'ネットワーク', icon: 'public', text: 'HTTPリクエスト基礎', completed: false },
+  { id: 59, category: 'ネットワーク', icon: 'public', text: '非同期処理(DispatchQueue, async/await)', completed: false },
+  { id: 60, category: 'ネットワーク', icon: 'public', text: 'JSONパース', completed: false },
+  { id: 61, category: 'ネットワーク', icon: 'public', text: 'REST API呼び出し', completed: false },
+  { id: 62, category: 'ネットワーク', icon: 'public', text: 'WebSocket通信基礎', completed: false },
+
+  // テストコード
+  { id: 63, category: 'テスト', icon: 'science', text: 'XCTestの基本', completed: false },
+  { id: 64, category: 'テスト', icon: 'science', text: '単体テスト', completed: false },
+  { id: 65, category: 'テスト', icon: 'science', text: 'UIテスト', completed: false },
+  { id: 66, category: 'テスト', icon: 'science', text: 'モックとスタブ', completed: false },
+
+  // デバッグ
+  { id: 67, category: 'デバッグ', icon: 'bug_report', text: 'Xcodeデバッグ機能', completed: false },
+  { id: 68, category: 'デバッグ', icon: 'bug_report', text: 'ブレークポイント', completed: false },
+  { id: 69, category: 'デバッグ', icon: 'bug_report', text: 'コンソールログ', completed: false },
+
+  // Swift Package Manager
+  { id: 70, category: 'Swift Package Manager', icon: 'extension', text: '基本操作', completed: false },
+  { id: 71, category: 'Swift Package Manager', icon: 'extension', text: '依存管理', completed: false },
+
+  // 配布・TestFlight
+  { id: 72, category: '配布', icon: 'flight_takeoff', text: 'TestFlight設定', completed: false },
+  { id: 73, category: '配布', icon: 'flight_takeoff', text: 'ベータ配布方法', completed: false },
+
+  // セキュリティ
+  { id: 74, category: 'セキュリティ', icon: 'lock', text: '認証・認可', completed: false },
+  { id: 75, category: 'セキュリティ', icon: 'lock', text: 'キーチェーン利用', completed: false },
+  { id: 76, category: 'セキュリティ', icon: 'lock', text: 'データ暗号化', completed: false },
+
+  // AVFoundation
+  { id: 77, category: 'AVFoundation', icon: 'video_library', text: '動画再生', completed: false },
+  { id: 78, category: 'AVFoundation', icon: 'video_library', text: '録画機能', completed: false },
+
+  // UI設計・アクセシビリティ
+  { id: 79, category: 'UI設計', icon: 'dashboard_customize', text: '画面遷移設計', completed: false },
+  { id: 80, category: 'UI設計', icon: 'dashboard_customize', text: 'アクセシビリティ対応', completed: false },
+  { id: 81, category: 'UI設計', icon: 'dashboard_customize', text: 'カラーパレット設計', completed: false },
+  { id: 82, category: 'UI設計', icon: 'dashboard_customize', text: 'レスポンシブ設計', completed: false },
+
+  // その他便利系
+  { id: 83, category: 'その他', icon: 'build', text: 'UserDefaults活用', completed: false },
+  { id: 84, category: 'その他', icon: 'build', text: 'ローカル通知', completed: false },
+  { id: 85, category: 'その他', icon: 'build', text: 'バックグラウンド処理', completed: false },
+  { id: 86, category: 'その他', icon: 'build', text: 'マルチスレッド基礎', completed: false },
+  { id: 87, category: 'その他', icon: 'build', text: 'ログ管理', completed: false },
+  { id: 88, category: 'その他', icon: 'build', text: 'アクセシビリティテスト', completed: false },
+  { id: 89, category: 'その他', icon: 'build', text: 'インターナショナル対応', completed: false },
+  { id: 90, category: 'その他', icon: 'build', text: 'App Store申請手順', completed: false },
+  { id: 91, category: 'その他', icon: 'build', text: 'App Store用アイコン作成', completed: false },
+  { id: 92, category: 'その他', icon: 'build', text: 'アプリのパフォーマンス改善', completed: false },
+  { id: 93, category: 'その他', icon: 'build', text: 'コードの最適化', completed: false },
+  { id: 94, category: 'その他', icon: 'build', text: 'メモリリークの発見と対策', completed: false },
+  { id: 95, category: 'その他', icon: 'build', text: 'CI/CD基礎', completed: false },
+  { id: 96, category: 'その他', icon: 'build', text: 'Gitの活用', completed: false },
+  { id: 97, category: 'その他', icon: 'build', text: 'SwiftLintによるコード整形', completed: false },
+  { id: 98, category: 'その他', icon: 'build', text: 'SwiftUI Previewsの活用', completed: false },
+  { id: 99, category: 'その他', icon: 'build', text: 'Localization対応', completed: false },
+  { id: 100, category: 'その他', icon: 'build', text: 'パフォーマンス測定ツールの使い方', completed: false },
+];
+
+
+  // フィルターUI 要素取得
+  const stateFilterButtons = document.querySelectorAll('.filters button');
+  const categoryFilterContainer = document.querySelector('.category-filters');
+  const searchBox = document.getElementById('search-box');
+  const studyListContainer = document.getElementById('study-list');
+
+  let stateFilter = 'all';
+  let categoryFilter = 'all';
+
+  // カテゴリ一覧を重複除去し取得
+  const categories = [...new Set(studyItems.map(item => item.category))];
+
+  function createCategoryFilters() {
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'すべて';
+    allBtn.dataset.category = 'all';
+    allBtn.classList.add('active');
+    allBtn.setAttribute('aria-pressed', 'true');
+    categoryFilterContainer.appendChild(allBtn);
+
+    allBtn.addEventListener('click', () => {
+      setCategoryFilter('all', allBtn);
+    });
+
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat;
+      btn.dataset.category = cat;
+      btn.setAttribute('aria-pressed', 'false');
+      btn.addEventListener('click', () => {
+        setCategoryFilter(cat, btn);
+      });
+      categoryFilterContainer.appendChild(btn);
+    });
+  }
+
+  function setCategoryFilter(cat, btn) {
+    categoryFilter = cat;
+    categoryFilterContainer.querySelectorAll('button').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+    renderList();
+  }
+
+  stateFilterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      stateFilterButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      stateFilter = btn.dataset.filter;
+      renderList();
+    });
+  });
+
+  function renderList() {
+    const search = searchBox.value.trim().toLowerCase();
+    studyListContainer.innerHTML = '';
+
+    const filtered = studyItems.filter(item => {
+      if (stateFilter === 'completed' && !item.completed) return false;
+      if (stateFilter === 'pending' && item.completed) return false;
+      if (categoryFilter !== 'all' && item.category !== categoryFilter) return false;
+      if (!item.text.toLowerCase().includes(search)) return false;
+      return true;
+    });
+
+    filtered.forEach(item => {
+      let el;
+      const iconHTML = `<span class="material-icons">${item.icon}</span>`;
+
+      if (item.completed && item.detailURL) {
+        el = document.createElement('a');
+        el.href = item.detailURL;
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
+        el.className = 'study-item';
+        el.innerHTML = `${iconHTML}${item.category} ${item.text}`;
+        el.setAttribute('role', 'listitem');
+        el.tabIndex = 0;
+      } else {
+        el = document.createElement('span');
+        el.className = 'study-item';
+        el.innerHTML = `${iconHTML}${item.category} ${item.text}`;
+        el.setAttribute('role', 'listitem');
+        el.tabIndex = -1;
+      }
+
+      studyListContainer.appendChild(el);
+    });
+  }
+
+  searchBox.addEventListener('input', () => renderList());
+
+  createCategoryFilters();
+  renderList();
+</script>
+
+</body>
+</html>
