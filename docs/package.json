@@ -9,8 +9,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "tailwind:init": "node ./node_modules/tailwindcss/lib/cli.js init -p",
-    "deploy": "gh-pages -d dist"
+
+    "deploy": "gh-pages -d dist",
+    "tailwind:init": "node ./node_modules/tailwindcss/lib/cli.js init -p"
+
   },
   "dependencies": {
     "framer-motion": "^12.23.11",
