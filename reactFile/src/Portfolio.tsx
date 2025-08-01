@@ -212,17 +212,15 @@ const Portfolio: React.FC = () => {
   return (
     <div className="snap-y snap-mandatory overflow-y-scroll h-screen bg-white text-yuruDust">
       {/* Profile Section */}
-      <section className="snap-start min-h-screen flex flex-col justify-center items-center p-10 bg-white">
-        <div className="flex items-center space-x-8">
-          <img
-            src={profileIconUrl}
-            alt="Profile"
-            className="w-[280px] h-[280px] rounded-full object-cover"
-          />
-          <div>
-            <h1 className="text-6xl font-script">Haruna Kawagishi</h1>
-            <p className="text-xl text-yuruBeige mt-2 font-sans">iOS Engineer</p>
-          </div>
+      <section className="snap-start min-h-screen flex flex-col sm:flex-row justify-center items-center p-10 bg-white gap-10">
+        <img
+          src={profileIconUrl}
+          alt="Profile"
+          className="w-56 h-56 sm:w-[280px] sm:h-[280px] rounded-full object-cover"
+        />
+        <div className="text-center sm:text-left">
+          <h1 className="text-5xl sm:text-6xl font-script">Haruna Kawagishi</h1>
+          <p className="text-lg sm:text-xl text-yuruBeige mt-2 font-sans">iOS Engineer</p>
         </div>
       </section>
 
