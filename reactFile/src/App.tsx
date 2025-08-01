@@ -1,11 +1,10 @@
-import './App.css'
+import Portfolio from "./Portfolio";
+import "./font.css";
 
 function App() {
   return (
-    <div className="min-h-screen bg-pink-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-pink-800">
-        Tailwind CSS が動いたよ 🎉
-      </h1>
+    <div className="h-screen w-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory">
+      <Portfolio />
     </div>
   );
 }
