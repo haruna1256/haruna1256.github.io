@@ -21,7 +21,7 @@ const projectsByCategory: Record<string, Project[]> = {
       period: "2025年4月 - 2025年8月",
       overview: "現実世界での移動や滞在行動をゲーム化する“陣取り型ライフログアプリ”",
       role: "企画立案、プレゼンテーション、リーダー、UI設計、swiftによるフロントエンド開発",
-      technologies: ["SwiftUI", "figma"],
+      technologies: ["Swift", "figma"],
       githubUrl: "https://github.com/Rihlar/rihlar_front",
       images: [
         "/slides/project/rihlar/1.png",
@@ -48,7 +48,7 @@ const projectsByCategory: Record<string, Project[]> = {
       period: "2025年2月 - 2025年3月",
       overview: "物の管理をデジタル化し、快適な生活空間を実現する整理・断捨離支援アプリの開発計画",
       role: "企画立案、バックエンド設計",
-      technologies: ["SwiftUI", "go", "figma"],
+      technologies: ["Swift", "go", "figma"],
       githubUrl: "https://github.com/narutosisu/backend",
       images: [
         "/slides/project/sutelog/1.png",
@@ -71,7 +71,7 @@ const projectsByCategory: Record<string, Project[]> = {
       period: "2024年6月 - 2024年7月",
       overview: "目的地への移動中に楽しい体験を提供し、旅の過程そのものを価値あるものにする",
       role: "バックエンド設計,データベース設計",
-      technologies: ["mysql"],
+      technologies: ["swift", "mysql"],
       githubUrl: "https://github.com/ganbariya-ecc/buntanchan_Renew_web",
       images: [
         "/slides/project/wakuwaku/1.png",
@@ -117,7 +117,7 @@ const projectsByCategory: Record<string, Project[]> = {
       overview:
         "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
       role: "フロントエンド開発、企画、プレゼンリーダー、UI設計",
-      technologies: ["HTML", "CSS", "javasqript", "TailwindCSS"],
+      technologies: ["HTML", "CSS", "JavaScript", "TailwindCSS"],
       githubUrl: "https://github.com/ganbariya-ecc/buntanchan_Renew_web",
       images: [
         "/slides/project/buntan/1.png",
@@ -164,6 +164,23 @@ const techStack = [
   { label: "Figma", icon: "/icons/figma.png" },
 ];
 
+const projectTechIcons = [
+  { label: "Swift", icon: "/icons/swift.png" },
+  { label: "Flutter", icon: "/icons/flutter.png" },
+  { label: "HTML", icon: "/icons/html.png" },
+  { label: "CSS", icon: "/icons/css.png" },
+  { label: "JavaScript", icon: "/icons/javasqript.png" },
+  { label: "React", icon: "/icons/react.png" },
+  { label: "Go", icon: "/icons/go.png" },
+  { label: "MySQL", icon: "/icons/mysql.png" },
+  { label: "TailwindCSS", icon: "/icons/TailwindCSS.png" },
+  { label: "vite", icon: "/icons/vite.png" },
+  { label: "firebase", icon: "/icons/firebase.png" },
+  { label: "TypeScript", icon: "/icons/typescript.png" },
+  { label: "Docker", icon: "/icons/docker.png" },
+  { label: "GitHub", icon: "/icons/github.png" },
+  { label: "Figma", icon: "/icons/figma.png" },
+];
 const Portfolio: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("SwiftUI");
@@ -316,10 +333,21 @@ const Portfolio: React.FC = () => {
                   <p className="text-sm text-gray-600 font-sans">
                     <span className="font-semibold">Role:</span> {project.role}
                   </p>
-                  <p className="text-sm text-gray-600 font-sans">
-                    <span className="font-semibold">Tech:</span>{" "}
-                    {project.technologies.join(", ")}
+                  <p className="text-sm text-gray-600 font-sans flex flex-wrap items-center gap-2">
+                    <span className="font-semibold mr-1">Tech:</span>
+                    {project.technologies.map((tech) => {
+                      const techInfo = projectTechIcons.find((item) => item.label.toLowerCase() === tech.toLowerCase());
+                      return (
+                        <span key={tech} className="flex items-center gap-1">
+                          {techInfo?.icon && (
+                            <img src={techInfo.icon} alt={tech} className="w-4 h-4" />
+                          )}
+                          {/* <span>{tech}</span> */}
+                        </span>
+                      );
+                    })}
                   </p>
+
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
@@ -387,8 +415,22 @@ const Portfolio: React.FC = () => {
             <p className="text-sm text-gray-600 font-sans">
               <span className="font-semibold">手法:</span> OpenAPI, gRPC, Code First
             </p>
-            <p className="text-sm text-gray-600 font-sans">
-              <span className="font-semibold">使用技術:</span> Go, React, Swagger, Protobuf
+            <p className="text-sm text-gray-600 font-sans flex flex-wrap items-center gap-2 mb-2">
+              <span className="font-semibold mr-1">使用技術:</span>
+              {["Go", "React", "Swagger", "Protobuf"].map((tech) => {
+                const techInfo = projectTechIcons.find(
+                  (item) => item.label.toLowerCase() === tech.toLowerCase()
+                );
+                return (
+                  <span key={tech} className="flex items-center gap-1">
+                    {techInfo?.icon ? (
+                      <img src={techInfo.icon} alt={tech} className="w-4 h-4" />
+                    ) : (
+                      <span>{tech}</span>
+                    )}
+                  </span>
+                );
+              })}
             </p>
             <a
               href="https://github.com/haruna1256/schema-vs-code-api-comparison"
