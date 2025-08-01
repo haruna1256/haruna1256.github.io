@@ -11,6 +11,7 @@ interface Project {
   role?: string;
   technologies: string[];
   images: string[];
+  githubUrl?: string;
 }
 
 const projectsByCategory: Record<string, Project[]> = {
@@ -21,6 +22,7 @@ const projectsByCategory: Record<string, Project[]> = {
       overview: "現実世界での移動や滞在行動をゲーム化する“陣取り型ライフログアプリ”",
       role: "企画立案、プレゼンテーション、リーダー、UI設計、swiftによるフロントエンド開発",
       technologies: ["SwiftUI", "figma"],
+      githubUrl: "https://github.com/Rihlar/rihlar_front",
       images: [
         "/slides/project/rihlar/1.png",
         "/slides/project/rihlar/2.png",
@@ -47,6 +49,7 @@ const projectsByCategory: Record<string, Project[]> = {
       overview: "物の管理をデジタル化し、快適な生活空間を実現する整理・断捨離支援アプリの開発計画",
       role: "企画立案、バックエンド設計",
       technologies: ["SwiftUI", "go", "figma"],
+      githubUrl: "https://github.com/narutosisu/backend",
       images: [
         "/slides/project/sutelog/1.png",
         "/slides/project/sutelog/2.png",
@@ -69,6 +72,7 @@ const projectsByCategory: Record<string, Project[]> = {
       overview: "目的地への移動中に楽しい体験を提供し、旅の過程そのものを価値あるものにする",
       role: "バックエンド設計,データベース設計",
       technologies: ["mysql"],
+      githubUrl: "https://github.com/ganbariya-ecc/buntanchan_Renew_web",
       images: [
         "/slides/project/wakuwaku/1.png",
         "/slides/project/wakuwaku/2.png",
@@ -86,7 +90,8 @@ const projectsByCategory: Record<string, Project[]> = {
       overview:
         "すれ違いを通じて`おすすめのお店`を共有し合う、レビュー信頼性重視のグルメ情報アプリ",
       role: "企画立案、プレゼンテーション、リーダー、UI設計、フロントエンド開発",
-      technologies:  ["flutter", "firebase",],
+      technologies: ["flutter", "firebase",],
+      githubUrl: "https://github.com/Doremifa-donuts/foodshuffle",
       images: [
         "/slides/project/food shuffle/1.png",
         "/slides/project/food shuffle/2.png",
@@ -112,7 +117,8 @@ const projectsByCategory: Record<string, Project[]> = {
       overview:
         "家族間の予定・タスク共有と家事の見える化により、コミュニケーションを促進するアプリ",
       role: "フロントエンド開発、企画、プレゼンリーダー、UI設計",
-      technologies: ["HTML", "CSS","javasqript","TailwindCSS"],
+      technologies: ["HTML", "CSS", "javasqript", "TailwindCSS"],
+      githubUrl: "https://github.com/ganbariya-ecc/buntanchan_Renew_web",
       images: [
         "/slides/project/buntan/1.png",
         "/slides/project/buntan/2.png",
@@ -135,9 +141,10 @@ const projectsByCategory: Record<string, Project[]> = {
         "Reactを使ったポートフォリオ",
       role: "構成・UI設計・コーディング",
       technologies: ["React", "Vite", "TypeScript"],
+      githubUrl: "https://github.com/haruna1256/haruna1256.github.io",
       images: [
         "/slides/project/profile/1.png",
-         "/slides/project/profile/2.png",
+        "/slides/project/profile/2.png",
       ],
     },
   ],
@@ -313,6 +320,17 @@ const Portfolio: React.FC = () => {
                     <span className="font-semibold">Tech:</span>{" "}
                     {project.technologies.join(", ")}
                   </p>
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-2 text-sm text-yuruDust bg-yuruPink px-4 py-1 rounded hover:bg-gray-800 transition"
+                    >
+                      <img src="/icons/github.png" className="w-4 h-4" alt="GitHub" />
+                      GitHub
+                    </a>
+                  )}
                 </div>
               );
             })}
@@ -372,6 +390,15 @@ const Portfolio: React.FC = () => {
             <p className="text-sm text-gray-600 font-sans">
               <span className="font-semibold">使用技術:</span> Go, React, Swagger, Protobuf
             </p>
+            <a
+              href="https://github.com/haruna1256/schema-vs-code-api-comparison"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-2 text-sm text-yuruDust bg-yuruPink px-4 py-1 rounded hover:bg-gray-800 transition"
+            >
+              <img src="/icons/github.png" className="w-4 h-4" alt="GitHub" />
+              GitHub
+            </a>
           </div>
         </div>
       </section>
