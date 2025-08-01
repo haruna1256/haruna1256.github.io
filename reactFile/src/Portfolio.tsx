@@ -260,13 +260,13 @@ const Portfolio: React.FC = () => {
         <h2 className="text-4xl mb-10 font-script">Projects</h2>
 
         {/* Category Tabs */}
-        <div className="flex justify-center space-x-6 mb-8">
+        <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-6 mb-8 flex-wrap">
           {Object.keys(projectsByCategory).map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-5 py-2 rounded-full font-semibold
-                ${selectedCategory === category
+              className={`px-3 py-1 sm:px-5 sm:py-2 rounded-full font-semibold text-sm sm:text-base md:text-lg
+        ${selectedCategory === category
                   ? "bg-yuruDust text-white shadow-lg"
                   : "bg-white text-yuruDust hover:bg-yuruDust hover:text-white transition"
                 }`}
@@ -275,6 +275,7 @@ const Portfolio: React.FC = () => {
             </button>
           ))}
         </div>
+
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
