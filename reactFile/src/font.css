@@ -1,8 +1,14 @@
-/* font.css */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-.font-script {
-  font-family: 'Great Vibes', cursive !important;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600&family=M+PLUS+1p:wght@400;500&display=swap');
+
+/* タイトル・セクション見出し用 */
+.font-serif {
+  font-family: 'Noto Serif JP', serif !important;
+}
+
+/* 本文・UI要素用 */
+.font-sans {
+  font-family: 'M PLUS 1p', sans-serif !important;
 }
 
 .bg-wineLight {

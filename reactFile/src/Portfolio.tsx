@@ -202,7 +202,7 @@ const Portfolio: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen bg-wineLight">
-        <h1 className="text-5xl md:text-7xl text-wineGold font-script animate-fade-in">
+        <h1 className="text-5xl md:text-7xl text-wineGold font-serif animate-fade-in">
           Haruna Kawagishi
         </h1>
       </div>
@@ -219,15 +219,15 @@ const Portfolio: React.FC = () => {
           className="w-56 h-56 sm:w-[280px] sm:h-[280px] rounded-full object-cover"
         />
         <div className="text-center sm:text-left">
-          <h1 className="text-5xl sm:text-6xl font-script">Haruna Kawagishi</h1>
+          <h1 className="text-5xl sm:text-6xl font-serif">Haruna Kawagishi</h1>
           <p className="text-lg sm:text-xl text-yuruBeige mt-2 font-sans">iOS Engineer</p>
         </div>
       </section>
 
       {/* About Me Section */}
       <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-yuruPink p-10 text-gray-700">
-        <h2 className="text-4xl mb-8 font-script">About Me</h2>
-        <div className="max-w-xl space-y-6 text-base text-center font-script">
+        <h2 className="text-4xl mb-8 font-serif">About Me</h2>
+        <div className="max-w-xl space-y-6 text-base text-center font-serif">
           <p>
             企画・問題定義重視。技術だけでなく、「どんな課題を解決したいのか」「どの手段が最適か」を重視しています。
             個人開発では「なぜこのアプリを作るのか」「誰の役に立てるのか」を考えながら設計・実装しています。
@@ -241,7 +241,7 @@ const Portfolio: React.FC = () => {
 
       {/* Tech Stack Section */}
       <section className="snap-start min-h-screen flex flex-col justify-center items-center p-10">
-        <h2 className="text-4xl mb-6 font-script">Tech Stack</h2>
+        <h2 className="text-4xl mb-6 font-serif">Tech Stack</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-800 max-w-4xl mx-auto justify-items-center">
           {techStack.map((tech) => (
             <div
@@ -257,7 +257,7 @@ const Portfolio: React.FC = () => {
 
       {/* Projects Section */}
       <section className="snap-start min-h-screen bg-yuruPink p-10 flex flex-col items-center">
-        <h2 className="text-4xl mb-10 font-script">Projects</h2>
+        <h2 className="text-4xl mb-10 font-serif">Projects</h2>
 
         {/* Category Tabs */}
         <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-6 mb-8 flex-wrap">
@@ -291,7 +291,7 @@ const Portfolio: React.FC = () => {
                   style={{ maxWidth: 320 }}
                 >
                   <h4
-                    className="text-lg font-semibold text-yuruDust text-center truncate font-script"
+                    className="text-lg font-semibold text-yuruDust text-center truncate font-serif"
                     title={project.title}
                   >
                     {project.title}
@@ -366,7 +366,7 @@ const Portfolio: React.FC = () => {
 
       {/* Research Section */}
       <section className="snap-start min-h-screen bg-white p-10 flex flex-col items-center">
-        <h2 className="text-4xl mb-10 font-script">Research</h2>
+        <h2 className="text-4xl mb-10 font-serif">Research</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           <div
@@ -374,7 +374,7 @@ const Portfolio: React.FC = () => {
             style={{ maxWidth: 320 }}
           >
             <h4
-              className="text-lg font-semibold text-yuruDust text-center truncate font-script"
+              className="text-lg font-semibold text-yuruDust text-center truncate font-serif"
               title="スキーマ駆動開発の研究"
             >
               スキーマ駆動開発の研究
