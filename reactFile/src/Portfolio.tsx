@@ -209,7 +209,8 @@ const Portfolio: React.FC = () => {
       <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-yuruPink p-10 text-gray-700 font-serif">
         <h2 className="text-4xl mb-8">About Me</h2>
         <div className="max-w-xl space-y-6 text-center">
-          <p>企画・問題定義重視。動くものだけでなく、その背後にある意図や価値を明確にし、良いプロダクト作りに貢献します。</p>
+          <p>企画・問題定義重視。技術だけでなく、「どんな課題を解決したいのか」「どの手段が最適か」を重視しています。 個人開発では「なぜこのアプリを作るのか」「誰の役に立てるのか」を考えながら設計・実装しています。</p>
+          <p>リーダーや発表経験を通して、物事を分かりやすく整理し伝える力を磨いてきました。 動くものだけでなく、その背後にある意図や価値を明確にし、良いプロダクト作りに貢献します。</p>
         </div>
       </section>
 
