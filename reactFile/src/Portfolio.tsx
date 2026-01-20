@@ -380,7 +380,7 @@ const Portfolio: React.FC = () => {
         SlideKit を用いたインタラクティブ資料の設計
       </h4>
 
-      <p className="text-sm text-yuruBeige">2025年12月</p>
+      <p className="text-sm text-yuruBeige">2025年10月~2026年1月</p>
 
       <div className="relative w-full flex items-center justify-center">
         <img
