@@ -122,13 +122,11 @@ const Portfolio: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // 拡大
   const openSlider = (key: string, images: string[]) => {
     setExpandedCardKey(key);
     setExpandedImages(images);
   };
 
-  // 閉じる（リセット）
   const closeSlider = () => {
     if (expandedCardKey) {
       setImageIndex((prev) => ({ ...prev, [expandedCardKey]: 0 }));
@@ -137,15 +135,16 @@ const Portfolio: React.FC = () => {
     setExpandedImages([]);
   };
 
-  // 画像切り替え用
-  const nextImage = (key: string, total: number) => {
+  const nextImage = (e: React.MouseEvent, key: string, total: number) => {
+    e.stopPropagation();
     setImageIndex((prev) => ({
       ...prev,
       [key]: ((prev[key] ?? 0) + 1) % total
     }));
   };
 
-  const prevImage = (key: string, total: number) => {
+  const prevImage = (e: React.MouseEvent, key: string, total: number) => {
+    e.stopPropagation();
     setImageIndex((prev) => ({
       ...prev,
       [key]: ((prev[key] ?? 0) - 1 + total) % total
@@ -166,41 +165,38 @@ const Portfolio: React.FC = () => {
       {/* --- 全画面拡大モーダル --- */}
       {expandedCardKey && (
         <div 
-          className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm"
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm p-4"
           onClick={closeSlider}
         >
-          {/* 画像コンテナ */}
-          <div className="relative w-full h-full flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
             <img 
               src={expandedImages[imageIndex[expandedCardKey] ?? 0]} 
               alt="Slide" 
-              className="max-h-full max-w-full object-contain rounded-lg shadow-2xl" 
+              className="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl" 
             />
 
-            {/* 操作ボタン */}
             {expandedImages.length > 1 && (
               <>
                 <button 
-                  className="absolute left-4 md:left-12 z-[1000] p-4 text-white text-6xl hover:bg-white/10 rounded-full transition-all"
-                  onClick={() => prevImage(expandedCardKey, expandedImages.length)}
+                  className="absolute left-2 md:left-8 z-[1000] text-white text-6xl md:text-8xl hover:text-gray-300 transition-all p-4"
+                  onClick={(e) => prevImage(e, expandedCardKey, expandedImages.length)}
                 >‹</button>
                 <button 
-                  className="absolute right-4 md:right-12 z-[1000] p-4 text-white text-6xl hover:bg-white/10 rounded-full transition-all"
-                  onClick={() => nextImage(expandedCardKey, expandedImages.length)}
+                  className="absolute right-2 md:right-8 z-[1000] text-white text-6xl md:text-8xl hover:text-gray-300 transition-all p-4"
+                  onClick={(e) => nextImage(e, expandedCardKey, expandedImages.length)}
                 >›</button>
               </>
             )}
 
-            {/* 閉じるボタン */}
             <button 
-              className="absolute top-8 right-8 z-[1000] text-white text-4xl hover:text-gray-300 transition-colors"
+              className="absolute top-4 right-4 z-[1000] text-white text-3xl font-bold p-2 hover:text-gray-400" 
               onClick={closeSlider}
             >✕</button>
           </div>
         </div>
       )}
 
-      {/* Profile Section */}
+      {/* --- Profile --- */}
       <section className="snap-start min-h-screen flex flex-col sm:flex-row justify-center items-center p-10 bg-white gap-10">
         <img src={profileIconUrl} alt="Profile" className="w-56 h-56 sm:w-[280px] sm:h-[280px] rounded-full object-cover" />
         <div className="text-center sm:text-left">
@@ -209,15 +205,15 @@ const Portfolio: React.FC = () => {
         </div>
       </section>
 
-      {/* About Me Section */}
+      {/* --- About Me --- */}
       <section className="snap-start min-h-screen flex flex-col justify-center items-center bg-yuruPink p-10 text-gray-700 font-serif">
         <h2 className="text-4xl mb-8">About Me</h2>
         <div className="max-w-xl space-y-6 text-center">
-          <p>企画・問題定義重視。意図や価値を明確にし、良いプロダクト作りに貢献します。</p>
+          <p>企画・問題定義重視。動くものだけでなく、その背後にある意図や価値を明確にし、良いプロダクト作りに貢献します。</p>
         </div>
       </section>
 
-      {/* Tech Stack Section */}
+      {/* --- Tech Stack --- */}
       <section className="snap-start min-h-screen flex flex-col justify-center items-center p-10">
         <h2 className="text-4xl mb-6 font-serif">Tech Stack</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
@@ -230,7 +226,7 @@ const Portfolio: React.FC = () => {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* --- Projects Section --- */}
       <section className="snap-start min-h-screen bg-yuruPink p-10 flex flex-col items-center">
         <h2 className="text-4xl mb-10 font-serif">Projects</h2>
         <div className="flex justify-center space-x-2 mb-8 flex-wrap">
@@ -249,34 +245,35 @@ const Portfolio: React.FC = () => {
           {projectsByCategory[selectedCategory].map((project, idx) => {
             const key = `project-${selectedCategory}-${idx}`;
             return (
-              <div
-                key={key}
-                className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-all"
-                style={{ maxWidth: 320 }}
-              >
+              <div key={key} className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-all" style={{ maxWidth: 320 }}>
                 <h4 className="text-lg font-semibold text-yuruDust text-center font-serif">{project.title}</h4>
                 <p className="text-sm text-yuruBeige">{project.period}</p>
                 <img 
                   src={project.images[0]} 
                   alt="Thumbnail" 
-                  className="w-full h-40 object-cover rounded-lg cursor-pointer hover:opacity-90" 
+                  className="w-full h-40 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity" 
                   onClick={() => openSlider(key, project.images)}
                 />
                 <p className="text-sm text-gray-700 text-center font-sans">{project.overview}</p>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-2">
                   <span className="text-sm font-semibold">Tech:</span>
                   {project.technologies.map((tech) => {
                     const icon = projectTechIcons.find((item) => item.label.toLowerCase() === tech.toLowerCase());
-                    return icon ? <img key={tech} src={icon.icon} className="w-4 h-4" alt={tech} /> : null;
+                    return icon ? <img key={tech} src={icon.icon} className="w-4 h-4" alt={tech} title={tech} /> : null;
                   })}
                 </div>
+                {project.githubUrl && (
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 text-sm text-yuruDust bg-yuruPink px-4 py-1.5 rounded-full hover:bg-yuruDust hover:text-white transition-all font-sans">
+                    <img src="/icons/github.png" className="w-4 h-4" alt="GitHub" /> GitHub
+                  </a>
+                )}
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* Research Section */}
+      {/* --- Research Section (GitHubボタンを復活) --- */}
       <section className="snap-start min-h-screen bg-white p-10 flex flex-col items-center">
         <h2 className="text-4xl mb-10 font-serif">Research</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -286,30 +283,45 @@ const Portfolio: React.FC = () => {
               title: "SlideKit を用いたインタラクティブ資料の設計",
               period: "2025年10月~2026年1月",
               images: Array.from({ length: 10 }, (_, i) => `/slides/research/Slidekit/swift-slidekit${i + 1}.png`),
-              desc: "SwiftUIとSlideKitを用いてスライドをコードで構築。"
+              desc: "SwiftUIとSlideKitを用いてスライドをコードで構築。",
+              githubUrl: "https://github.com/haruna1256/SlideKitAtelier", 
+              techs: ["Swift"]
             },
             {
               id: "schema",
               title: "スキーマ駆動開発の研究",
               period: "2025年4月 〜 2025年7月",
               images: Array.from({ length: 20 }, (_, i) => `/slides/research/schema${i + 1}.png`),
-              desc: "OpenAPI・gRPCとコードファースト開発を比較。"
+              desc: "OpenAPI・gRPCとコードファースト開発を比較。",
+              githubUrl: "https://github.com/haruna1256/schema-vs-code-api-comparison", 
+              techs: ["Go", "MySQL"]
             }
           ].map((res) => (
-            <div
-              key={res.id}
-              className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-all border border-gray-100"
-              style={{ maxWidth: 320 }}
-            >
+            <div key={res.id} className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-all border border-gray-100" style={{ maxWidth: 320 }}>
               <h4 className="text-lg font-semibold text-yuruDust text-center font-serif">{res.title}</h4>
               <p className="text-sm text-yuruBeige">{res.period}</p>
               <img 
                 src={res.images[0]} 
                 alt="Thumbnail" 
-                className="w-full h-40 object-cover rounded-lg cursor-pointer hover:opacity-90" 
+                className="w-full h-40 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity" 
                 onClick={() => openSlider(res.id, res.images)}
               />
               <p className="text-sm text-gray-700 text-center font-sans">{res.desc}</p>
+              
+              {/* ResearchにもTechアイコンを表示 */}
+              <div className="flex gap-2">
+                {res.techs?.map(t => {
+                  const icon = projectTechIcons.find(i => i.label.toLowerCase() === t.toLowerCase());
+                  return icon ? <img key={t} src={icon.icon} className="w-4 h-4" alt={t} /> : null;
+                })}
+              </div>
+
+              {/* ResearchのGitHubボタンを表示 */}
+              {res.githubUrl && (
+                <a href={res.githubUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 text-sm text-yuruDust bg-yuruPink px-4 py-1.5 rounded-full hover:bg-yuruDust hover:text-white transition-all font-sans">
+                  <img src="/icons/github.png" className="w-4 h-4" alt="GitHub" /> GitHub
+                </a>
+              )}
             </div>
           ))}
         </div>
