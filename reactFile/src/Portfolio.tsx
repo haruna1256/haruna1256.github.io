@@ -377,7 +377,7 @@ const Portfolio: React.FC = () => {
       style={{ maxWidth: 320 }}
     >
       <h4 className="text-lg font-semibold text-yuruDust text-center font-serif">
-        SlideKit を用いた\nインタラクティブ資料の設計
+        SlideKit を用いたインタラクティブ資料の設計
       </h4>
 
       <p className="text-sm text-yuruBeige">2025年12月</p>
@@ -403,7 +403,6 @@ const Portfolio: React.FC = () => {
 
       <p className="text-sm text-gray-700 text-center font-sans">
         SwiftUIとSlideKitを用いてスライドをコードで構築し、段階的に表示が変化するアニメーション設計を研究しました。
-  さらに、iOSアプリと連携してiPhoneからスライド操作を可能にし、プレゼン操作におけるUI設計とユーザー体験の向上を検証しました。
 </p>
 
       <p className="text-sm text-gray-600 font-sans">
