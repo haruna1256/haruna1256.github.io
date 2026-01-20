@@ -377,41 +377,41 @@ const Portfolio: React.FC = () => {
       style={{ maxWidth: 320 }}
     >
       <h4 className="text-lg font-semibold text-yuruDust text-center font-serif">
-        Swift on Windows 検証
+        SlideKit を用いた\nインタラクティブ資料の設計
       </h4>
 
       <p className="text-sm text-yuruBeige">2025年12月</p>
 
       <div className="relative w-full flex items-center justify-center">
         <img
-          src={`/slides/research/swift-win${(imageIndex["swift-win"] ?? 0) + 1}.png`}
+          src={`/slides/research/Slidekit/swift-slidekit${(imageIndex["swift-slidekit"] ?? 0) + 1}.png`}
           className="w-full h-40 object-cover rounded-lg"
         />
         <button
           className="absolute left-0 text-2xl px-2 bg-white bg-opacity-60 rounded-r"
-          onClick={() => handleImageChange("swift-win", 10, -1)}
+          onClick={() => handleImageChange("swift-slidekit", 10, -1)}
         >
           ‹
         </button>
         <button
           className="absolute right-0 text-2xl px-2 bg-white bg-opacity-60 rounded-l"
-          onClick={() => handleImageChange("swift-win", 10, 1)}
+          onClick={() => handleImageChange("swift-slidekit", 10, 1)}
         >
           ›
         </button>
       </div>
 
       <p className="text-sm text-gray-700 text-center font-sans">
-        SwiftはmacOS向けの印象が強いが、公式にWindows対応が進められている。
-        CLIベースでの計算処理・テキスト出力などを実環境で検証した。
-      </p>
+        SwiftUIとSlideKitを用いてスライドをコードで構築し、段階的に表示が変化するアニメーション設計を研究しました。
+  さらに、iOSアプリと連携してiPhoneからスライド操作を可能にし、プレゼン操作におけるUI設計とユーザー体験の向上を検証しました。
+</p>
 
       <p className="text-sm text-gray-600 font-sans">
         <span className="font-semibold">手法:</span> 公式調査 / 実機検証 / SlideKit
       </p>
 
       <p className="text-sm text-gray-600 flex gap-2">
-        {["Swift", "Windows", "CLI", "SlideKit"].map((tech) => {
+        {["Swift", "Windows", "SlideKit"].map((tech) => {
           const icon = projectTechIcons.find(
             (i) => i.label.toLowerCase() === tech.toLowerCase()
           );
