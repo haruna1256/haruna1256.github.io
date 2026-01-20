@@ -367,6 +367,79 @@ const Portfolio: React.FC = () => {
       {/* Research Section */}
       <section className="snap-start min-h-screen bg-white p-10 flex flex-col items-center">
         <h2 className="text-4xl mb-10 font-serif">Research</h2>
+        {/* Swift on Windows / SlideKit Research */}
+<div
+  className="bg-white rounded-xl shadow p-4 space-y-3 flex flex-col items-center hover:shadow-lg transition-shadow duration-300"
+  style={{ maxWidth: 320 }}
+>
+  <h4
+    className="text-lg font-semibold text-yuruDust text-center truncate font-serif"
+    title="Swift on Windows 検証（SlideKit利用）"
+  >
+    Swift on Windows 検証
+  </h4>
+
+  <p className="text-sm text-yuruBeige">
+    2025年12月
+  </p>
+
+  {/* スライド画像切り替え */}
+  <div className="relative w-full flex items-center justify-center">
+    <img
+      src={`/slides/research/swift-win${(imageIndex["swift-win"] ?? 0) + 1}.png`}
+      alt={`Swift on Windows Slide ${(imageIndex["swift-win"] ?? 0) + 1}`}
+      className="w-full h-40 object-cover rounded-lg"
+    />
+    <button
+      className="absolute left-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-r hover:bg-opacity-90"
+      onClick={() =>
+        handleImageChange("swift-win", 10, -1)
+      }
+      aria-label="Previous"
+    >
+      ‹
+    </button>
+    <button
+      className="absolute right-0 text-2xl px-2 text-yuruDust font-bold bg-white bg-opacity-60 rounded-l hover:bg-opacity-90"
+      onClick={() =>
+        handleImageChange("swift-win", 10, 1)
+      }
+      aria-label="Next"
+    >
+      ›
+    </button>
+  </div>
+
+  <p className="text-sm text-gray-700 text-center font-sans">
+    SwiftはmacOS向けという印象が強いが、公式にWindows対応が進められている。
+    実際にWindows環境でSwiftをセットアップし、計算処理・テキスト出力など
+    CLIベースの開発がどこまで可能かを検証した。
+  </p>
+
+  <p className="text-sm text-gray-600 font-sans">
+    <span className="font-semibold">手法:</span>
+    公式ドキュメント調査 / 実環境検証 / SlideKitでの発表資料作成
+  </p>
+
+  <p className="text-sm text-gray-600 font-sans flex flex-wrap items-center gap-2 mb-2">
+    <span className="font-semibold mr-1">使用技術:</span>
+    {["Swift", "Windows", "CLI", "SlideKit"].map((tech) => {
+      const techInfo = projectTechIcons.find(
+        (item) => item.label.toLowerCase() === tech.toLowerCase()
+      );
+      return (
+        <span key={tech} className="flex items-center gap-1">
+          {techInfo?.icon ? (
+            <img src={techInfo.icon} alt={tech} className="w-4 h-4" />
+          ) : (
+            <span>{tech}</span>
+          )}
+        </span>
+      );
+    })}
+  </p>
+</div>
+
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           <div
